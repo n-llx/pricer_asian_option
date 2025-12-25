@@ -1,3 +1,5 @@
+#include "Payoff.hpp"
+
 #include <iostream>
 #include <vector>
 #include <cmath>

@@ -98,24 +98,41 @@ int main(){
     FILE *pipePut = _popen("gnuplot -persist", "w");
 
     if (pipeCall && pipePut) {
-        // Setup Call Window
+        // Common setup string to avoid repetition
+        const char* commonSetup = 
+            "set pm3d\n"
+            "set hidden3d\n"
+            "set xlabel 'Spot Price (S0)'\n"
+            "set ylabel 'Volatility (sigma)'\n"
+            "set zlabel 'Option Price'\n"
+            "set dgrid3d %d,%d\n";
+
+        // --- Setup Call Window (Window 0) ---
         fprintf(pipeCall, "set term wxt 0 title 'Asian Call Surface' enhanced noraise\n");
-        fprintf(pipeCall, "set pm3d\nset dgrid3d %d,%d\n", grid_size + 1, grid_size + 1);
+        fprintf(pipeCall, commonSetup, grid_size + 1, grid_size + 1);
+        // Dynamic Title for Call
+        fprintf(pipeCall, "set title 'Asian Call Price Surface\\n{/*0.8 K (Strike, unit currency)=%.2f, r=%.2f, T(years)=%.2f, N=%d}'\n", K, r, T, N);
         fprintf(pipeCall, "splot '-' u 1:2:3 with pm3d title 'Call Price'\n");
 
-        // Setup Put Window
+        // --- Setup Put Window (Window 1) ---
         fprintf(pipePut, "set term wxt 1 title 'Asian Put Surface' enhanced noraise\n");
-        fprintf(pipePut, "set pm3d\nset dgrid3d %d,%d\n", grid_size + 1, grid_size + 1);
+        fprintf(pipePut, commonSetup, grid_size + 1, grid_size + 1);
+        // Dynamic Title for Put
+        fprintf(pipePut, "set title 'Asian Put Price Surface\\n{/*0.8 K (Strike, unit currency)=%.2f, r=%.2f, T(years)=%.2f, N=%d}'\n", K, r, T, N);
         fprintf(pipePut, "splot '-' u 1:2:3 with pm3d title 'Put Price'\n");
 
+        // --- Data Transmission ---
         for (int i = 0; i <= grid_size; ++i) {
             for (int j = 0; j <= grid_size; ++j) {
-                fprintf(pipeCall, "%f %f %f\n", S0_start + j * s_step, sigma_start + i * vol_step, call_results[i][j]);
-                fprintf(pipePut, "%f %f %f\n", S0_start + j * s_step, sigma_start + i * vol_step, put_results[i][j]);
+                double current_sigma = sigma_start + i * vol_step;
+                double current_S0 = S0_start + j * s_step;
+                fprintf(pipeCall, "%f %f %f\n", current_S0, current_sigma, call_results[i][j]);
+                fprintf(pipePut, "%f %f %f\n", current_S0, current_sigma, put_results[i][j]);
             }
             fprintf(pipeCall, "\n");
             fprintf(pipePut, "\n");
         }
+        
         fprintf(pipeCall, "e\n");
         fprintf(pipePut, "e\n");
         fflush(pipeCall);

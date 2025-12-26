@@ -48,9 +48,8 @@ if %errorlevel% == 0 (
 
 :: 3. Compile code
 echo.
-echo Compiling pricer...
-g++ main/main.cpp Math/StochasticModel.cpp Instruments/Payoff.cpp -o pricer.exe
-
+echo Compiling with OpenMP Optimization...
+g++ -O3 -fopenmp main/main.cpp Math/StochasticModel.cpp Instruments/Payoff.cpp -o pricer.exe
 if %errorlevel% == 0 (
     echo [SUCCESS] The program can be run with 'pricer.exe'. !
 ) else (

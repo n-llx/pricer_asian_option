@@ -1,4 +1,6 @@
 #include <iostream>
+#include <clocale>
+#include <omp.h> 
 #include "../Math/StochasticModel.hpp"
 #include "../Instruments/Payoff.hpp"
 #include <vector>
@@ -6,6 +8,9 @@
 #include <cmath>
 #include <random>
 #include <algorithm>
+#include <iomanip> // For progress bar formatting
+
+
 
 double monte_carlo(int N, double S0, double r, double sigma, double T, int steps, double(*f_payoff)(std::vector<double>,double), double K ){
     double sum = 0.0;
@@ -19,9 +24,12 @@ double monte_carlo(int N, double S0, double r, double sigma, double T, int steps
 
 
 int main(){
-int grid_size = 20;
+    std::setlocale(LC_NUMERIC, "C");
+    int grid_size = 50;
     double S0_input, r, sigma_input, T, K;
     int steps, N;
+    int total_points = (grid_size + 1) * (grid_size + 1);
+    int completed_points = 0;
 
     std::cout << "\\--- Asian Options Monte Carlo Pricer ---//" << std::endl;
     std::cout << "Enter S0: "; std::cin >> S0_input;
@@ -39,50 +47,82 @@ int grid_size = 20;
     
     double sigma_start = 0.05, sigma_end = 0.50;
     double S0_start = 50.0, S0_end = 150.0;
-    
-    FILE *gnuplotPipe = _popen("gnuplot -persist", "w");
-    if (!gnuplotPipe) {
-        std::cerr << "CRITICAL ERROR: Gnuplot not found in system PATH." << std::endl;
-        std::cerr << "Please run 'setup.bat' first to install dependencies." << std::endl;
-        return -1;
-    }
-    fprintf(gnuplotPipe, "set terminal wxt enhanced\n");
-    fprintf(gnuplotPipe, "set mouse\n");
-    fprintf(gnuplotPipe, "set title 'Asian Call Option Price with \\n{/*0.8 K=%.2f, r=%.2f, T=%.2f}'\n", K, r, T);
-    fprintf(gnuplotPipe, "set dgrid3d %d,%d\n", grid_size, grid_size); // Create a grid
-    fprintf(gnuplotPipe, "set hidden3d\n"); // Hide lines behind the surface
-    fprintf(gnuplotPipe, "set xlabel 'Underlying Price (S0)'\n");
-    fprintf(gnuplotPipe, "set ylabel 'Volatility (Sigma)'\n");
-    fprintf(gnuplotPipe, "set zlabel 'Price'\n");
-    fprintf(gnuplotPipe, "set pm3d at s\n");
-    fprintf(gnuplotPipe, "set hidden3d\n");
-    fprintf(gnuplotPipe, "splot '-' using 1:2:3 with pm3d notitle\n");
-    
     double s_step = (S0_end - S0_start) / grid_size;
     double vol_step = (sigma_end - sigma_start) / grid_size;
-    
-    std::cout << "Calculating and plotting..." << std::endl;
-    
-    for (int i = 0; i <= grid_size; ++i) {
-        double sigma = sigma_start + i * vol_step;
-        
-        for (int j = 0; j <= grid_size; ++j) {
-            double S0 = S0_start + j * s_step;
-            
-            // Calculate price
-            double price = monte_carlo(N, S0, r, sigma, T, steps, &payoff_as_call, K);
-            
-            // Send x, y, z coordinates to Gnuplot
-            fprintf(gnuplotPipe, "%f %f %f\n", S0, sigma, price);
+    int completed = 0;
+
+    // 1. DATA STORAGE: 2D vectors to store results safely during parallel computation
+    std::vector<std::vector<double>> call_results(grid_size + 1, std::vector<double>(grid_size + 1));
+    std::vector<std::vector<double>> put_results(grid_size + 1, std::vector<double>(grid_size + 1));
+
+    std::cout << "\nCalculating Call and Put surfaces using " << omp_get_max_threads() << " threads...\n";
+
+    // --- Parallel Calculation with Progress Bar ---
+    #pragma omp parallel
+    {
+        // Get the thread ID so only the first thread prints the UI
+        int thread_id = omp_get_thread_num();
+
+        #pragma omp for collapse(2)
+        for (int i = 0; i <= grid_size; ++i) {
+            for (int j = 0; j <= grid_size; ++j) {
+                double current_sigma = sigma_start + i * vol_step;
+                double current_S0 = S0_start + j * s_step;
+                
+                call_results[i][j] = monte_carlo(N, current_S0, r, current_sigma, T, steps, &payoff_as_call, K);
+                put_results[i][j] = monte_carlo(N, current_S0, r, current_sigma, T, steps, &payoff_as_put, K);
+
+                #pragma omp atomic
+                completed++;
+
+                // Only thread 0 updates the bar to avoid "nesting" errors
+                if (thread_id == 0 && completed % 10 == 0) {
+                    float progress = (float)completed / total_points;
+                    int barWidth = 40;
+                    std::cout << "\rProgress: [";
+                    int pos = barWidth * progress;
+                    for (int k = 0; k < barWidth; ++k) {
+                        if (k < pos) std::cout << "=";
+                        else if (k == pos) std::cout << ">";
+                        else std::cout << " ";
+                    }
+                    std::cout << "] " << int(progress * 100.0) << "% " << std::flush;
+                }
+            }
         }
     }
-    fprintf(gnuplotPipe, "e\n");
-    fflush(gnuplotPipe);
-    pclose(gnuplotPipe);
-    
-    std::cout << "Done." << std::endl;
-    
-    
-    
+    std::cout << "\n\nCalculations complete. Sending data to Gnuplot..." << std::endl;
+
+    // --- Gnuplot Plotting ---
+    FILE *pipeCall = _popen("gnuplot -persist", "w");
+    FILE *pipePut = _popen("gnuplot -persist", "w");
+
+    if (pipeCall && pipePut) {
+        // Setup Call Window
+        fprintf(pipeCall, "set term wxt 0 title 'Asian Call Surface' enhanced noraise\n");
+        fprintf(pipeCall, "set pm3d\nset dgrid3d %d,%d\n", grid_size + 1, grid_size + 1);
+        fprintf(pipeCall, "splot '-' u 1:2:3 with pm3d title 'Call Price'\n");
+
+        // Setup Put Window
+        fprintf(pipePut, "set term wxt 1 title 'Asian Put Surface' enhanced noraise\n");
+        fprintf(pipePut, "set pm3d\nset dgrid3d %d,%d\n", grid_size + 1, grid_size + 1);
+        fprintf(pipePut, "splot '-' u 1:2:3 with pm3d title 'Put Price'\n");
+
+        for (int i = 0; i <= grid_size; ++i) {
+            for (int j = 0; j <= grid_size; ++j) {
+                fprintf(pipeCall, "%f %f %f\n", S0_start + j * s_step, sigma_start + i * vol_step, call_results[i][j]);
+                fprintf(pipePut, "%f %f %f\n", S0_start + j * s_step, sigma_start + i * vol_step, put_results[i][j]);
+            }
+            fprintf(pipeCall, "\n");
+            fprintf(pipePut, "\n");
+        }
+        fprintf(pipeCall, "e\n");
+        fprintf(pipePut, "e\n");
+        fflush(pipeCall);
+        fflush(pipePut);
+    }
+
+    _pclose(pipeCall);
+    _pclose(pipePut);
     return 0;
 }

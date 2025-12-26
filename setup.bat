@@ -1,5 +1,5 @@
 @echo off
-setlocal
+setlocal enabledelayedexpansion
 echo Checking system dependencies...
 
 :: 1. Check for Winget and install if missing
@@ -48,8 +48,13 @@ if %errorlevel% == 0 (
 
 :: 3. Compile code
 echo.
-echo Compiling with OpenMP Optimization...
-g++ -O3 -fopenmp main/main.cpp Math/StochasticModel.cpp Instruments/Payoff.cpp -o pricer.exe
+echo Compiling with OpenMP Optimization (all .cpp files)...
+set "SRCS="
+for /R %%f in (*.cpp) do (
+    set "SRCS=!SRCS! %%f"
+)
+echo Source files: !SRCS!
+g++ -O3 -fopenmp -Iinclude !SRCS! -o pricer.exe
 if %errorlevel% == 0 (
     echo [SUCCESS] The program can be run with 'pricer.exe'. !
 ) else (

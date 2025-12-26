@@ -10,7 +10,7 @@ if %errorlevel% neq 0 (
     echo [INFO] Downloading Microsoft.DesktopAppInstaller bundle...
     
     :: Use PowerShell to download the latest bundle and its dependencies
-    powershell -Command "Invoke-WebRequest -Uri https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle -OutFile winget.msixbundle"
+    powershell -Command "winget install wingetcreate"
     
     if exist winget.msixbundle (
         echo [INFO] Installing Winget bundle...
@@ -20,7 +20,7 @@ if %errorlevel% neq 0 (
         echo [NOTE] You may need to restart this script for Winget to be recognized.
     ) else (
         echo [ERROR] Could not download Winget automatically.
-        echo Please install 'App Installer' from the Microsoft Store.
+        echo Please open a PowerShell / Command prompt and type: winget install wingetcreate.
         pause
         exit /b
     )

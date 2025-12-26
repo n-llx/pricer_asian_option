@@ -3,4 +3,5 @@ C++ open-source project engine that prices path-dependent Asian options using Mo
 
 Instructions:
 - first execute the "setup.bat" that installs the necessary C++ dependencies for plotting (gunplot,...)
+        -> Troubleshooting: if "winget" is not available, please open a PowerShell and type in "winget install wingetcreate" and restart setup.bat
 - second execute the "pricer.exe" already compiled program that works everything.

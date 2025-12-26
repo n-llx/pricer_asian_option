@@ -25,6 +25,7 @@ double monte_carlo(int N, double S0, double r, double sigma, double T, int steps
 
 int main(){
     std::setlocale(LC_NUMERIC, "C");
+
     int grid_size = 50;
     double S0_input, r, sigma_input, T, K;
     int steps, N;
@@ -51,6 +52,7 @@ int main(){
     double vol_step = (sigma_end - sigma_start) / grid_size;
     double epsilon = 0.1 * S0_input; // 100 basis points for epsilon
     int completed = 0;
+    double discount_factor = std::exp(-r * T);
 
     // 1. DATA STORAGE: 2D vectors to store results safely during parallel computation
     std::vector<std::vector<double>> call_results(grid_size + 1, std::vector<double>(grid_size + 1));
@@ -68,21 +70,46 @@ int main(){
         int thread_id = omp_get_thread_num();
 
         #pragma omp for collapse(2)
+
+        // generation of the multiple paths:
+
         for (int i = 0; i <= grid_size; ++i) {
             for (int j = 0; j <= grid_size; ++j) {
                 double current_sigma = sigma_start + i * vol_step;
                 double current_S0 = S0_start + j * s_step;
+                double call_sum = 0.0, put_sum = 0.0;
+                double call_up_sum = 0.0, call_down_sum = 0.0;
+                double put_up_sum = 0.0, put_down_sum = 0.0;
+
                 
-                call_results[i][j] = monte_carlo(N, current_S0, r, current_sigma, T, steps, &payoff_as_call, K);
-                put_results[i][j] = monte_carlo(N, current_S0, r, current_sigma, T, steps, &payoff_as_put, K);
 
-                double curr_price_call_up = monte_carlo(N, current_S0 + epsilon, r, current_sigma, T, steps, &payoff_as_call, K);
-                double curr_price_call_down = monte_carlo(N, current_S0 - epsilon, r, current_sigma, T, steps, &payoff_as_call, K);
-                double curr_price_put_up = monte_carlo(N, current_S0 + epsilon, r, current_sigma, T, steps, &payoff_as_put, K);
-                double curr_price_put_down = monte_carlo(N, current_S0, r, current_sigma, T, steps, &payoff_as_put, K);
+                for (int n  = 0; n < N; ++n) {
+                    std::vector<double> path = generate_price_path(current_S0, r, current_sigma, T, steps);
+                    double scale_up   = (current_S0 + epsilon) / current_S0;
+                    double scale_down = (current_S0 - epsilon) / current_S0;
+                    std::vector<double> path_up(path.size());
+                    std::vector<double> path_down(path.size());
 
-                call_delta_call_results[i][j] = (curr_price_call_up - curr_price_call_down) / (2.0 * epsilon);
-                put_delta_put_results[i][j] = (curr_price_put_up - curr_price_put_down) / (2.0 * epsilon);
+                    for (size_t k = 0; k < path.size(); ++k) {
+                        path_up[k]   = path[k] * scale_up;
+                        path_down[k] = path[k] * scale_down;
+                    }
+                    //prices
+                    call_sum += payoff_as_call(path, K);
+                    put_sum += payoff_as_put(path, K);
+                    //deltas
+                    call_up_sum += payoff_as_call(path_up, K);
+                    call_down_sum += payoff_as_call(path_down, K);
+                    put_up_sum += payoff_as_put(path_up, K); 
+                    put_down_sum += payoff_as_put(path_down, K);
+                }
+
+
+                call_results[i][j] = discount_factor * call_sum / N;
+                put_results[i][j] = discount_factor * put_sum / N;
+
+                call_delta_call_results[i][j] = discount_factor * (call_up_sum - call_down_sum) / (2.0 * epsilon * N);
+                put_delta_put_results[i][j] = discount_factor * (put_up_sum - put_down_sum) / (2.0 * epsilon * N);
 
                 #pragma omp atomic
                 completed++;

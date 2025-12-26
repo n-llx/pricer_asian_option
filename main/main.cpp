@@ -2,6 +2,16 @@
 #include "Instruments/Payoff.hpp"
 #include <iostream>
 
+double monte_carlo(int N, double S0, double r, double sigma, double T, int steps, double(*f_payoff)(vector<double>,double), double K ){
+    double sum = 0.0;
+    for (int i = 0; i < N; i++){
+        vector<double> path = generate_price_path(S0,r,sigma,T,steps);
+        double payoff = f_payoff(path,K);
+        sum = sum + payoff;
+        }
+    return (sum / N)*exp(-r*T);
+    }
+
 int main(){
     double S0 = 100;
     double r = 0.03;

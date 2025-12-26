@@ -49,11 +49,15 @@ int main(){
     double S0_start = 50.0, S0_end = 150.0;
     double s_step = (S0_end - S0_start) / grid_size;
     double vol_step = (sigma_end - sigma_start) / grid_size;
+    double epsilon = 0.1 * S0_input; // 100 basis points for epsilon
     int completed = 0;
 
     // 1. DATA STORAGE: 2D vectors to store results safely during parallel computation
     std::vector<std::vector<double>> call_results(grid_size + 1, std::vector<double>(grid_size + 1));
     std::vector<std::vector<double>> put_results(grid_size + 1, std::vector<double>(grid_size + 1));
+
+    std::vector<std::vector<double>> call_delta_call_results(grid_size + 1, std::vector<double>(grid_size + 1));
+    std::vector<std::vector<double>> put_delta_put_results(grid_size + 1, std::vector<double>(grid_size + 1));
 
     std::cout << "\nCalculating Call and Put surfaces using " << omp_get_max_threads() << " threads...\n";
 
@@ -72,11 +76,19 @@ int main(){
                 call_results[i][j] = monte_carlo(N, current_S0, r, current_sigma, T, steps, &payoff_as_call, K);
                 put_results[i][j] = monte_carlo(N, current_S0, r, current_sigma, T, steps, &payoff_as_put, K);
 
+                double curr_price_call_up = monte_carlo(N, current_S0 + epsilon, r, current_sigma, T, steps, &payoff_as_call, K);
+                double curr_price_call_down = monte_carlo(N, current_S0 - epsilon, r, current_sigma, T, steps, &payoff_as_call, K);
+                double curr_price_put_up = monte_carlo(N, current_S0 + epsilon, r, current_sigma, T, steps, &payoff_as_put, K);
+                double curr_price_put_down = monte_carlo(N, current_S0, r, current_sigma, T, steps, &payoff_as_put, K);
+
+                call_delta_call_results[i][j] = (curr_price_call_up - curr_price_call_down) / (2.0 * epsilon);
+                put_delta_put_results[i][j] = (curr_price_put_up - curr_price_put_down) / (2.0 * epsilon);
+
                 #pragma omp atomic
                 completed++;
 
                 // Only thread 0 updates the bar to avoid "nesting" errors
-                if (thread_id == 0 && completed % 10 == 0) {
+                if (thread_id == 0 && completed % 20 == 0) {
                     float progress = (float)completed / total_points;
                     int barWidth = 40;
                     std::cout << "\rProgress: [";
@@ -96,30 +108,55 @@ int main(){
     // --- Gnuplot Plotting ---
     FILE *pipeCall = _popen("gnuplot -persist", "w");
     FILE *pipePut = _popen("gnuplot -persist", "w");
+    FILE *pipeDeltaCall = _popen("gnuplot -persist", "w");
+    FILE *pipeDeltaPut = _popen("gnuplot -persist", "w");
 
-    if (pipeCall && pipePut) {
+    if (pipeCall && pipePut && pipeDeltaCall && pipeDeltaPut) {
         // Common setup string to avoid repetition
         const char* commonSetup = 
-            "set pm3d\n"
+            "set pm3d at s\n"
             "set hidden3d\n"
-            "set xlabel 'Spot Price (S0)'\n"
-            "set ylabel 'Volatility (sigma)'\n"
-            "set zlabel 'Option Price'\n"
+            "set xlabel 'Spot Price (S0)' offset 0,-1\n" // Move label down slightly
+            "set ylabel 'Volatility (sigma)' offset 2,0\n" // Move label right slightly
+            "set view 60, 30, 1.0, 1.1\n"              // Adjust view scale to make room
             "set dgrid3d %d,%d\n";
 
         // --- Setup Call Window (Window 0) ---
         fprintf(pipeCall, "set term wxt 0 title 'Asian Call Surface' enhanced noraise\n");
         fprintf(pipeCall, commonSetup, grid_size + 1, grid_size + 1);
+        fprintf(pipeCall, "set pm3d at s\n");       // Surface color
+        fprintf(pipeCall, "set zlabel 'Option Price' offset 1,1,0\n"); // Z-axis label with offset
         // Dynamic Title for Call
-        fprintf(pipeCall, "set title 'Asian Call Price Surface\\n{/*0.8 K (Strike, unit currency)=%.2f, r=%.2f, T(years)=%.2f, N=%d}'\n", K, r, T, N);
+        fprintf(pipeCall, "set title 'Asian Call Price Surface\\n{/*0.8 K=%.2f, r=%.2f, T=%.2f, N=%d}'\n", K, r, T, N);
         fprintf(pipeCall, "splot '-' u 1:2:3 with pm3d title 'Call Price'\n");
 
         // --- Setup Put Window (Window 1) ---
         fprintf(pipePut, "set term wxt 1 title 'Asian Put Surface' enhanced noraise\n");
         fprintf(pipePut, commonSetup, grid_size + 1, grid_size + 1);
+        fprintf(pipePut, "set pm3d at s\n");       // Surface color
+        fprintf(pipePut, "set zlabel 'Option Price' offset 1,1,0\n"); // Z-axis label with offset
         // Dynamic Title for Put
-        fprintf(pipePut, "set title 'Asian Put Price Surface\\n{/*0.8 K (Strike, unit currency)=%.2f, r=%.2f, T(years)=%.2f, N=%d}'\n", K, r, T, N);
+        fprintf(pipePut, "set title 'Asian Put Price Surface\\n{/*0.8 K=%.2f, r=%.2f, T=%.2f, N=%d}'\n", K, r, T, N);
         fprintf(pipePut, "splot '-' u 1:2:3 with pm3d title 'Put Price'\n");
+
+        // Setuo Delta Call Window (Window 2)
+        fprintf(pipeDeltaCall, "set term wxt 2 title 'Asian Call Delta Surface' enhanced noraise\n");
+        fprintf(pipeDeltaCall, commonSetup, grid_size + 1, grid_size + 1);
+        fprintf(pipeDeltaCall, "set pm3d at s\n");       // Surface color
+        fprintf(pipeDeltaCall, "set zlabel 'Delta' offset 1,1,0\n"); // Z-axis label with offset
+        // Dynamic Title for Call Delta
+        fprintf(pipeDeltaCall, "set title 'Asian Call Delta Surface\\n{/*0.8 K=%.2f, r=%.2f, T=%.2f, N=%d}'\n", K, r, T, N);
+        fprintf(pipeDeltaCall, "splot '-' u 1:2:3 with pm3d title 'Call Delta'\n");
+
+        // Setup Delta Put Window (Window 3)
+        fprintf(pipeDeltaPut, "set term wxt 3 title 'Asian Put Delta Surface' enhanced noraise\n");
+        fprintf(pipeDeltaPut, commonSetup, grid_size + 1, grid_size + 1);
+        fprintf(pipeDeltaPut, "set pm3d at s\n");       // Surface color
+        fprintf(pipeDeltaPut, "set zlabel 'Delta' offset 1,1,0\n"); // Z-axis label with offset
+        // Dynamic Title for Put Delta
+        fprintf(pipeDeltaPut, "set title 'Asian Put Delta Surface\\n{/*0.8 K=%.2f, r=%.2f, T=%.2f, N=%d}'\n", K, r, T, N);
+        fprintf(pipeDeltaPut, "splot '-' u 1:2:3 with pm3d title 'Put Delta'\n");
+
 
         // --- Data Transmission ---
         for (int i = 0; i <= grid_size; ++i) {
@@ -128,18 +165,28 @@ int main(){
                 double current_S0 = S0_start + j * s_step;
                 fprintf(pipeCall, "%f %f %f\n", current_S0, current_sigma, call_results[i][j]);
                 fprintf(pipePut, "%f %f %f\n", current_S0, current_sigma, put_results[i][j]);
+                fprintf(pipeDeltaCall, "%f %f %f\n", current_S0, current_sigma, call_delta_call_results[i][j]);
+                fprintf(pipeDeltaPut, "%f %f %f\n", current_S0, current_sigma, put_delta_put_results[i][j]);
             }
             fprintf(pipeCall, "\n");
             fprintf(pipePut, "\n");
+            fprintf(pipeDeltaCall, "\n");
+            fprintf(pipeDeltaPut, "\n");
         }
         
         fprintf(pipeCall, "e\n");
         fprintf(pipePut, "e\n");
+        fprintf(pipeDeltaCall, "e\n");
+        fprintf(pipeDeltaPut, "e\n");
         fflush(pipeCall);
         fflush(pipePut);
+        fflush(pipeDeltaCall);
+        fflush(pipeDeltaPut);
     }
 
     _pclose(pipeCall);
     _pclose(pipePut);
+    _pclose(pipeDeltaCall);
+    _pclose(pipeDeltaPut);
     return 0;
 }

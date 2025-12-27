@@ -12,3 +12,16 @@ double calculate_delta(const std::vector<std::vector<double>>& call_results, int
         return (call_results[i][j] - call_results[i][j - 1]) / s_step;
     }
 }
+
+double calculate_vega(const std::vector<std::vector<double>>& call_results, int i, int j, double s_step) {
+    int grid_max_s = call_results[0].size() - 1;
+    if (i > 0 && i < grid_max_s) {
+        return (call_results[i+1][j] - call_results[i-1][j]) / (2.0 * s_step);
+    } 
+    else if (i == 0) {
+        return (call_results[i+1][j] - call_results[i][j]) / s_step;
+    } 
+    else {
+        return (call_results[i][j] - call_results[i-1][j]) / s_step;
+    }
+}

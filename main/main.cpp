@@ -16,7 +16,7 @@
 int main()
 {
     std::setlocale(LC_NUMERIC, "C");
-    cout << "Test";
+    std::cout << "Test";
     int grid_size = 50;
     double S0_input, r, sigma_input, T, K;
     int steps, N;

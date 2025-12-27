@@ -61,6 +61,7 @@ int main()
 
     std::cout << "\nCalculating Call, Put and Delta surfaces ";
     for (int i = 0; i <= grid_size; ++i)
+        for (int j = 0; j <= grid_size; ++j) {
     {
         double current_sigma = sigma_start + i * vol_step;
         double current_S0 = S0_start + j * s_step;
@@ -99,7 +100,6 @@ int main()
                 }
                 std::cout << "] " << int(progress * 100.0) << "% " << std::flush;
             }
-            std::cout << "] " << int(progress * 100.0) << "% " << std::flush;
         }
     }
 }

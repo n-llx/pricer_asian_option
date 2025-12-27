@@ -1,15 +1,14 @@
-#include "Payoff.hpp"
-#include "Payoff.cpp"
-#include "StochasticModel.hpp"
-#include "StochasticModel.cpp"
+#include "Greeks.hpp"
 
-
-using namespace std;
-
-double calculate_delta(double S0, double r, double sigma, double T, int steps, double K, double(*f_payoff)(std::vector<double>,double), int N){
-    double pi = monte_carlo(N, S0, r, sigma, T, steps, f_payoff, K);
-    double epsilon = 1e-5*pi;
-    double pi_up = monte_carlo(N, S0 + epsilon/2, r, sigma, T, steps, f_payoff, K);
-    double pi_down = monte_carlo(N, S0 - epsilon/2, r, sigma, T, steps, f_payoff, K);
-    return (pi_up - pi_down)/epsilon;
+double calculate_delta(const std::vector<std::vector<double>>& call_results, int i, int j, double s_step) {
+    int grid_max_s = call_results[0].size() - 1;
+    if (j > 0 && j < grid_max_s) {
+        return (call_results[i][j + 1] - call_results[i][j - 1]) / (2.0 * s_step);
+    } 
+    else if (j == 0) {
+        return (call_results[i][j + 1] - call_results[i][j]) / s_step;
+    } 
+    else {
+        return (call_results[i][j] - call_results[i][j - 1]) / s_step;
+    }
 }

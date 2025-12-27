@@ -1,6 +1,5 @@
-#ifdef GREEKS_HPP
+#ifndef GREEKS_HPP
 #define GREEKS_HPP
-
 #include <vector>
-double calculate_delta(double S0, double r, double sigma, double T, int steps, double K, double(*f_payoff)(std::vector<double>,double),)
-#endif 
+double calculate_delta(const std::vector<std::vector<double>>& call_results, int i, int j, double s_step);
+#endif

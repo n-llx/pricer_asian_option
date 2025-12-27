@@ -39,8 +39,11 @@ int main()
     std::cin >> N;
 
     std::cout << "Monte carlo with strike " << K << "$ and " << N << " paths simulated :" << "\n";
-    std::cout << "Asian Call: " << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_call, K) << "\n";
-    std::cout << "Asian Put:" << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_put, K) << "\n"
+    // here the prices are calculated using random seeds: confidence interval depends on N 
+    std::random_device rd;
+    unsigned int random_seed = rd();
+    std::cout << "Asian Call: " << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_call, K, random_seed) << "\n";
+    std::cout << "Asian Put:" << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_put, K, random_seed) << "\n"
               << "\n";
 
     double sigma_start = 0.05, sigma_end = 0.50;
@@ -54,18 +57,7 @@ int main()
     std::vector<std::vector<double>> put_results(grid_size + 1, std::vector<double>(grid_size + 1));
     std::vector<std::vector<double>> call_delta_call_results(grid_size + 1, std::vector<double>(grid_size + 1));
 
-    std::cout << "\nCalculating Call and Put surfaces using " << omp_get_max_threads() << " threads...\n";
-
-// --- Parallel Calculation of the surfaces
-    #pragma omp parallel
-    {
-        // Get the thread ID so only the first thread prints the UI
-        int thread_id = omp_get_thread_num();
-
-    #pragma omp for collapse(2)
-
-        // generation of the multiple paths:
-
+    std::cout << "\nCalculating Call, Put and Delta surfaces ";
         for (int i = 0; i <= grid_size; ++i)
         {
             for (int j = 0; j <= grid_size; ++j)
@@ -73,15 +65,13 @@ int main()
                 double current_sigma = sigma_start + i * vol_step;
                 double current_S0 = S0_start + j * s_step;
 
+                //random seed is fixed to 42 for smoothness of the surfaces
                 call_results[i][j] = monte_carlo(N, current_S0, r, current_sigma, T, steps, &payoff_as_call, K, 42);
-                // put surface is calculated using put call parity for options: C - P = S0 - K exp(-rT)
+                // put surface is bootstrapped using put call parity for options: C - P = S0 - K exp(-rT)
                 put_results[i][j] = call_results[i][j] - current_S0 + K * std::exp(-r * T);
-
-                #pragma omp atomic
                 completed++;
 
-                // Only thread 0 updates the bar to avoid "nesting" errors
-                if (thread_id == 0 && completed % 20 == 0)
+                if (completed % 20 == 0)
                 {
                     float progress = (float)completed / total_points;
                     int barWidth = 40;
@@ -100,14 +90,12 @@ int main()
                 }
             }
         }
-        #pragma omp parallel for collapse(2)
         for (int i = 0; i <= grid_size; ++i) {
             for (int j = 0; j <= grid_size; ++j) {
                 // delta calculation is bootrstapped using the call price surface
                 call_delta_call_results[i][j] = calculate_delta(call_results, i, j, s_step);
              }
         }
-    }
     std::cout << "\n\nCalculations complete. Sending data to Gnuplot..." << std::endl;
 
     // --- Gnuplot Plotting ---

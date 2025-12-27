@@ -9,26 +9,26 @@
 #include <cmath>
 #include <random>
 #include <algorithm>
-#include <iomanip> // For progress bar formatting
+#include <iomanip> // for progress bar
 
-using namespace std;
+#include "../Graphics/plot.hpp"
 
 int main()
 {
     std::setlocale(LC_NUMERIC, "C");
-
+    cout << "Test";
     int grid_size = 50;
     double S0_input, r, sigma_input, T, K;
     int steps, N;
     int total_points = (grid_size + 1) * (grid_size + 1);
     int completed_points = 0;
 
-    std::cout << "\\--- Asian Options Monte Carlo Pricer ---//" << std::endl;
-    std::cout << "Enter S0: ";
+    std::cout << "||--- Asian Options Monte Carlo Pricer ---||" << std::endl;
+    std::cout << "Enter S0 (between 50 and 150): ";
     std::cin >> S0_input;
     std::cout << "Enter r: ";
     std::cin >> r;
-    std::cout << "Enter sigma: ";
+    std::cout << "Enter sigma (between 0.05 and 0.5): ";
     std::cin >> sigma_input;
     std::cout << "Enter T: ";
     std::cin >> T;
@@ -40,190 +40,77 @@ int main()
     std::cin >> N;
 
     std::cout << "Monte carlo with strike " << K << "$ and " << N << " paths simulated :" << "\n";
-    std::cout << "Asian Call: " << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_call, K) << "\n";
-    std::cout << "Asian Put:" << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_put, K) << "\n"
+    // here the prices are calculated using random seeds: confidence interval depends on N
+    std::random_device rd;
+    unsigned int random_seed = rd();
+    std::cout << "Asian Call: " << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_call, K, random_seed) << "\n";
+    std::cout << "Asian Put:" << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_put, K, random_seed) << "\n"
               << "\n";
-    cout << "Delta Asian Call:" << calculate_delta(S0_input, r, sigma_input, T, steps, K, &payoff_as_call, N) << "\n";
-    cout << "Delta Asian Put:" << calculate_delta(S0_input, r, sigma_input, T, steps, K, &payoff_as_put, N) << "\n";
 
     double sigma_start = 0.05, sigma_end = 0.50;
     double S0_start = 50.0, S0_end = 150.0;
     double s_step = (S0_end - S0_start) / grid_size;
     double vol_step = (sigma_end - sigma_start) / grid_size;
-    double epsilon = 0.1 * S0_input; // 100 basis points for epsilon
     int completed = 0;
-    double discount_factor = std::exp(-r * T);
 
-    // 1. DATA STORAGE: 2D vectors to store results safely during parallel computation
-    std::vector<std::vector<double>> call_results(grid_size + 1, std::vector<double>(grid_size + 1));
+    // start of the surfaces calculation
+    std::vector<std::vector<double>>
+        call_results(grid_size + 1, std::vector<double>(grid_size + 1));
     std::vector<std::vector<double>> put_results(grid_size + 1, std::vector<double>(grid_size + 1));
-
     std::vector<std::vector<double>> call_delta_call_results(grid_size + 1, std::vector<double>(grid_size + 1));
-    std::vector<std::vector<double>> put_delta_put_results(grid_size + 1, std::vector<double>(grid_size + 1));
 
-    std::cout << "\nCalculating Call and Put surfaces using " << omp_get_max_threads() << " threads...\n";
-
-// --- Parallel Calculation with Progress Bar ---
-#pragma omp parallel
+    std::cout << "\nCalculating Call, Put and Delta surfaces ";
+    for (int i = 0; i <= grid_size; ++i)
     {
-        // Get the thread ID so only the first thread prints the UI
-        int thread_id = omp_get_thread_num();
-
-#pragma omp for collapse(2)
-
-        // generation of the multiple paths:
-
-        for (int i = 0; i <= grid_size; ++i)
+        for (int j = 0; j <= grid_size; ++j)
         {
-            for (int j = 0; j <= grid_size; ++j)
+            double current_sigma = sigma_start + i * vol_step;
+            double current_S0 = S0_start + j * s_step;
+
+            // random seed is fixed to 42 for smoothness of the surfaces
+            call_results[i][j] = monte_carlo(N, current_S0, r, current_sigma, T, steps, &payoff_as_call, K, 42);
+            // put surface is bootstrapped using put call parity for options: C - P = S0 - K exp(-rT)
+            put_results[i][j] = call_results[i][j] - current_S0 + K * std::exp(-r * T);
+            completed++;
+
+            if (completed % 20 == 0)
             {
-                double current_sigma = sigma_start + i * vol_step;
-                double current_S0 = S0_start + j * s_step;
-                double call_sum = 0.0, put_sum = 0.0;
-                double call_up_sum = 0.0, call_down_sum = 0.0;
-                double put_up_sum = 0.0, put_down_sum = 0.0;
-
-                for (int n = 0; n < N; ++n)
+                float progress = (float)completed / total_points;
+                int barWidth = 40;
+                std::cout << "\rProgress: [";
+                int pos = barWidth * progress;
+                for (int k = 0; k < barWidth; ++k)
                 {
-                    std::vector<double> path = generate_price_path(current_S0, r, current_sigma, T, steps);
-                    double scale_up = (current_S0 + epsilon) / current_S0;
-                    double scale_down = (current_S0 - epsilon) / current_S0;
-                    std::vector<double> path_up(path.size());
-                    std::vector<double> path_down(path.size());
-
-                    for (size_t k = 0; k < path.size(); ++k)
-                    {
-                        path_up[k] = path[k] * scale_up;
-                        path_down[k] = path[k] * scale_down;
-                    }
-                    // prices
-                    call_sum += payoff_as_call(path, K);
-                    put_sum += payoff_as_put(path, K);
-                    // deltas
-                    call_up_sum += payoff_as_call(path_up, K);
-                    call_down_sum += payoff_as_call(path_down, K);
-                    put_up_sum += payoff_as_put(path_up, K);
-                    put_down_sum += payoff_as_put(path_down, K);
+                    if (k < pos)
+                        std::cout << "=";
+                    else if (k == pos)
+                        std::cout << ">";
+                    else
+                        std::cout << " ";
                 }
-
-                call_results[i][j] = discount_factor * call_sum / N;
-                put_results[i][j] = discount_factor * put_sum / N;
-
-                call_delta_call_results[i][j] = discount_factor * (call_up_sum - call_down_sum) / (2.0 * epsilon * N);
-                put_delta_put_results[i][j] = discount_factor * (put_up_sum - put_down_sum) / (2.0 * epsilon * N);
-
-                implied_volatility[i][j] =
-
-#pragma omp atomic
-                    completed++;
-
-                // Only thread 0 updates the bar to avoid "nesting" errors
-                if (thread_id == 0 && completed % 20 == 0)
-                {
-                    float progress = (float)completed / total_points;
-                    int barWidth = 40;
-                    std::cout << "\rProgress: [";
-                    int pos = barWidth * progress;
-                    for (int k = 0; k < barWidth; ++k)
-                    {
-                        if (k < pos)
-                            std::cout << "=";
-                        else if (k == pos)
-                            std::cout << ">";
-                        else
-                            std::cout << " ";
-                    }
-                    std::cout << "] " << int(progress * 100.0) << "% " << std::flush;
-                }
+                std::cout << "] " << int(progress * 100.0) << "% " << std::flush;
             }
         }
     }
+    for (int i = 0; i <= grid_size; ++i)
+    {
+        for (int j = 0; j <= grid_size; ++j)
+        {
+            // delta calculation is bootrstapped using the call price surface
+            call_delta_call_results[i][j] = calculate_delta(call_results, i, j, s_step);
+        }
+    }
+    // delta of the inputed option is given printed
+    std::cout << "\n\nDelta of the option calculated:" << call_delta_call_results[grid_size * (1 - ((sigma_end - sigma_input) / (sigma_end - sigma_start)))][grid_size * (1 - ((S0_end - S0_input) / (S0_end - S0_start)))] << std::endl;
     std::cout << "\n\nCalculations complete. Sending data to Gnuplot..." << std::endl;
 
-    // --- Gnuplot Plotting ---
-    FILE *pipeCall = _popen("gnuplot -persist", "w");
-    FILE *pipePut = _popen("gnuplot -persist", "w");
-    FILE *pipeDeltaCall = _popen("gnuplot -persist", "w");
-    FILE *pipeDeltaPut = _popen("gnuplot -persist", "w");
+    // Delegate plotting to Graphics/plot.cpp (single-surface calls)
+    plot_surface(grid_size, call_results, S0_start, s_step, sigma_start, vol_step,
+                 "Asian Call Price Surface", "Option Price", K, r, T, N, 0);
+    plot_surface(grid_size, put_results, S0_start, s_step, sigma_start, vol_step,
+                 "Asian Put Price Surface", "Option Price", K, r, T, N, 1);
+    plot_surface(grid_size, call_delta_call_results, S0_start, s_step, sigma_start, vol_step,
+                 "Asian Call Delta Surface", "Delta", K, r, T, N, 2);
 
-    if (pipeCall && pipePut && pipeDeltaCall && pipeDeltaPut)
-    {
-        // Common setup string to avoid repetition
-        const char *commonSetup =
-            "set pm3d at s\n"
-            "set hidden3d\n"
-            "set xlabel 'Spot Price (S0)' offset 0,-1\n"   // Move label down slightly
-            "set ylabel 'Volatility (sigma)' offset 2,0\n" // Move label right slightly
-            "set view 60, 30, 1.0, 1.1\n"                  // Adjust view scale to make room
-            "set dgrid3d %d,%d\n";
-
-        // --- Setup Call Window (Window 0) ---
-        fprintf(pipeCall, "set term wxt 0 title 'Asian Call Surface' enhanced noraise\n");
-        fprintf(pipeCall, commonSetup, grid_size + 1, grid_size + 1);
-        fprintf(pipeCall, "set pm3d at s\n");                          // Surface color
-        fprintf(pipeCall, "set zlabel 'Option Price' offset 1,1,0\n"); // Z-axis label with offset
-        // Dynamic Title for Call
-        fprintf(pipeCall, "set title 'Asian Call Price Surface\\n{/*0.8 K=%.2f, r=%.2f, T=%.2f, N=%d}'\n", K, r, T, N);
-        fprintf(pipeCall, "splot '-' u 1:2:3 with pm3d title 'Call Price'\n");
-
-        // --- Setup Put Window (Window 1) ---
-        fprintf(pipePut, "set term wxt 1 title 'Asian Put Surface' enhanced noraise\n");
-        fprintf(pipePut, commonSetup, grid_size + 1, grid_size + 1);
-        fprintf(pipePut, "set pm3d at s\n");                          // Surface color
-        fprintf(pipePut, "set zlabel 'Option Price' offset 1,1,0\n"); // Z-axis label with offset
-        // Dynamic Title for Put
-        fprintf(pipePut, "set title 'Asian Put Price Surface\\n{/*0.8 K=%.2f, r=%.2f, T=%.2f, N=%d}'\n", K, r, T, N);
-        fprintf(pipePut, "splot '-' u 1:2:3 with pm3d title 'Put Price'\n");
-
-        // Setuo Delta Call Window (Window 2)
-        fprintf(pipeDeltaCall, "set term wxt 2 title 'Asian Call Delta Surface' enhanced noraise\n");
-        fprintf(pipeDeltaCall, commonSetup, grid_size + 1, grid_size + 1);
-        fprintf(pipeDeltaCall, "set pm3d at s\n");                   // Surface color
-        fprintf(pipeDeltaCall, "set zlabel 'Delta' offset 1,1,0\n"); // Z-axis label with offset
-        // Dynamic Title for Call Delta
-        fprintf(pipeDeltaCall, "set title 'Asian Call Delta Surface\\n{/*0.8 K=%.2f, r=%.2f, T=%.2f, N=%d}'\n", K, r, T, N);
-        fprintf(pipeDeltaCall, "splot '-' u 1:2:3 with pm3d title 'Call Delta'\n");
-
-        // Setup Delta Put Window (Window 3)
-        fprintf(pipeDeltaPut, "set term wxt 3 title 'Asian Put Delta Surface' enhanced noraise\n");
-        fprintf(pipeDeltaPut, commonSetup, grid_size + 1, grid_size + 1);
-        fprintf(pipeDeltaPut, "set pm3d at s\n");                   // Surface color
-        fprintf(pipeDeltaPut, "set zlabel 'Delta' offset 1,1,0\n"); // Z-axis label with offset
-        // Dynamic Title for Put Delta
-        fprintf(pipeDeltaPut, "set title 'Asian Put Delta Surface\\n{/*0.8 K=%.2f, r=%.2f, T=%.2f, N=%d}'\n", K, r, T, N);
-        fprintf(pipeDeltaPut, "splot '-' u 1:2:3 with pm3d title 'Put Delta'\n");
-
-        // --- Data Transmission ---
-        for (int i = 0; i <= grid_size; ++i)
-        {
-            for (int j = 0; j <= grid_size; ++j)
-            {
-                double current_sigma = sigma_start + i * vol_step;
-                double current_S0 = S0_start + j * s_step;
-                fprintf(pipeCall, "%f %f %f\n", current_S0, current_sigma, call_results[i][j]);
-                fprintf(pipePut, "%f %f %f\n", current_S0, current_sigma, put_results[i][j]);
-                fprintf(pipeDeltaCall, "%f %f %f\n", current_S0, current_sigma, call_delta_call_results[i][j]);
-                fprintf(pipeDeltaPut, "%f %f %f\n", current_S0, current_sigma, put_delta_put_results[i][j]);
-            }
-            fprintf(pipeCall, "\n");
-            fprintf(pipePut, "\n");
-            fprintf(pipeDeltaCall, "\n");
-            fprintf(pipeDeltaPut, "\n");
-        }
-
-        fprintf(pipeCall, "e\n");
-        fprintf(pipePut, "e\n");
-        fprintf(pipeDeltaCall, "e\n");
-        fprintf(pipeDeltaPut, "e\n");
-        fflush(pipeCall);
-        fflush(pipePut);
-        fflush(pipeDeltaCall);
-        fflush(pipeDeltaPut);
-    }
-
-    _pclose(pipeCall);
-    _pclose(pipePut);
-    _pclose(pipeDeltaCall);
-    _pclose(pipeDeltaPut);
     return 0;
 }

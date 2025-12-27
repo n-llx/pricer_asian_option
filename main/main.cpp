@@ -23,11 +23,11 @@ int main()
     int completed_points = 0;
 
     std::cout << "||--- Asian Options Monte Carlo Pricer ---||" << std::endl;
-    std::cout << "Enter S0: ";
+    std::cout << "Enter S0 (between 50 and 150): ";
     std::cin >> S0_input;
     std::cout << "Enter r: ";
     std::cin >> r;
-    std::cout << "Enter sigma: ";
+    std::cout << "Enter sigma (between 0.05 and 0.5): ";
     std::cin >> sigma_input;
     std::cout << "Enter T: ";
     std::cin >> T;
@@ -96,6 +96,8 @@ int main()
                 call_delta_call_results[i][j] = calculate_delta(call_results, i, j, s_step);
              }
         }
+    // delta of the inputed option is given printed
+    std::cout << "\n\nDelta of the option calculated:" << call_delta_call_results[grid_size *(1-((sigma_end - sigma_input) / (sigma_end - sigma_start)))][grid_size *(1-((S0_end - S0_input) / (S0_end - S0_start)))] << std::endl;
     std::cout << "\n\nCalculations complete. Sending data to Gnuplot..." << std::endl;
 
     // --- Gnuplot Plotting ---

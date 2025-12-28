@@ -1,6 +1,6 @@
 #include <iostream>
 #include <clocale>
-#include <omp.h>
+#include <clocale>
 #include "../Math/StochasticModel.hpp"
 #include "../Instruments/Payoff.hpp"
 #include "../Math/Greeks.hpp"

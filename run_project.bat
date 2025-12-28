@@ -13,7 +13,7 @@ set "SRCS="
 for /R "%~dp0" %%f in (*.cpp) do (
     set "FILEPATH=%%f"
     :: This logic ignores any .cpp files found inside mingw64 or gnuplot
-    echo !FILEPATH! | findstr /i "mingw64 gnuplot" >nul
+    echo !FILEPATH! | findstr /i "mingw64 gnuplot build" >nul
     if errorlevel 1 (
         set "SRCS=!SRCS! "%%f""
     )
@@ -25,7 +25,7 @@ echo Compiling: !SRCS!
 :: 3. The Compile Command
 :: -static-libgcc -static-libstdc++ ensures it runs on any PC without extra DLLs
 :: -I"%~dp0include" tells g++ to look for the 'nlohmann' folder here
-g++ -O3 -fopenmp -static -static-libgcc -static-libstdc++ -I"%~dp0include" !SRCS! -o "%~dp0pricer.exe"
+g++ -O3 -static -static-libgcc -static-libstdc++ -I"%~dp0include" !SRCS! -o "%~dp0pricer.exe"
 
 if %errorlevel% == 0 (
     echo [SUCCESS] pricer.exe created.

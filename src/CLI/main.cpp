@@ -1,8 +1,8 @@
 #include <iostream>
 #include <clocale>
 #include <omp.h> 
-#include "../Math/StochasticModel.hpp"
-#include "../Instruments/Payoff.hpp"
+#include "Math/StochasticModel.hpp"
+#include "Instruments/Payoff.hpp"
 #include <vector>
 #include <cstdio> 
 #include <cmath>

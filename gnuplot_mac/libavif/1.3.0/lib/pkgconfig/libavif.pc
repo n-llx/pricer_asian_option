@@ -1,0 +1,13 @@
+prefix=/opt/homebrew/Cellar/libavif/1.3.0
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libavif
+Description: Library for encoding and decoding .avif files
+Version: 1.3.0
+Libs: -L${libdir} -lavif
+Libs.private:
+Cflags: -I${includedir} -DAVIF_DLL
+Cflags.private: -UAVIF_DLL
+Requires.private: dav1d aom

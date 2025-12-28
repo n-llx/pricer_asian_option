@@ -1,0 +1,76 @@
+{
+  "homebrew_version": "5.0.5",
+  "used_options": [],
+  "unused_options": [],
+  "built_as_bottle": true,
+  "poured_from_bottle": true,
+  "loaded_from_api": true,
+  "installed_as_dependency": true,
+  "installed_on_request": false,
+  "changed_files": [
+    "bin/gdbus-codegen",
+    "bin/glib-gettextize",
+    "lib/pkgconfig/gio-2.0.pc",
+    "lib/pkgconfig/gio-unix-2.0.pc",
+    "lib/pkgconfig/girepository-2.0.pc",
+    "lib/pkgconfig/glib-2.0.pc",
+    "lib/pkgconfig/gmodule-2.0.pc",
+    "lib/pkgconfig/gmodule-export-2.0.pc",
+    "lib/pkgconfig/gmodule-no-export-2.0.pc",
+    "lib/pkgconfig/gobject-2.0.pc",
+    "lib/pkgconfig/gthread-2.0.pc",
+    "share/gdb/auto-load/opt/homebrew/Cellar/glib/2.86.3/lib/libglib-2.0.so.0.8600.3-gdb.py",
+    "share/gdb/auto-load/opt/homebrew/Cellar/glib/2.86.3/lib/libgobject-2.0.so.0.8600.3-gdb.py"
+  ],
+  "time": 1766916874,
+  "source_modified_time": 1765208766,
+  "compiler": "clang",
+  "aliases": [],
+  "runtime_dependencies": [
+    {
+      "full_name": "pcre2",
+      "version": "10.47",
+      "revision": 0,
+      "bottle_rebuild": 0,
+      "pkg_version": "10.47",
+      "declared_directly": true
+    },
+    {
+      "full_name": "libunistring",
+      "version": "1.4.1",
+      "revision": 0,
+      "bottle_rebuild": 0,
+      "pkg_version": "1.4.1",
+      "declared_directly": false
+    },
+    {
+      "full_name": "gettext",
+      "version": "0.26",
+      "revision": 1,
+      "bottle_rebuild": 0,
+      "pkg_version": "0.26_1",
+      "declared_directly": true
+    }
+  ],
+  "source": {
+    "spec": "stable",
+    "versions": {
+      "stable": "2.86.3",
+      "head": null,
+      "version_scheme": 0,
+      "compatibility_version": null
+    },
+    "path": "/Users/alexm1/Library/Caches/Homebrew/api/formula.jws.json",
+    "tap_git_head": null,
+    "tap": "homebrew/core"
+  },
+  "arch": "arm64",
+  "built_on": {
+    "os": "Macintosh",
+    "os_version": "macOS 15.7",
+    "cpu_family": "dunno",
+    "xcode": "26.1",
+    "clt": "26.1.0.0.1.1761104275",
+    "preferred_perl": "5.34"
+  }
+}

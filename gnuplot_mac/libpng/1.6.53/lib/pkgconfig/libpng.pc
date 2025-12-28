@@ -1,0 +1,12 @@
+prefix=/opt/homebrew/opt/libpng
+exec_prefix=${prefix}
+libdir=/opt/homebrew/opt/libpng/lib
+includedir=${prefix}/include/libpng16
+
+Name: libpng
+Description: Loads and saves PNG files
+Version: 1.6.53
+Requires.private: zlib
+Libs: -L${libdir} -lpng16
+Libs.private: -lz 
+Cflags: -I${includedir}

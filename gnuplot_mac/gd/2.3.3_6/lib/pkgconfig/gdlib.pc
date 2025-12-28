@@ -1,0 +1,13 @@
+prefix=/opt/homebrew/Cellar/gd/2.3.3_6
+exec_prefix=${prefix}
+libdir=/opt/homebrew/Cellar/gd/2.3.3_6/lib
+includedir=${prefix}/include
+
+Name: gd
+Description: GD graphics library
+Version: 2.3.3
+Requires:
+Requires.private: 
+Cflags: -I${includedir}
+Libs.private:    -lz -L/opt/homebrew/opt/libpng/lib -L/opt/homebrew/Cellar/libpng/1.6.43/lib -lpng16 -L/opt/homebrew/opt/freetype/lib -L/opt/homebrew/opt/freetype/lib -lfreetype -L/opt/homebrew/opt/fontconfig/lib  -lfontconfig -L/opt/homebrew/opt/jpeg-turbo/lib  -ljpeg -L/opt/homebrew/opt/libtiff/lib  -ltiff -L/opt/homebrew/opt/webp/lib  -lwebp -L/opt/homebrew/opt/libavif/lib  -lavif -liconv
+Libs: -L${libdir} -lgd

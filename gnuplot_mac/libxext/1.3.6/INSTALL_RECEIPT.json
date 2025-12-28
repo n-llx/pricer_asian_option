@@ -1,0 +1,80 @@
+{
+  "homebrew_version": "4.3.20-36-gf0be97f",
+  "used_options": [],
+  "unused_options": [],
+  "built_as_bottle": true,
+  "poured_from_bottle": true,
+  "loaded_from_api": true,
+  "installed_as_dependency": true,
+  "installed_on_request": false,
+  "changed_files": [
+    "lib/pkgconfig/xext.pc"
+  ],
+  "time": 1766916877,
+  "source_modified_time": 1707082979,
+  "compiler": "clang",
+  "aliases": [],
+  "runtime_dependencies": [
+    {
+      "full_name": "xorgproto",
+      "version": "2025.1",
+      "revision": 0,
+      "bottle_rebuild": 0,
+      "pkg_version": "2025.1",
+      "declared_directly": true
+    },
+    {
+      "full_name": "libxau",
+      "version": "1.0.12",
+      "revision": 0,
+      "bottle_rebuild": 0,
+      "pkg_version": "1.0.12",
+      "declared_directly": false
+    },
+    {
+      "full_name": "libxdmcp",
+      "version": "1.1.5",
+      "revision": 0,
+      "bottle_rebuild": 0,
+      "pkg_version": "1.1.5",
+      "declared_directly": false
+    },
+    {
+      "full_name": "libxcb",
+      "version": "1.17.0",
+      "revision": 0,
+      "bottle_rebuild": 1,
+      "pkg_version": "1.17.0",
+      "declared_directly": false
+    },
+    {
+      "full_name": "libx11",
+      "version": "1.8.12",
+      "revision": 0,
+      "bottle_rebuild": 0,
+      "pkg_version": "1.8.12",
+      "declared_directly": true
+    }
+  ],
+  "source": {
+    "spec": "stable",
+    "versions": {
+      "stable": "1.3.6",
+      "head": null,
+      "version_scheme": 0,
+      "compatibility_version": null
+    },
+    "path": "/Users/alexm1/Library/Caches/Homebrew/api/formula.jws.json",
+    "tap_git_head": null,
+    "tap": "homebrew/core"
+  },
+  "arch": "arm64",
+  "built_on": {
+    "os": "Macintosh",
+    "os_version": "macOS 15",
+    "cpu_family": "dunno",
+    "xcode": "16.0",
+    "clt": "16.0.0.0.1.1724870825",
+    "preferred_perl": "5.34"
+  }
+}

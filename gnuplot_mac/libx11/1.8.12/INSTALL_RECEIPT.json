@@ -1,0 +1,88 @@
+{
+  "homebrew_version": "4.4.23-84-ga2d0aae",
+  "used_options": [],
+  "unused_options": [],
+  "built_as_bottle": true,
+  "poured_from_bottle": true,
+  "loaded_from_api": true,
+  "installed_as_dependency": true,
+  "installed_on_request": false,
+  "changed_files": [
+    "lib/pkgconfig/x11-xcb.pc",
+    "lib/pkgconfig/x11.pc",
+    "share/X11/locale/am_ET.UTF-8/Compose",
+    "share/X11/locale/cs_CZ.UTF-8/Compose",
+    "share/X11/locale/fi_FI.UTF-8/Compose",
+    "share/X11/locale/ja_JP.UTF-8/Compose",
+    "share/X11/locale/km_KH.UTF-8/Compose",
+    "share/X11/locale/ko_KR.UTF-8/Compose",
+    "share/X11/locale/pt_BR.UTF-8/Compose",
+    "share/X11/locale/pt_PT.UTF-8/Compose",
+    "share/X11/locale/ru_RU.UTF-8/Compose",
+    "share/X11/locale/sr_RS.UTF-8/Compose",
+    "share/X11/locale/th_TH.UTF-8/Compose",
+    "share/X11/locale/zh_CN.UTF-8/Compose",
+    "share/X11/locale/zh_HK.UTF-8/Compose",
+    "share/X11/locale/zh_TW.UTF-8/Compose",
+    "share/man/man5/Compose.5"
+  ],
+  "time": 1766916877,
+  "source_modified_time": 1741478004,
+  "compiler": "clang",
+  "aliases": [],
+  "runtime_dependencies": [
+    {
+      "full_name": "xorgproto",
+      "version": "2025.1",
+      "revision": 0,
+      "bottle_rebuild": 0,
+      "pkg_version": "2025.1",
+      "declared_directly": true
+    },
+    {
+      "full_name": "libxau",
+      "version": "1.0.12",
+      "revision": 0,
+      "bottle_rebuild": 0,
+      "pkg_version": "1.0.12",
+      "declared_directly": false
+    },
+    {
+      "full_name": "libxdmcp",
+      "version": "1.1.5",
+      "revision": 0,
+      "bottle_rebuild": 0,
+      "pkg_version": "1.1.5",
+      "declared_directly": false
+    },
+    {
+      "full_name": "libxcb",
+      "version": "1.17.0",
+      "revision": 0,
+      "bottle_rebuild": 1,
+      "pkg_version": "1.17.0",
+      "declared_directly": true
+    }
+  ],
+  "source": {
+    "spec": "stable",
+    "versions": {
+      "stable": "1.8.12",
+      "head": null,
+      "version_scheme": 0,
+      "compatibility_version": null
+    },
+    "path": "/Users/alexm1/Library/Caches/Homebrew/api/formula.jws.json",
+    "tap_git_head": null,
+    "tap": "homebrew/core"
+  },
+  "arch": "arm64",
+  "built_on": {
+    "os": "Macintosh",
+    "os_version": "macOS 15",
+    "cpu_family": "dunno",
+    "xcode": "16.2",
+    "clt": "16.2.0.0.1.1733547573",
+    "preferred_perl": "5.34"
+  }
+}

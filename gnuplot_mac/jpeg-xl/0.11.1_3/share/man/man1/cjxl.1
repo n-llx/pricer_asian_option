@@ -1,0 +1,214 @@
+'\" t
+.\"     Title: cjxl
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 11/26/2024
+.\"    Manual: \ \&
+.\"    Source: \ \&
+.\"  Language: English
+.\"
+.TH "CJXL" "1" "11/26/2024" "\ \&" "\ \&"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+cjxl \- compress images to JPEG XL
+.SH "SYNOPSIS"
+.sp
+\fBcjxl\fR [\fIoptions\fR\&...] \fIinput\fR [\fIoutput\&.jxl\fR]
+.SH "DESCRIPTION"
+.sp
+cjxl compresses an image or animation to the JPEG XL format\&. It is intended to spare users the trouble of determining a set of optimal parameters for each individual image\&. Instead, for a given target quality, it should provide consistent visual results across various kinds of images\&. The defaults have been chosen to be sensible, so that the following commands should give satisfactory results in most cases:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+cjxl input\&.png output\&.jxl
+cjxl input\&.jpg output\&.jxl
+cjxl input\&.gif output\&.jxl
+.fi
+.if n \{\
+.RE
+.\}
+.SH "OPTIONS"
+.PP
+\-h, \-\-help
+.RS 4
+Displays the options that
+cjxl
+supports\&. On its own, it will only show basic options\&. It can be combined with
+\-v
+or
+\-v \-v
+to show increasingly advanced options as well\&.
+.RE
+.PP
+\-v, \-\-verbose
+.RS 4
+Increases verbosity\&. Can be repeated to increase it further, and also applies to
+\-\-help\&.
+.RE
+.PP
+\-d \fIdistance\fR, \-\-distance=\fIdistance\fR
+.RS 4
+The preferred way to specify quality\&. It is specified in multiples of a just\-noticeable difference\&. That is,
+\-d 0
+is mathematically lossless,
+\-d 1
+should be visually lossless, and higher distances yield denser and denser files with lower and lower fidelity\&. Lossy sources such as JPEG and GIF files are compressed losslessly by default, and in the case of JPEG files specifically, the original JPEG can then be reconstructed bit\-for\-bit\&. For lossless sources,
+\-d 1
+is the default\&.
+.RE
+.PP
+\-q \fIquality\fR, \-\-quality=\fIquality\fR
+.RS 4
+Alternative way to indicate the desired quality\&. 100 is lossless and lower values yield smaller files\&. There is no lower bound to this quality parameter, but positive values should approximately match the quality setting of libjpeg\&.
+.RE
+.PP
+\-e \fIeffort\fR, \-\-effort=\fIeffort\fR
+.RS 4
+Controls the amount of effort that goes into producing an \(lqoptimal\(rq file in terms of quality/size\&. That is to say, all other parameters being equal, a higher effort should yield a file that is at least as dense and possibly denser, and with at least as high and possibly higher quality\&.
+.sp
+Recognized effort settings, from fastest to slowest, are:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+1 or \(lqlightning\(rq
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+2 or \(lqthunder\(rq
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+3 or \(lqfalcon\(rq
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+4 or \(lqcheetah\(rq
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+5 or \(lqhare\(rq
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+6 or \(lqwombat\(rq
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+7 or \(lqsquirrel\(rq (default)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+8 or \(lqkitten\(rq
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+9 or \(lqtortoise\(rq
+.RE
+.RE
+.SH "EXAMPLES"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+# Compress a PNG file to a high\-quality JPEG XL version\&.
+$ cjxl input\&.png output\&.jxl
+
+# Compress it at a slightly lower quality, appropriate for web use\&.
+$ cjxl \-d 2 input\&.png output\&.jxl
+
+# Compress it losslessly\&. These are equivalent\&.
+$ cjxl \-d 0   input\&.png lossless\&.jxl
+$ cjxl \-q 100 input\&.png lossless\&.jxl
+
+# Compress a JPEG file losslessly\&.
+$ cjxl input\&.jpeg lossless\-jpeg\&.jxl
+.fi
+.if n \{\
+.RE
+.\}
+.SH "SEE ALSO"
+.sp
+\fBdjxl\fR(1)

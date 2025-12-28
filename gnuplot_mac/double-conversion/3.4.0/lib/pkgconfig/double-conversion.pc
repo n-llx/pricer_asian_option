@@ -1,0 +1,9 @@
+prefix=/opt/homebrew/Cellar/double-conversion/3.4.0
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: double-conversion
+Description: Binary-decimal and decimal-binary routines for IEEE doubles
+Version: 3.4.0
+Libs: -L${libdir} -ldouble-conversion
+Cflags: -I${includedir}

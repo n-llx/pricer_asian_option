@@ -1,0 +1,87 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "spdxVersion": "SPDX-2.3",
+  "name": "SBOM-SPDX-libvmaf-3.0.0",
+  "creationInfo": {
+    "created": "2025-12-28T10:14:43Z",
+    "creators": [
+      "Tool: https://github.com/Homebrew/brew@5.0.7"
+    ]
+  },
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://formulae.brew.sh/spdx/libvmaf-3.0.0.json",
+  "documentDescribes": [
+    "SPDXRef-Archive-libvmaf-src",
+    "SPDXRef-Compiler",
+    "SPDXRef-Bottle-libvmaf"
+  ],
+  "files": [],
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Archive-libvmaf-src",
+      "name": "libvmaf",
+      "versionInfo": "3.0.0",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2023-12-07 19:27:32 UTC",
+      "licenseConcluded": "BSD-2-Clause-Patent",
+      "downloadLocation": "https://github.com/Netflix/vmaf/archive/refs/tags/v3.0.0.tar.gz",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "7178c4833639e6b989ecae73131d02f70735fdb3fc2c7d84bc36c9c3461d93b1"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Compiler",
+      "name": "clang",
+      "versionInfo": "16.2",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "checksums": [],
+      "externalRefs": []
+    },
+    {
+      "SPDXID": "SPDXRef-Bottle-libvmaf",
+      "name": "libvmaf",
+      "versionInfo": "3.0.0",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2023-12-07 19:27:32 UTC",
+      "licenseConcluded": "BSD-2-Clause-Patent",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/libvmaf/blobs/sha256:0809635a529d0e53e927cb9834225210096c625b10ab7eb1211cadf63a1016c5",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/homebrew/core/libvmaf@3.0.0",
+          "referenceType": "purl"
+        }
+      ],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "0809635a529d0e53e927cb9834225210096c625b10ab7eb1211cadf63a1016c5"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-File-libvmaf",
+      "relationshipType": "PACKAGE_OF",
+      "relatedSpdxElement": "SPDXRef-Archive-libvmaf-src"
+    },
+    {
+      "spdxElementId": "SPDXRef-Compiler",
+      "relationshipType": "BUILD_TOOL_OF",
+      "relatedSpdxElement": "SPDXRef-Package-libvmaf-src"
+    }
+  ]
+}

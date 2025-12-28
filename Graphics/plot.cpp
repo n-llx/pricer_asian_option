@@ -11,8 +11,6 @@
 #endif
 
 
-// Note: only `plot_surface` is exported/used. Keep implementation minimal.
-
 void plot_surface(int grid_size,
                   const std::vector<std::vector<double>> &results,
                   double S0_start, double s_step,

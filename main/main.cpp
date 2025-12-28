@@ -92,7 +92,7 @@ int main()
     {
         for (int j = 0; j <= grid_size; ++j)
         {
-            // Calcul du Delta
+            // Calcul du Delta par méthode des différences finies
             call_delta_call_results[i][j] = calculate_delta(call_results, i, j, s_step);
         }
     }
@@ -101,7 +101,7 @@ int main()
     {
         for (int j = 0; j <= grid_size; ++j)
         {
-            // Calcul du Vega
+            // Calcul du Vega par méthode des différences finies
             call_vega_call_results[i][j] = calculate_vega(call_results, i, j, s_step);
         }
     }

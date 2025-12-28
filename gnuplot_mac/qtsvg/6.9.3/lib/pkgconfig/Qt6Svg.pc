@@ -1,0 +1,13 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 Svg
+Description: Qt Svg module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtSvg
+Cflags: -I${libdir}/QtSvg.framework/Headers -I${libdir}/QtSvg.framework -DQT_SVG_LIB
+Requires: Qt6Core Qt6Gui

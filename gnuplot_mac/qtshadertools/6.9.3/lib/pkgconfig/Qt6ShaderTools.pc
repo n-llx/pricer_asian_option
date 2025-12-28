@@ -1,0 +1,13 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 ShaderTools
+Description: Qt ShaderTools module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtShaderTools
+Cflags: -I${libdir}/QtShaderTools.framework/Headers -I${libdir}/QtShaderTools.framework -DQT_SHADERTOOLS_LIB
+Requires: Qt6Core Qt6Gui

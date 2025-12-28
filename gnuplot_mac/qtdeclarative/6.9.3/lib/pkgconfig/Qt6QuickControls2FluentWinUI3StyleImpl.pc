@@ -1,0 +1,12 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 QuickControls2FluentWinUI3StyleImpl
+Description: Qt QuickControls2FluentWinUI3StyleImpl module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtQuickControls2FluentWinUI3StyleImpl
+Cflags: -I${libdir}/QtQuickControls2FluentWinUI3StyleImpl.framework/Headers -I${libdir}/QtQuickControls2FluentWinUI3StyleImpl.framework -DQT_QUICKCONTROLS2FLUENTWINUI3STYLEIMPL_LIB

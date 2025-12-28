@@ -1,0 +1,13 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 Widgets
+Description: Qt Widgets module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtWidgets
+Cflags: -F${libdir} -I${libdir}/QtWidgets.framework/Headers -I${libdir}/QtWidgets.framework -DQT_WIDGETS_LIB
+Requires: Qt6Core Qt6Gui

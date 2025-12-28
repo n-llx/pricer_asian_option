@@ -1,0 +1,7 @@
+prefix=/opt/homebrew/Cellar/xorgproto/2025.1
+includedir=${prefix}/include
+
+Name: ScrnSaverProto
+Description: ScrnSaver extension headers
+Version: 1.2.3
+Cflags: -I${includedir}

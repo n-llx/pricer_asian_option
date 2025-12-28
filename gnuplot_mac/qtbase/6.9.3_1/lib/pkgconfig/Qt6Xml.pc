@@ -1,0 +1,13 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 Xml
+Description: Qt Xml module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtXml
+Cflags: -F${libdir} -I${libdir}/QtXml.framework/Headers -I${libdir}/QtXml.framework -DQT_XML_LIB
+Requires: Qt6Core

@@ -1,0 +1,12 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 QuickControls2IOSStyleImpl
+Description: Qt QuickControls2IOSStyleImpl module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtQuickControls2IOSStyleImpl
+Cflags: -I${libdir}/QtQuickControls2IOSStyleImpl.framework/Headers -I${libdir}/QtQuickControls2IOSStyleImpl.framework -DQT_QUICKCONTROLS2IOSSTYLEIMPL_LIB

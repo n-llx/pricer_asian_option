@@ -1,0 +1,12 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 QuickControls2Imagine
+Description: Qt QuickControls2Imagine module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtQuickControls2Imagine
+Cflags: -I${libdir}/QtQuickControls2Imagine.framework/Headers -I${libdir}/QtQuickControls2Imagine.framework -DQT_QUICKCONTROLS2IMAGINE_LIB

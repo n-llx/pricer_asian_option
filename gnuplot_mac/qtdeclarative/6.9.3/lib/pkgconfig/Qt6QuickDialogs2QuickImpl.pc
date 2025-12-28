@@ -1,0 +1,13 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 QuickDialogs2QuickImpl
+Description: Qt QuickDialogs2QuickImpl module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtQuickDialogs2QuickImpl
+Cflags: -I${libdir}/QtQuickDialogs2QuickImpl.framework/Headers -I${libdir}/QtQuickDialogs2QuickImpl.framework -DQT_QUICKDIALOGS2QUICKIMPL_LIB
+Requires: Qt6Core Qt6Gui Qt6Quick

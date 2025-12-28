@@ -1,0 +1,11 @@
+QT.quickcontrols2fusionstyleimpl_private.VERSION = 6.9.3
+QT.quickcontrols2fusionstyleimpl_private.name = QtQuickControls2FusionStyleImpl
+QT.quickcontrols2fusionstyleimpl_private.module =
+QT.quickcontrols2fusionstyleimpl_private.libs = $$QT_MODULE_LIB_BASE
+QT.quickcontrols2fusionstyleimpl_private.includes = $$QT_MODULE_LIB_BASE/QtQuickControls2FusionStyleImpl.framework/Versions/A/Headers/6.9.3 $$QT_MODULE_LIB_BASE/QtQuickControls2FusionStyleImpl.framework/Versions/A/Headers/6.9.3/QtQuickControls2FusionStyleImpl
+QT.quickcontrols2fusionstyleimpl_private.frameworks = 
+QT.quickcontrols2fusionstyleimpl_private.depends = quickcontrols2fusionstyleimpl
+QT.quickcontrols2fusionstyleimpl_private.uses = 
+QT.quickcontrols2fusionstyleimpl_private.module_config = v2 lib_bundle internal_module
+QT.quickcontrols2fusionstyleimpl_private.enabled_features = 
+QT.quickcontrols2fusionstyleimpl_private.disabled_features = 

@@ -1,0 +1,7 @@
+prefix=/opt/homebrew/Cellar/xorgproto/2025.1
+includedir=${prefix}/include
+
+Name: DPMSProto
+Description: DPMS extension headers
+Version: 1.2
+Cflags: -I${includedir}

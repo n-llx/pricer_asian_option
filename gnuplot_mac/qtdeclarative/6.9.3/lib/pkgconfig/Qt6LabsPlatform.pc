@@ -1,0 +1,12 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 LabsPlatform
+Description: Qt LabsPlatform module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtLabsPlatform
+Cflags: -I${libdir}/QtLabsPlatform.framework/Headers -I${libdir}/QtLabsPlatform.framework -DQT_LABSPLATFORM_LIB

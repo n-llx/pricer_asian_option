@@ -1,0 +1,13 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 QmlCore
+Description: Qt QmlCore module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtQmlCore
+Cflags: -I${libdir}/QtQmlCore.framework/Headers -I${libdir}/QtQmlCore.framework -DQT_QMLCORE_LIB
+Requires: Qt6Core Qt6Qml

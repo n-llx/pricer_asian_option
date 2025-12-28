@@ -1,0 +1,13 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 Quick
+Description: Qt Quick module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtQuick
+Cflags: -I${libdir}/QtQuick.framework/Headers -I${libdir}/QtQuick.framework -DQT_QUICK_LIB
+Requires: Qt6QmlMeta Qt6QmlModels Qt6OpenGL Qt6Core Qt6Gui Qt6Qml

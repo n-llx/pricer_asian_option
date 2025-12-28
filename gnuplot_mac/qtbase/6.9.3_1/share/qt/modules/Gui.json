@@ -1,0 +1,26 @@
+{
+    "schema_version": 2,
+    "name": "Gui",
+    "repository": "qtbase",
+    "version": "6.9.3",
+    "plugin_types": ["accessiblebridge", "platforms", "platforms/darwin", "xcbglintegrations", "platformthemes", "platforminputcontexts", "generic", "iconengines", "imageformats", "egldeviceintegrations"],
+    "bundle_type": "framework",
+    "qpa": {
+        "platforms": ["cocoa"],
+        "default_platform": "cocoa"
+    },
+    "platforms": [
+        {
+            "name": "Darwin",
+            "version": "24.4.0",
+            "compiler_id": "AppleClang",
+            "compiler_version": "17.0.0.17000013",
+            "targets": [
+                {
+                    "architecture": "arm64",
+                    "abi": "arm64-little_endian-lp64"
+                }
+            ]
+        }
+    ]
+}

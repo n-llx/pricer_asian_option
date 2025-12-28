@@ -1,0 +1,12 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 QuickControls2UniversalStyleImpl
+Description: Qt QuickControls2UniversalStyleImpl module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtQuickControls2UniversalStyleImpl
+Cflags: -I${libdir}/QtQuickControls2UniversalStyleImpl.framework/Headers -I${libdir}/QtQuickControls2UniversalStyleImpl.framework -DQT_QUICKCONTROLS2UNIVERSALSTYLEIMPL_LIB

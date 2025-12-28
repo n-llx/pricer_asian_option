@@ -1,0 +1,13 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 QmlAssetDownloader
+Description: Qt QmlAssetDownloader module
+Version: 6.9.3
+Libs: -L${libdir} -lQt6QmlAssetDownloader
+Cflags: -I${includedir}/QtQmlAssetDownloader -I${includedir} -DQT_QMLASSETDOWNLOADER_LIB
+Requires: Qt6Qml

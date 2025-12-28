@@ -1,0 +1,146 @@
+[
+    {
+        "classes": [
+            {
+                "classInfos": [
+                    {
+                        "name": "QML.Element",
+                        "value": "CursorFlashTimer"
+                    }
+                ],
+                "className": "QQuickIOSCursorFlashTimer",
+                "lineNumber": 23,
+                "object": true,
+                "properties": [
+                    {
+                        "constant": false,
+                        "designable": true,
+                        "final": true,
+                        "index": 0,
+                        "name": "visible",
+                        "notify": "visibleChanged",
+                        "read": "visible",
+                        "required": false,
+                        "scriptable": true,
+                        "stored": true,
+                        "type": "bool",
+                        "user": false,
+                        "write": "setVisible"
+                    },
+                    {
+                        "constant": false,
+                        "designable": true,
+                        "final": true,
+                        "index": 1,
+                        "name": "cursorPosition",
+                        "notify": "cursorPositionChanged",
+                        "read": "cursorPosition",
+                        "required": false,
+                        "scriptable": true,
+                        "stored": true,
+                        "type": "int",
+                        "user": false,
+                        "write": "setCursorPosition"
+                    },
+                    {
+                        "constant": false,
+                        "designable": true,
+                        "final": true,
+                        "index": 2,
+                        "name": "running",
+                        "notify": "runningChanged",
+                        "read": "running",
+                        "required": false,
+                        "scriptable": true,
+                        "stored": true,
+                        "type": "bool",
+                        "user": false,
+                        "write": "setRunning"
+                    }
+                ],
+                "qualifiedClassName": "QQuickIOSCursorFlashTimer",
+                "signals": [
+                    {
+                        "access": "public",
+                        "index": 0,
+                        "name": "visibleChanged",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "index": 1,
+                        "name": "cursorPositionChanged",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "running",
+                                "type": "bool"
+                            }
+                        ],
+                        "index": 2,
+                        "name": "runningChanged",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qquickioscursorflashtimer_p.h",
+        "outputRevision": 69
+    },
+    {
+        "classes": [
+            {
+                "classInfos": [
+                    {
+                        "name": "QML.Element",
+                        "value": "IOS"
+                    },
+                    {
+                        "name": "QML.Singleton",
+                        "value": "true"
+                    },
+                    {
+                        "name": "QML.AddedInVersion",
+                        "value": "1541"
+                    }
+                ],
+                "className": "QQuickIOSStyle",
+                "lineNumber": 23,
+                "object": true,
+                "properties": [
+                    {
+                        "constant": true,
+                        "designable": true,
+                        "final": true,
+                        "index": 0,
+                        "name": "url",
+                        "read": "url",
+                        "required": false,
+                        "scriptable": true,
+                        "stored": true,
+                        "type": "QUrl",
+                        "user": false
+                    }
+                ],
+                "qualifiedClassName": "QQuickIOSStyle",
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qquickiosstyle_p.h",
+        "outputRevision": 69
+    }
+]

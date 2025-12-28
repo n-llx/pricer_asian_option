@@ -1,0 +1,13 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 QmlCompiler
+Description: Qt QmlCompiler module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtQmlCompiler
+Cflags: -I${libdir}/QtQmlCompiler.framework/Headers -I${libdir}/QtQmlCompiler.framework -DQT_QMLCOMPILER_LIB
+Requires: Qt6Core Qt6Qml

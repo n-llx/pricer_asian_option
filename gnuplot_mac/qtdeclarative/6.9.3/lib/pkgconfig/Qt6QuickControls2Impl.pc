@@ -1,0 +1,13 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 QuickControls2Impl
+Description: Qt QuickControls2Impl module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtQuickControls2Impl
+Cflags: -I${libdir}/QtQuickControls2Impl.framework/Headers -I${libdir}/QtQuickControls2Impl.framework -DQT_QUICKCONTROLS2IMPL_LIB
+Requires: Qt6Core Qt6Gui Qt6Quick

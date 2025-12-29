@@ -27,11 +27,11 @@ int main()
 
     cout << "||--- Pricer Option Asiatique (Monte Carlo) ---||" << endl;
     cout << "Mode manuel :" << endl;
-    cout << "Entrez S0 (entre 50 et 150) : ";
+    cout << "Entrez S0: ";
     cin >> S0_input;
-    cout << "Entrez r (taux) : ";
+    cout << "Entrez r (taux sans risque) : ";
     cin >> r;
-    cout << "Entrez sigma (entre 0.05 et 0.5) : ";
+    cout << "Entrez sigma (volatilité entre 0 & 1): ";
     cin >> sigma_input;
     cout << "Entrez T (maturite) : ";
     cin >> T;
@@ -125,7 +125,7 @@ int main()
 
     while (true)
     {
-        cout << "\n Choisissez le Greeks à calculer : [1] Delta, [2] Vega, [3] Gamma, [4] Rho, [5] Theta  : ";
+        cout << "\n Choisissez le Greeks a calculer : [1] Delta, [2] Vega, [3] Gamma, [4] Rho, [5] Theta  : ";
         int greek_choice;
         cin >> greek_choice;
 
@@ -240,7 +240,7 @@ int main()
 
         if (greek_choice == 4 && option_type == 1)
         {
-
+            int completed = 0;
             vector<vector<double>> call_rho_call_results(grid_size + 1, vector<double>(grid_size + 1));
             vector<vector<double>> call_results_r_plus(grid_size + 1, vector<double>(grid_size + 1));
             double r_step = 1e-2 * r;
@@ -251,6 +251,25 @@ int main()
                     double current_sigma_r = sigma_start + i * vol_step;
                     double current_S0_r = S0_start + j * s_step;
                     call_results_r_plus[i][j] = monte_carlo(N, current_S0_r, r + r_step, current_sigma_r, T, steps, &payoff_as_call, K, 42);
+                    completed++;
+                    if (completed % 10 == 0 || completed == total_points)
+                    {
+                        float progress = (float)completed / total_points;
+                        int barWidth = 40;
+                        int pos = barWidth * progress;
+                        cout << "\rProgression : [";
+                        for (int k = 0; k < barWidth; ++k)
+                        {
+                            if (k < pos)
+                                cout << "=";
+                            else if (k == pos)
+                                cout << ">";
+                            else
+                                cout << " ";
+                        }
+                        cout << "] " << int(progress * 100.0) << "% " << flush;
+                    }
+
                 }
             }
 
@@ -259,6 +278,7 @@ int main()
                 for (int j = 0; j <= grid_size; ++j)
                 {
                     call_rho_call_results[i][j] = calculate_rho(call_results, call_results_r_plus, i, j, r_step);
+
                 }
             }
             cout << "\n\nRho calcule :" << call_rho_call_results[grid_size * (1 - ((sigma_end - sigma_input) / (sigma_end - sigma_start)))][grid_size * (1 - ((S0_end - S0_input) / (S0_end - S0_start)))] << endl;
@@ -268,7 +288,7 @@ int main()
 
         if (greek_choice == 4 && option_type == 2)
         {
-
+            int completed = 0;
             vector<vector<double>> call_rho_put_results(grid_size + 1, vector<double>(grid_size + 1));
             vector<vector<double>> put_results_r_plus(grid_size + 1, vector<double>(grid_size + 1));
 
@@ -280,6 +300,24 @@ int main()
                     double current_sigma_r = sigma_start + i * vol_step;
                     double current_S0_r = S0_start + j * s_step;
                     put_results_r_plus[i][j] = monte_carlo(N, current_S0_r, r + r_step, current_sigma_r, T, steps, &payoff_as_put, K, 42);
+                    completed++;
+                    if (completed % 10 == 0 || completed == total_points)
+                    {
+                        float progress = (float)completed / total_points;
+                        int barWidth = 40;
+                        int pos = barWidth * progress;
+                        cout << "\rProgression : [";
+                        for (int k = 0; k < barWidth; ++k)
+                        {
+                            if (k < pos)
+                                cout << "=";
+                            else if (k == pos)
+                                cout << ">";
+                            else
+                                cout << " ";
+                        }
+                        cout << "] " << int(progress * 100.0) << "% " << flush;
+                    }
                 }
             }
 
@@ -297,7 +335,7 @@ int main()
 
         if (greek_choice == 5 && option_type == 1)
         {
-
+            int completed = 0;
             vector<vector<double>> call_theta_call_results(grid_size + 1, vector<double>(grid_size + 1));
             vector<vector<double>> call_results_t_minus(grid_size + 1, vector<double>(grid_size + 1));
             double t_step = 1e-4 * T;
@@ -308,6 +346,24 @@ int main()
                     double current_sigma_t = sigma_start + i * vol_step;
                     double current_S0_t = S0_start + j * s_step;
                     call_results_t_minus[i][j] = monte_carlo(N, current_S0_t, r, current_sigma_t, T - t_step, steps, &payoff_as_call, K, 42);
+                    completed++;
+                    if (completed % 10 == 0 || completed == total_points)
+                    {
+                        float progress = (float)completed / total_points;
+                        int barWidth = 40;
+                        int pos = barWidth * progress;
+                        cout << "\rProgression : [";
+                        for (int k = 0; k < barWidth; ++k)
+                        {
+                            if (k < pos)
+                                cout << "=";
+                            else if (k == pos)
+                                cout << ">";
+                            else
+                                cout << " ";
+                        }
+                        cout << "] " << int(progress * 100.0) << "% " << flush;
+                    }
                 }
             }
 
@@ -325,7 +381,7 @@ int main()
 
         if (greek_choice == 5 && option_type == 2)
         {
-
+            int completed = 0;
             vector<vector<double>> call_theta_put_results(grid_size + 1, vector<double>(grid_size + 1));
             vector<vector<double>> put_results_t_minus(grid_size + 1, vector<double>(grid_size + 1));
             double t_step = 1e-4 * T;
@@ -336,6 +392,24 @@ int main()
                     double current_sigma_t = sigma_start + i * vol_step;
                     double current_S0_t = S0_start + j * s_step;
                     put_results_t_minus[i][j] = monte_carlo(N, current_S0_t, r, current_sigma_t, T - t_step, steps, &payoff_as_put, K, 42);
+                    completed++;
+                    if (completed % 10 == 0 || completed == total_points)
+                    {
+                        float progress = (float)completed / total_points;
+                        int barWidth = 40;
+                        int pos = barWidth * progress;
+                        cout << "\rProgression : [";
+                        for (int k = 0; k < barWidth; ++k)
+                        {
+                            if (k < pos)
+                                cout << "=";
+                            else if (k == pos)
+                                cout << ">";
+                            else
+                                cout << " ";
+                        }
+                        cout << "] " << int(progress * 100.0) << "% " << flush;
+                    }
                 }
             }
 

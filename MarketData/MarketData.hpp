@@ -18,7 +18,7 @@ struct StockData {
     bool success = false;
 };
 
-std::string windowsHttpsGet(const std::string& url) {
+inline std::string windowsHttpsGet(const std::string& url) {
     std::string response;
     HINTERNET hSession = InternetOpenA("PricerAgent", INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0);
     if (hSession) {
@@ -36,7 +36,7 @@ std::string windowsHttpsGet(const std::string& url) {
     return response;
 }
 
-StockData fetchMarketData(std::string ticker) {
+inline StockData fetchMarketData(std::string ticker) {
     StockData data;
     // Request 1 month of daily data to calculate volatility
     std::string url = "https://query1.finance.yahoo.com/v8/finance/chart/" + ticker + "?interval=1d&range=1mo";

@@ -74,7 +74,7 @@ StockData fetchMarketData(std::string ticker) {
             data.success = true;
             
             std::cout << "[DATA] " << ticker << " | Price: " << data.price 
-                      << " | Vol (Ann): " << (data.volatility * 100) << "%" << std::endl;
+                      << " | Vol hist (Ann): " << (data.volatility * 100) << "%" << std::endl;
         }
     } catch (...) {
         std::cerr << "[ERROR] Volatility calculation failed." << std::endl;

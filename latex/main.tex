@@ -1,0 +1,174 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+
+% Colors
+\definecolor{primaryColor}{RGB}{0, 51, 102} % Dark Blue
+\definecolor{secondaryColor}{RGB}{0, 102, 204} % Lighter Blue
+\definecolor{accentColor}{RGB}{204, 0, 0} % Red accent
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryColor,
+    filecolor=magenta,      
+    urlcolor=secondaryColor,
+}
+
+% Header and Footer
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textcolor{primaryColor}{Pricer Asian Option}}
+\lhead{\textcolor{primaryColor}{C++ Project}}
+\cfoot{\thepage}
+
+% Title Format
+\titleformat{\section}
+{\color{primaryColor}\normalfont\Large\bfseries}
+{\color{primaryColor}\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\color{secondaryColor}\normalfont\large\bfseries}
+{\color{secondaryColor}\thesubsection}{1em}{}
+
+\begin{document}
+
+% --- Cover Page ---
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture, overlay]
+        % Background shading
+        \fill[left color=primaryColor, right color=secondaryColor!80] (current page.north west) rectangle ([yshift=-5cm]current page.north east);
+        
+        % Decorative line
+        \draw[accentColor, line width=2pt] ([yshift=-5cm]current page.north west) -- ([yshift=-5cm]current page.north east);
+    \end{tikzpicture}
+    
+    \vspace{3cm}
+    \centering
+    
+    {\color{white} \Huge \textbf{Pricer Asian Option} \par}
+    \vspace{0.5cm}
+    {\color{white} \Large \textit{C++ Project Report} \par}
+    
+    \vspace{6cm}
+    
+    {\Large \textbf{Course:} C++ Project \par}
+    \vspace{0.5cm}
+    {\Large \textbf{Professor:} Miss DUMITRESCU \par}
+    
+    \vfill
+    
+    {\large \today \par}
+    
+\end{titlepage}
+
+% --- Table of Contents ---
+\tableofcontents
+\newpage
+
+% --- Section 1: Description, Usage, and Structure ---
+\section{Description, Usage, and Structure}
+
+\subsection{Project Description}
+This project implements a robust \textbf{C++ pricer for path-dependent Asian options} using \textbf{Monte Carlo simulations}. It calculates the price of Asian Call and Put options based on the arithmetic average of the underlying asset's price path, modeled via Geometric Brownian Motion.
+
+Key features include:
+\begin{itemize}
+    \item \textbf{Pricing}: Valuation of Asian Call and Put options.
+    \item \textbf{Greeks Calculation}: Computation of sensitivities like Delta and Vega.
+    \item \textbf{Visualization}: Integrated plotting of price surfaces and sensitivities using \texttt{Gnuplot}.
+    \item \textbf{Performance}: Efficient simulation using the C++ standard library's random number generation and vector arithmetic.
+\end{itemize}
+
+\subsection{Usage Instructions}
+The project is designed to be easily executed on Windows environments without complex local dependencies (other than the included MinGW compiler and Gnuplot).
+
+\begin{enumerate}
+    \item \textbf{Locate the Script}: Find `run\_project.bat` in the root directory.
+    \item \textbf{Execute}: Double-click the batch file or run it from the command line:
+    \begin{lstlisting}[language=bash, frame=single, backgroundcolor=\color{gray!10}]
+    > run_project.bat
+    \end{lstlisting}
+    \item \textbf{Workflow}:
+    \begin{itemize}
+        \item The script automatically checks for the compiler and sources.
+        \item It compiles the project using `g++` with static linking to ensure portability.
+        \item Upon successful compilation, it launches `pricer.exe`.
+    \end{itemize}
+    \item \textbf{Interaction}: Follow the on-screen prompts to input parameters (Spot price, Strike, Rates, Volatility, Maturity, etc.).
+\end{enumerate}
+
+\subsection{Project Structure}
+The codebase is organized into logical modules to separate concerns:
+
+\begin{description}
+    \item[\texttt{Math/}] Contains the core mathematical models.
+    \begin{itemize}
+        \item \texttt{StochasticModel.hpp/cpp}: Implements the Geometric Brownian Motion path generation and the Monte Carlo engine.
+        \item \texttt{Greeks.hpp/cpp}: Functions to calculate Delta and Vega.
+    \end{itemize}
+    
+    \item[\texttt{Instruments/}] Defines the financial instruments.
+    \begin{itemize}
+        \item \texttt{Payoff.hpp/cpp}: Payoff functions for Asian Call/Put (and European variants).
+    \end{itemize}
+    
+    \item[\texttt{Graphics/}] Handles visualization.
+    \begin{itemize}
+        \item \texttt{plot.hpp/cpp}: Interface to Gnuplot to render 3D surfaces and dashboards.
+        \item \texttt{gnuplot/}: Contains the local Gnuplot binary.
+    \end{itemize}
+    
+    \item[\texttt{main/}] Application entry point.
+    \begin{itemize}
+        \item \texttt{main.cpp}: Drives the user interface, coordinates the simulation, and calls the plotting functions.
+    \end{itemize}
+\end{description}
+
+% --- Section 2: Problems Encountered ---
+\section{Review of Problems Encountered}
+\textit{(This section describes the challenges faced during development.)}
+
+\begin{itemize}
+    \item \textbf{Compilation issues}: Configuring the build system to work portably across different Windows machines was challenging. This was resolved by including a local MinGW distribution and using a batch script for automatic path configuration.
+    \item \textbf{Gnuplot Integration}: Piping data correctly to Gnuplot for 3D surface rendering required careful formatting of the data streams.
+\end{itemize}
+
+% --- Section 3: General Architecture ---
+% --- Section 3: General Architecture ---
+\section{General Architecture}
+\textit{(This section details the software design decisions and technical justifications.)}
+
+The architecture of this project was driven by three primary goals: \textbf{performance}, \textbf{portability}, and \textbf{simplicity}. We wanted a codebase that is straightforward to compile on any Windows machine while being efficient enough to run heavy Monte Carlo simulations.
+
+\subsection{Global Architecture \& Portability}
+The project relies on a modular structure with clear separation of concerns: the \textbf{Math} module handles the stochastic calculus, \textbf{Instruments} defines the financial contracts, and \textbf{Graphics} manages visualization. 
+
+A key challenge in C++ development is distributing executables that run on any machine. To solve this, we used \textbf{MinGW64} with static linking flags (\texttt{-static}). This ensures that all necessary C++ runtime libraries are bundled directly into the executable, preventing the common "DLL missing" errors that often plague academic projects when moved between computers.
+
+\subsection{Mathematical Engine: Precision \& Performance}
+At the heart of the pricer lies the Monte Carlo engine. Financial simulations require generating billions of random numbers, and the quality of these numbers directly impacts the pricing accuracy. We explicitly rejected the standard C \texttt{rand()} function because of its known statistical flaws and short period. Instead, we implemented the \textbf{Mersenne Twister 19937 engine} (\texttt{std::mt19937}), which provides the high-quality randomness essential for robust financial modeling.
+
+Performance was also a critical consideration. In our implementation of \texttt{StochasticModel.cpp}, we pay close attention to memory management. Specifically, we allocate the path vector \textit{outside} the main simulation loop and pass it by reference. This avoids the distinct overhead of allocating and deallocating memory millions of times, which would otherwise significantly slow down the pricing process.
+
+\subsection{Financial Instruments: Function Pointers vs OOP}
+When designing the financial instruments, we had to choose between a classic Object-Oriented approach (with inheritance and polymorphism) and a more functional C-style approach.
+
+We opted for \textbf{Function Pointers}. While polymorphism is a powerful tool, virtual function calls incur a small CPU cost due to vtable lookups. In a tight loop running millions of iterations, these small costs accumulate. By using function pointers for our payoffs, we achieve a direct and faster execution path. This also keeps our code structure simpler and lighter compared to a deep class hierarchy.
+
+\subsection{Visualization: Lightweight Inter-Process Communication}
+Finally, for visualization, we wanted to avoid the complexity of linking heavy GUI libraries like Qt, which can be difficult to configure. Instead, we used a lightweight inter-process communication strategy: \textbf{Piping}.
+
+Our program spawns a \texttt{Gnuplot} subprocess and sends commands via standard input. To optimize performance, we use Gnuplot's "Data Blocks" feature. We transmit the simulation data only once, store it in memory within Gnuplot, and then issue multiple commands to render different views. This approach gives us powerful 3D visualization capabilities with minimal code and zero external library dependencies.
+
+\end{document}

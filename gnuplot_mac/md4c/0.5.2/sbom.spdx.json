@@ -1,0 +1,87 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "spdxVersion": "SPDX-2.3",
+  "name": "SBOM-SPDX-md4c-0.5.2",
+  "creationInfo": {
+    "created": "2025-12-28T10:14:49Z",
+    "creators": [
+      "Tool: https://github.com/Homebrew/brew@5.0.7"
+    ]
+  },
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://formulae.brew.sh/spdx/md4c-0.5.2.json",
+  "documentDescribes": [
+    "SPDXRef-Archive-md4c-src",
+    "SPDXRef-Compiler",
+    "SPDXRef-Bottle-md4c"
+  ],
+  "files": [],
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Archive-md4c-src",
+      "name": "md4c",
+      "versionInfo": "0.5.2",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2024-01-30 08:01:36 UTC",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://github.com/mity/md4c/archive/refs/tags/release-0.5.2.tar.gz",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "55d0111d48fb11883aaee91465e642b8b640775a4d6993c2d0e7a8092758ef21"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Compiler",
+      "name": "clang",
+      "versionInfo": "16.2",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "checksums": [],
+      "externalRefs": []
+    },
+    {
+      "SPDXID": "SPDXRef-Bottle-md4c",
+      "name": "md4c",
+      "versionInfo": "0.5.2",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2024-01-30 08:01:36 UTC",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/md4c/blobs/sha256:528d191cb50a6f5901faf2bf989374657792410929d5ac78b1515f412e07ab58",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/homebrew/core/md4c@0.5.2",
+          "referenceType": "purl"
+        }
+      ],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "528d191cb50a6f5901faf2bf989374657792410929d5ac78b1515f412e07ab58"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-File-md4c",
+      "relationshipType": "PACKAGE_OF",
+      "relatedSpdxElement": "SPDXRef-Archive-md4c-src"
+    },
+    {
+      "spdxElementId": "SPDXRef-Compiler",
+      "relationshipType": "BUILD_TOOL_OF",
+      "relatedSpdxElement": "SPDXRef-Package-md4c-src"
+    }
+  ]
+}

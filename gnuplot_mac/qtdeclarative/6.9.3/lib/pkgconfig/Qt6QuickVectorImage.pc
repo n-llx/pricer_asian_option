@@ -1,0 +1,12 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 QuickVectorImage
+Description: Qt QuickVectorImage module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtQuickVectorImage
+Cflags: -I${libdir}/QtQuickVectorImage.framework/Headers -I${libdir}/QtQuickVectorImage.framework -DQT_QUICKVECTORIMAGE_LIB

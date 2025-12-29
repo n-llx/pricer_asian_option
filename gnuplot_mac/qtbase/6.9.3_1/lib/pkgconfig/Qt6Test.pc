@@ -1,0 +1,13 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 Test
+Description: Qt Test module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtTest
+Cflags: -F${libdir} -I${libdir}/QtTest.framework/Headers -I${libdir}/QtTest.framework -DQT_TESTLIB_LIB
+Requires: Qt6Core

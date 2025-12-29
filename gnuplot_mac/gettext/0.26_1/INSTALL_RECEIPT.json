@@ -1,0 +1,57 @@
+{
+  "homebrew_version": "4.6.20-7-g490e51d",
+  "used_options": [],
+  "unused_options": [],
+  "built_as_bottle": true,
+  "poured_from_bottle": true,
+  "loaded_from_api": true,
+  "installed_as_dependency": true,
+  "installed_on_request": false,
+  "changed_files": [
+    "bin/autopoint",
+    "bin/gettextize",
+    "libexec/gettext/user-email",
+    "share/doc/gettext/examples/README",
+    "share/doc/gettext/examples/installpaths",
+    "share/gettext/po/Makefile.in.in",
+    "share/man/man1/gettext.1",
+    "share/man/man1/ngettext.1",
+    "share/man/man1/printf_gettext.1",
+    "share/man/man1/printf_ngettext.1"
+  ],
+  "time": 1766916868,
+  "source_modified_time": 1752955463,
+  "compiler": "clang",
+  "aliases": [],
+  "runtime_dependencies": [
+    {
+      "full_name": "libunistring",
+      "version": "1.4.1",
+      "revision": 0,
+      "bottle_rebuild": 0,
+      "pkg_version": "1.4.1",
+      "declared_directly": true
+    }
+  ],
+  "source": {
+    "spec": "stable",
+    "versions": {
+      "stable": "0.26",
+      "head": null,
+      "version_scheme": 0,
+      "compatibility_version": null
+    },
+    "path": "/Users/alexm1/Library/Caches/Homebrew/api/formula.jws.json",
+    "tap_git_head": null,
+    "tap": "homebrew/core"
+  },
+  "arch": "arm64",
+  "built_on": {
+    "os": "Macintosh",
+    "os_version": "macOS 15.4",
+    "cpu_family": "dunno",
+    "xcode": "16.3",
+    "clt": "16.3.0.0.1.1742442376",
+    "preferred_perl": "5.34"
+  }
+}

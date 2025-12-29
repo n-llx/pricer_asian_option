@@ -1,0 +1,11 @@
+QT.qmlnetwork_private.VERSION = 6.9.3
+QT.qmlnetwork_private.name = QtQmlNetwork
+QT.qmlnetwork_private.module =
+QT.qmlnetwork_private.libs = $$QT_MODULE_LIB_BASE
+QT.qmlnetwork_private.includes = $$QT_MODULE_LIB_BASE/QtQmlNetwork.framework/Versions/A/Headers/6.9.3 $$QT_MODULE_LIB_BASE/QtQmlNetwork.framework/Versions/A/Headers/6.9.3/QtQmlNetwork
+QT.qmlnetwork_private.frameworks = 
+QT.qmlnetwork_private.depends = qmlnetwork
+QT.qmlnetwork_private.uses = 
+QT.qmlnetwork_private.module_config = v2 lib_bundle internal_module
+QT.qmlnetwork_private.enabled_features = 
+QT.qmlnetwork_private.disabled_features = 

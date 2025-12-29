@@ -1,0 +1,87 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "spdxVersion": "SPDX-2.3",
+  "name": "SBOM-SPDX-readline-8.3.3",
+  "creationInfo": {
+    "created": "2025-12-28T10:15:08Z",
+    "creators": [
+      "Tool: https://github.com/Homebrew/brew@5.0.7"
+    ]
+  },
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://formulae.brew.sh/spdx/readline-8.3.3.json",
+  "documentDescribes": [
+    "SPDXRef-Archive-readline-src",
+    "SPDXRef-Compiler",
+    "SPDXRef-Bottle-readline"
+  ],
+  "files": [],
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Archive-readline-src",
+      "name": "readline",
+      "versionInfo": "8.3.3",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2025-06-25 20:09:16 UTC",
+      "licenseConcluded": "GPL-3.0-or-later",
+      "downloadLocation": "https://ftpmirror.gnu.org/gnu/readline/readline-8.3.tar.gz",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "fe5383204467828cd495ee8d1d3c037a7eba1389c22bc6a041f627976f9061cc"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Compiler",
+      "name": "clang",
+      "versionInfo": "16.2",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "checksums": [],
+      "externalRefs": []
+    },
+    {
+      "SPDXID": "SPDXRef-Bottle-readline",
+      "name": "readline",
+      "versionInfo": "8.3.3",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2025-06-25 20:09:16 UTC",
+      "licenseConcluded": "GPL-3.0-or-later",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/readline/blobs/sha256:2e055f7b620fcbe1f809e850a23a68daa429edcf9b484b1967f9a49d89ebed8e",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/homebrew/core/readline@8.3.3",
+          "referenceType": "purl"
+        }
+      ],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "2e055f7b620fcbe1f809e850a23a68daa429edcf9b484b1967f9a49d89ebed8e"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-File-readline",
+      "relationshipType": "PACKAGE_OF",
+      "relatedSpdxElement": "SPDXRef-Archive-readline-src"
+    },
+    {
+      "spdxElementId": "SPDXRef-Compiler",
+      "relationshipType": "BUILD_TOOL_OF",
+      "relatedSpdxElement": "SPDXRef-Package-readline-src"
+    }
+  ]
+}

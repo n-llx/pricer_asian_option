@@ -1,0 +1,74 @@
+{
+  "homebrew_version": "4.6.9-21-g3f11702",
+  "used_options": [],
+  "unused_options": [],
+  "built_as_bottle": true,
+  "poured_from_bottle": true,
+  "loaded_from_api": true,
+  "installed_as_dependency": true,
+  "installed_on_request": false,
+  "changed_files": [
+    ".bottle/etc/fonts/conf.d/README",
+    ".bottle/etc/fonts/fonts.conf",
+    "lib/pkgconfig/fontconfig.pc"
+  ],
+  "time": 1766916870,
+  "source_modified_time": 1751431594,
+  "compiler": "clang",
+  "aliases": [],
+  "runtime_dependencies": [
+    {
+      "full_name": "libpng",
+      "version": "1.6.53",
+      "revision": 0,
+      "bottle_rebuild": 0,
+      "pkg_version": "1.6.53",
+      "declared_directly": false
+    },
+    {
+      "full_name": "freetype",
+      "version": "2.14.1",
+      "revision": 1,
+      "bottle_rebuild": 0,
+      "pkg_version": "2.14.1_1",
+      "declared_directly": true
+    },
+    {
+      "full_name": "libunistring",
+      "version": "1.4.1",
+      "revision": 0,
+      "bottle_rebuild": 0,
+      "pkg_version": "1.4.1",
+      "declared_directly": false
+    },
+    {
+      "full_name": "gettext",
+      "version": "0.26",
+      "revision": 1,
+      "bottle_rebuild": 0,
+      "pkg_version": "0.26_1",
+      "declared_directly": true
+    }
+  ],
+  "source": {
+    "spec": "stable",
+    "versions": {
+      "stable": "2.17.1",
+      "head": null,
+      "version_scheme": 0,
+      "compatibility_version": null
+    },
+    "path": "/Users/alexm1/Library/Caches/Homebrew/api/formula.jws.json",
+    "tap_git_head": null,
+    "tap": "homebrew/core"
+  },
+  "arch": "arm64",
+  "built_on": {
+    "os": "Macintosh",
+    "os_version": "macOS 15.4",
+    "cpu_family": "dunno",
+    "xcode": "16.3",
+    "clt": "16.3.0.0.1.1742442376",
+    "preferred_perl": "5.34"
+  }
+}

@@ -1,0 +1,13 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 Concurrent
+Description: Qt Concurrent module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtConcurrent
+Cflags: -F${libdir} -I${libdir}/QtConcurrent.framework/Headers -I${libdir}/QtConcurrent.framework -DQT_CONCURRENT_LIB
+Requires: Qt6Core

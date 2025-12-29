@@ -1,0 +1,12 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 QuickControls2MacOSStyleImpl
+Description: Qt QuickControls2MacOSStyleImpl module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtQuickControls2MacOSStyleImpl
+Cflags: -I${libdir}/QtQuickControls2MacOSStyleImpl.framework/Headers -I${libdir}/QtQuickControls2MacOSStyleImpl.framework -DQT_QUICKCONTROLS2MACOSSTYLEIMPL_LIB

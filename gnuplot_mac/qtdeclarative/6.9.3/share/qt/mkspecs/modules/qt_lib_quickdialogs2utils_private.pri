@@ -1,0 +1,11 @@
+QT.quickdialogs2utils_private.VERSION = 6.9.3
+QT.quickdialogs2utils_private.name = QtQuickDialogs2Utils
+QT.quickdialogs2utils_private.module =
+QT.quickdialogs2utils_private.libs = $$QT_MODULE_LIB_BASE
+QT.quickdialogs2utils_private.includes = $$QT_MODULE_LIB_BASE/QtQuickDialogs2Utils.framework/Versions/A/Headers/6.9.3 $$QT_MODULE_LIB_BASE/QtQuickDialogs2Utils.framework/Versions/A/Headers/6.9.3/QtQuickDialogs2Utils
+QT.quickdialogs2utils_private.frameworks = 
+QT.quickdialogs2utils_private.depends = quickdialogs2utils
+QT.quickdialogs2utils_private.uses = 
+QT.quickdialogs2utils_private.module_config = v2 lib_bundle internal_module
+QT.quickdialogs2utils_private.enabled_features = 
+QT.quickdialogs2utils_private.disabled_features = 

@@ -1,0 +1,13 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 QmlNetwork
+Description: Qt QmlNetwork module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtQmlNetwork
+Cflags: -I${libdir}/QtQmlNetwork.framework/Headers -I${libdir}/QtQmlNetwork.framework -DQT_QMLNETWORK_LIB
+Requires: Qt6Core Qt6Network Qt6Qml

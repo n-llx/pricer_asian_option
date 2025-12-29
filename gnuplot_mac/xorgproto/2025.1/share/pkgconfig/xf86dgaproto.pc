@@ -1,0 +1,7 @@
+prefix=/opt/homebrew/Cellar/xorgproto/2025.1
+includedir=${prefix}/include
+
+Name: XF86DGAProto
+Description: XF86DGA extension headers
+Version: 2.1
+Cflags: -I${includedir}

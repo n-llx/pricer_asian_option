@@ -1,0 +1,87 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "spdxVersion": "SPDX-2.3",
+  "name": "SBOM-SPDX-lz4-1.10.0",
+  "creationInfo": {
+    "created": "2025-12-28T10:14:39Z",
+    "creators": [
+      "Tool: https://github.com/Homebrew/brew@5.0.7"
+    ]
+  },
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://formulae.brew.sh/spdx/lz4-1.10.0.json",
+  "documentDescribes": [
+    "SPDXRef-Archive-lz4-src",
+    "SPDXRef-Compiler",
+    "SPDXRef-Bottle-lz4"
+  ],
+  "files": [],
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Archive-lz4-src",
+      "name": "lz4",
+      "versionInfo": "1.10.0",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2024-07-21 17:29:49 UTC",
+      "licenseConcluded": "BSD-2-Clause",
+      "downloadLocation": "https://github.com/lz4/lz4/archive/refs/tags/v1.10.0.tar.gz",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "537512904744b35e232912055ccf8ec66d768639ff3abe5788d90d792ec5f48b"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Compiler",
+      "name": "clang",
+      "versionInfo": "16.2",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "checksums": [],
+      "externalRefs": []
+    },
+    {
+      "SPDXID": "SPDXRef-Bottle-lz4",
+      "name": "lz4",
+      "versionInfo": "1.10.0",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2024-07-21 17:29:49 UTC",
+      "licenseConcluded": "BSD-2-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/lz4/blobs/sha256:5bd143b7b784989e549637ea4e484af85ba481e640dde69bc35f3843ae25abc6",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/homebrew/core/lz4@1.10.0",
+          "referenceType": "purl"
+        }
+      ],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "5bd143b7b784989e549637ea4e484af85ba481e640dde69bc35f3843ae25abc6"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-File-lz4",
+      "relationshipType": "PACKAGE_OF",
+      "relatedSpdxElement": "SPDXRef-Archive-lz4-src"
+    },
+    {
+      "spdxElementId": "SPDXRef-Compiler",
+      "relationshipType": "BUILD_TOOL_OF",
+      "relatedSpdxElement": "SPDXRef-Package-lz4-src"
+    }
+  ]
+}

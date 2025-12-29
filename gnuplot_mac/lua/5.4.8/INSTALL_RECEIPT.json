@@ -1,0 +1,42 @@
+{
+  "homebrew_version": "4.5.4-18-g68ef29f",
+  "used_options": [],
+  "unused_options": [],
+  "built_as_bottle": true,
+  "poured_from_bottle": true,
+  "loaded_from_api": true,
+  "installed_as_dependency": true,
+  "installed_on_request": false,
+  "changed_files": [
+    "include/lua/luaconf.h",
+    "lib/pkgconfig/lua.pc"
+  ],
+  "time": 1766916885,
+  "source_modified_time": 1747861947,
+  "compiler": "clang",
+  "aliases": [
+    "lua@5.4"
+  ],
+  "runtime_dependencies": [],
+  "source": {
+    "spec": "stable",
+    "versions": {
+      "stable": "5.4.8",
+      "head": null,
+      "version_scheme": 0,
+      "compatibility_version": null
+    },
+    "path": "/Users/alexm1/Library/Caches/Homebrew/api/formula.jws.json",
+    "tap_git_head": null,
+    "tap": "homebrew/core"
+  },
+  "arch": "arm64",
+  "built_on": {
+    "os": "Macintosh",
+    "os_version": "macOS 15.4",
+    "cpu_family": "dunno",
+    "xcode": "16.3",
+    "clt": "16.3.0.0.1.1742442376",
+    "preferred_perl": "5.34"
+  }
+}

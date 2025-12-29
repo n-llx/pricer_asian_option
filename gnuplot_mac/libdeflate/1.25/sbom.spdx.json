@@ -1,0 +1,87 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "spdxVersion": "SPDX-2.3",
+  "name": "SBOM-SPDX-libdeflate-1.25",
+  "creationInfo": {
+    "created": "2025-12-28T10:14:41Z",
+    "creators": [
+      "Tool: https://github.com/Homebrew/brew@5.0.7"
+    ]
+  },
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://formulae.brew.sh/spdx/libdeflate-1.25.json",
+  "documentDescribes": [
+    "SPDXRef-Archive-libdeflate-src",
+    "SPDXRef-Compiler",
+    "SPDXRef-Bottle-libdeflate"
+  ],
+  "files": [],
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Archive-libdeflate-src",
+      "name": "libdeflate",
+      "versionInfo": "1.25",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2025-11-01 02:19:27 UTC",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.25.tar.gz",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "d11473c1ad4c57d874695e8026865e38b47116bbcb872bfc622ec8f37a86017d"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Compiler",
+      "name": "clang",
+      "versionInfo": "16.2",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "checksums": [],
+      "externalRefs": []
+    },
+    {
+      "SPDXID": "SPDXRef-Bottle-libdeflate",
+      "name": "libdeflate",
+      "versionInfo": "1.25",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2025-11-01 02:19:27 UTC",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/libdeflate/blobs/sha256:81bb3537257061a0a60cf1b6842b7c13d9090ddce9bd8ec84fa7381e08c45b47",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/homebrew/core/libdeflate@1.25",
+          "referenceType": "purl"
+        }
+      ],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "81bb3537257061a0a60cf1b6842b7c13d9090ddce9bd8ec84fa7381e08c45b47"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-File-libdeflate",
+      "relationshipType": "PACKAGE_OF",
+      "relatedSpdxElement": "SPDXRef-Archive-libdeflate-src"
+    },
+    {
+      "spdxElementId": "SPDXRef-Compiler",
+      "relationshipType": "BUILD_TOOL_OF",
+      "relatedSpdxElement": "SPDXRef-Package-libdeflate-src"
+    }
+  ]
+}

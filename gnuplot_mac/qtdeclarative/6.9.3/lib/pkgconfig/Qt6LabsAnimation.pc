@@ -1,0 +1,13 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 LabsAnimation
+Description: Qt LabsAnimation module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtLabsAnimation
+Cflags: -I${libdir}/QtLabsAnimation.framework/Headers -I${libdir}/QtLabsAnimation.framework -DQT_LABSANIMATION_LIB
+Requires: Qt6Qml Qt6Quick

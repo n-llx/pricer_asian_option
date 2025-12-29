@@ -1,0 +1,18 @@
+prefix=/opt/homebrew/Cellar/libcerf/3.3
+exec_prefix=${prefix}
+libdir=/opt/homebrew/Cellar/libcerf/3.3/lib
+includedir=/opt/homebrew/Cellar/libcerf/3.3/include
+
+Name: libcerf
+Description: Complex error function library, C ABI
+Version: 3.1
+Libs: -L${libdir} -lcerf
+Libs.private: -lm
+Cflags: -I${includedir}
+
+Name: libcerfcpp
+Description: Complex error function library, C++ ABI
+Version: 3.1
+Libs: -L${libdir} -lcerfcpp
+Libs.private: -lm
+Cflags: -I${includedir}

@@ -24,17 +24,17 @@ void generate_price_path(double S0, double r, double sigma, double T, int steps,
 }
 
 double monte_carlo(int N, double S0, double r, double sigma, double T, int steps, 
-                   double (*f_payoff)(const std::vector<double>&, double), double K, 
+                   double (*f_payoff)(const vector<double>&, double), double K, 
                    unsigned int base_seed) 
 {
     mt19937 gen(base_seed); 
     double sum = 0.0;
-    std::vector<double> path(steps + 1); // Allocation unique
+    vector<double> path(steps + 1); // Allocation unique
     
     for (int i = 0; i < N; i++)
     {
         generate_price_path(S0, r, sigma, T, steps, path, gen); // Réutilisation
         sum += f_payoff(path, K);
     }
-    return (sum / N) * std::exp(-r * T);
+    return (sum / N) * exp(-r * T);
 }

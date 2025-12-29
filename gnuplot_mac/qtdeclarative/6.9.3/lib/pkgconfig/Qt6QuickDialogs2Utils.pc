@@ -1,0 +1,13 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 QuickDialogs2Utils
+Description: Qt QuickDialogs2Utils module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtQuickDialogs2Utils
+Cflags: -I${libdir}/QtQuickDialogs2Utils.framework/Headers -I${libdir}/QtQuickDialogs2Utils.framework -DQT_QUICKDIALOGS2UTILS_LIB
+Requires: Qt6Core

@@ -1,0 +1,174 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "spdxVersion": "SPDX-2.3",
+  "name": "SBOM-SPDX-libxcb-1.17.0",
+  "creationInfo": {
+    "created": "2025-12-28T10:14:36Z",
+    "creators": [
+      "Tool: https://github.com/Homebrew/brew@5.0.7"
+    ]
+  },
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://formulae.brew.sh/spdx/libxcb-1.17.0.json",
+  "documentDescribes": [
+    "SPDXRef-Archive-libxcb-src",
+    "SPDXRef-Package-SPDXRef-xorgproto-2025.1",
+    "SPDXRef-Package-SPDXRef-libxau-1.0.12",
+    "SPDXRef-Package-SPDXRef-libxdmcp-1.1.5",
+    "SPDXRef-Compiler",
+    "SPDXRef-Bottle-libxcb"
+  ],
+  "files": [],
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Archive-libxcb-src",
+      "name": "libxcb",
+      "versionInfo": "1.17.0",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2024-04-15 15:09:41 UTC",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://xorg.freedesktop.org/archive/individual/lib/libxcb-1.17.0.tar.xz",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "599ebf9996710fea71622e6e184f3a8ad5b43d0e5fa8c4e407123c88a59a6d55"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-xorgproto-2025.1",
+      "name": "xorgproto",
+      "versionInfo": "2025.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/xorgproto/blobs/sha256:c65163b3daadd9160d9e2ba92f0541800577833c6b06b50c10aab69c1ce38f25",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "c65163b3daadd9160d9e2ba92f0541800577833c6b06b50c10aab69c1ce38f25"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/xorgproto@2025.1",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-libxau-1.0.12",
+      "name": "libxau",
+      "versionInfo": "1.0.12",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/libxau/blobs/sha256:e8a5fedbd9e5c49f10006171decc5b1e56c48fbd4267e7668f813e47c0da984f",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "e8a5fedbd9e5c49f10006171decc5b1e56c48fbd4267e7668f813e47c0da984f"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/libxau@1.0.12",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-libxdmcp-1.1.5",
+      "name": "libxdmcp",
+      "versionInfo": "1.1.5",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/libxdmcp/blobs/sha256:b09a915dae5b45371a86f20a4ccce13c16c7a8eadc843b665e91bc5b2d2143ce",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "b09a915dae5b45371a86f20a4ccce13c16c7a8eadc843b665e91bc5b2d2143ce"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/libxdmcp@1.1.5",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Compiler",
+      "name": "clang",
+      "versionInfo": "16.2",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "checksums": [],
+      "externalRefs": []
+    },
+    {
+      "SPDXID": "SPDXRef-Bottle-libxcb",
+      "name": "libxcb",
+      "versionInfo": "1.17.0",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2024-04-15 15:09:41 UTC",
+      "licenseConcluded": "MIT",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/libxcb/blobs/sha256:cce8d9e12c3f0b2fdbffbb3f7ba02f7e25cf3fa495b3e759d34a6264599543b3",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/homebrew/core/libxcb@1.17.0",
+          "referenceType": "purl"
+        }
+      ],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "cce8d9e12c3f0b2fdbffbb3f7ba02f7e25cf3fa495b3e759d34a6264599543b3"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-xorgproto-2025.1",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-libxcb"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-libxau-1.0.12",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-libxcb"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-libxdmcp-1.1.5",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-libxcb"
+    },
+    {
+      "spdxElementId": "SPDXRef-File-libxcb",
+      "relationshipType": "PACKAGE_OF",
+      "relatedSpdxElement": "SPDXRef-Archive-libxcb-src"
+    },
+    {
+      "spdxElementId": "SPDXRef-Compiler",
+      "relationshipType": "BUILD_TOOL_OF",
+      "relatedSpdxElement": "SPDXRef-Package-libxcb-src"
+    }
+  ]
+}

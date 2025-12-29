@@ -1,0 +1,87 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "spdxVersion": "SPDX-2.3",
+  "name": "SBOM-SPDX-jpeg-turbo-3.1.3",
+  "creationInfo": {
+    "created": "2025-12-28T10:14:38Z",
+    "creators": [
+      "Tool: https://github.com/Homebrew/brew@5.0.7"
+    ]
+  },
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://formulae.brew.sh/spdx/jpeg-turbo-3.1.3.json",
+  "documentDescribes": [
+    "SPDXRef-Archive-jpeg-turbo-src",
+    "SPDXRef-Compiler",
+    "SPDXRef-Bottle-jpeg-turbo"
+  ],
+  "files": [],
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Archive-jpeg-turbo-src",
+      "name": "jpeg-turbo",
+      "versionInfo": "3.1.3",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2025-12-10 15:09:10 UTC",
+      "licenseConcluded": "IJG AND Zlib AND BSD-3-Clause",
+      "downloadLocation": "https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/3.1.3/libjpeg-turbo-3.1.3.tar.gz",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "075920b826834ac4ddf97661cc73491047855859affd671d52079c6867c1c6c0"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Compiler",
+      "name": "clang",
+      "versionInfo": "16.2",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "checksums": [],
+      "externalRefs": []
+    },
+    {
+      "SPDXID": "SPDXRef-Bottle-jpeg-turbo",
+      "name": "jpeg-turbo",
+      "versionInfo": "3.1.3",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2025-12-10 15:09:10 UTC",
+      "licenseConcluded": "IJG AND Zlib AND BSD-3-Clause",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/jpeg-turbo/blobs/sha256:b33d21a69c9d9617f0ea4197a9a5f428078f7f0f6e6388151ca1d15210542c07",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/homebrew/core/jpeg-turbo@3.1.3",
+          "referenceType": "purl"
+        }
+      ],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "b33d21a69c9d9617f0ea4197a9a5f428078f7f0f6e6388151ca1d15210542c07"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-File-jpeg-turbo",
+      "relationshipType": "PACKAGE_OF",
+      "relatedSpdxElement": "SPDXRef-Archive-jpeg-turbo-src"
+    },
+    {
+      "spdxElementId": "SPDXRef-Compiler",
+      "relationshipType": "BUILD_TOOL_OF",
+      "relatedSpdxElement": "SPDXRef-Package-jpeg-turbo-src"
+    }
+  ]
+}

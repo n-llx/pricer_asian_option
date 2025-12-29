@@ -1,0 +1,11 @@
+QT.quickcontrols2macosstyleimpl_private.VERSION = 6.9.3
+QT.quickcontrols2macosstyleimpl_private.name = QtQuickControls2MacOSStyleImpl
+QT.quickcontrols2macosstyleimpl_private.module =
+QT.quickcontrols2macosstyleimpl_private.libs = $$QT_MODULE_LIB_BASE
+QT.quickcontrols2macosstyleimpl_private.includes = 
+QT.quickcontrols2macosstyleimpl_private.frameworks = 
+QT.quickcontrols2macosstyleimpl_private.depends = quickcontrols2macosstyleimpl
+QT.quickcontrols2macosstyleimpl_private.uses = 
+QT.quickcontrols2macosstyleimpl_private.module_config = v2 lib_bundle internal_module
+QT.quickcontrols2macosstyleimpl_private.enabled_features = 
+QT.quickcontrols2macosstyleimpl_private.disabled_features = 

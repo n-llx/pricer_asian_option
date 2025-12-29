@@ -1,0 +1,87 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "spdxVersion": "SPDX-2.3",
+  "name": "SBOM-SPDX-dbus-1.16.2",
+  "creationInfo": {
+    "created": "2025-12-28T10:14:47Z",
+    "creators": [
+      "Tool: https://github.com/Homebrew/brew@5.0.7"
+    ]
+  },
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://formulae.brew.sh/spdx/dbus-1.16.2.json",
+  "documentDescribes": [
+    "SPDXRef-Archive-dbus-src",
+    "SPDXRef-Compiler",
+    "SPDXRef-Bottle-dbus"
+  ],
+  "files": [],
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Archive-dbus-src",
+      "name": "dbus",
+      "versionInfo": "1.16.2",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2025-02-27 16:29:06 UTC",
+      "licenseConcluded": "AFL-2.1 OR GPL-2.0-or-later",
+      "downloadLocation": "https://dbus.freedesktop.org/releases/dbus/dbus-1.16.2.tar.xz",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "0ba2a1a4b16afe7bceb2c07e9ce99a8c2c3508e5dec290dbb643384bd6beb7e2"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Compiler",
+      "name": "clang",
+      "versionInfo": "16.2",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "checksums": [],
+      "externalRefs": []
+    },
+    {
+      "SPDXID": "SPDXRef-Bottle-dbus",
+      "name": "dbus",
+      "versionInfo": "1.16.2",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2025-02-27 16:29:06 UTC",
+      "licenseConcluded": "AFL-2.1 OR GPL-2.0-or-later",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/dbus/blobs/sha256:5a51451acabb5ae56b5682e88a82dfa43cc6a2b653ca068198546bb72324bd0c",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/homebrew/core/dbus@1.16.2",
+          "referenceType": "purl"
+        }
+      ],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "5a51451acabb5ae56b5682e88a82dfa43cc6a2b653ca068198546bb72324bd0c"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-File-dbus",
+      "relationshipType": "PACKAGE_OF",
+      "relatedSpdxElement": "SPDXRef-Archive-dbus-src"
+    },
+    {
+      "spdxElementId": "SPDXRef-Compiler",
+      "relationshipType": "BUILD_TOOL_OF",
+      "relatedSpdxElement": "SPDXRef-Package-dbus-src"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+QMAKE_PRL_TARGET = libQt6QmlLS.a
+QMAKE_PRL_CONFIG = static
+QMAKE_PRL_VERSION = 6.9.3
+QMAKE_PRL_LIBS = $$[QT_INSTALL_LIBS]/libQt6LanguageServer.a $$[QT_INSTALL_LIBS]/libQt6JsonRpc.a $$[QT_INSTALL_LIBS]/libQt6QmlFormat.a $$[QT_INSTALL_LIBS]/libQt6QmlDom.a $$[QT_INSTALL_LIBS]/libQt6QmlToolingSettings.a -F$$[QT_INSTALL_LIBS] -framework QtQmlCompiler -framework QtQml -framework QtNetwork $$[QT_INSTALL_LIBS]/libQt6QmlToolingSettings.a -framework QtCore -framework IOKit -framework DiskArbitration -framework UniformTypeIdentifiers
+QMAKE_PRL_LIBS_FOR_CMAKE = $$[QT_INSTALL_LIBS]/libQt6LanguageServer.a;$$[QT_INSTALL_LIBS]/libQt6JsonRpc.a;$$[QT_INSTALL_LIBS]/libQt6QmlFormat.a;$$[QT_INSTALL_LIBS]/libQt6QmlDom.a;$$[QT_INSTALL_LIBS]/libQt6QmlToolingSettings.a;-F$$[QT_INSTALL_LIBS];-framework;QtQmlCompiler;-framework;QtQml;-framework;QtNetwork;$$[QT_INSTALL_LIBS]/libQt6QmlToolingSettings.a;-framework;QtCore;-framework IOKit;-framework DiskArbitration;-framework UniformTypeIdentifiers

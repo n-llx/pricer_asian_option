@@ -1,0 +1,11 @@
+QT.quickeffects_private.VERSION = 6.9.3
+QT.quickeffects_private.name = QtQuickEffects
+QT.quickeffects_private.module =
+QT.quickeffects_private.libs = $$QT_MODULE_LIB_BASE
+QT.quickeffects_private.includes = $$QT_MODULE_LIB_BASE/QtQuickEffects.framework/Versions/A/Headers/6.9.3 $$QT_MODULE_LIB_BASE/QtQuickEffects.framework/Versions/A/Headers/6.9.3/QtQuickEffects
+QT.quickeffects_private.frameworks = 
+QT.quickeffects_private.depends = core_private gui_private qml_private quick_private quickeffects
+QT.quickeffects_private.uses = 
+QT.quickeffects_private.module_config = v2 lib_bundle internal_module
+QT.quickeffects_private.enabled_features = 
+QT.quickeffects_private.disabled_features = 

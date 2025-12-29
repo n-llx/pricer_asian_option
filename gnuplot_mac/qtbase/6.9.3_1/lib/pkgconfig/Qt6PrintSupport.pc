@@ -1,0 +1,13 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 PrintSupport
+Description: Qt PrintSupport module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtPrintSupport
+Cflags: -F${libdir} -I${libdir}/QtPrintSupport.framework/Headers -I${libdir}/QtPrintSupport.framework -DQT_PRINTSUPPORT_LIB
+Requires: Qt6Core Qt6Gui Qt6Widgets

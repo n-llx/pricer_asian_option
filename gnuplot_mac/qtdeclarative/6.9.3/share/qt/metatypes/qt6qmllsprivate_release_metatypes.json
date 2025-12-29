@@ -1,0 +1,576 @@
+[
+    {
+        "classes": [
+            {
+                "className": "QLanguageServerModule",
+                "lineNumber": 29,
+                "object": true,
+                "qualifiedClassName": "QLanguageServerModule",
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            },
+            {
+                "className": "QLanguageServer",
+                "enums": [
+                    {
+                        "isClass": true,
+                        "isFlag": false,
+                        "name": "RunStatus",
+                        "values": [
+                            "NotSetup",
+                            "SettingUp",
+                            "DidSetup",
+                            "Initializing",
+                            "DidInitialize",
+                            "WaitPending",
+                            "Stopping",
+                            "WaitingForExit",
+                            "Stopped"
+                        ]
+                    }
+                ],
+                "lineNumber": 40,
+                "object": true,
+                "properties": [
+                    {
+                        "constant": false,
+                        "designable": true,
+                        "final": false,
+                        "index": 0,
+                        "name": "runStatus",
+                        "notify": "runStatusChanged",
+                        "read": "runStatus",
+                        "required": false,
+                        "scriptable": true,
+                        "stored": true,
+                        "type": "RunStatus",
+                        "user": false
+                    },
+                    {
+                        "constant": false,
+                        "designable": true,
+                        "final": false,
+                        "index": 1,
+                        "name": "isInitialized",
+                        "read": "isInitialized",
+                        "required": false,
+                        "scriptable": true,
+                        "stored": true,
+                        "type": "bool",
+                        "user": false
+                    }
+                ],
+                "qualifiedClassName": "QLanguageServer",
+                "signals": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "type": "RunStatus"
+                            }
+                        ],
+                        "index": 0,
+                        "name": "runStatusChanged",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "server",
+                                "type": "QLanguageServer*"
+                            }
+                        ],
+                        "index": 1,
+                        "name": "clientInitialized",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "index": 2,
+                        "name": "shutdown",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "index": 3,
+                        "name": "exit",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "index": 4,
+                        "name": "lifecycleError",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "index": 5,
+                        "name": "readNextMessage",
+                        "returnType": "void"
+                    }
+                ],
+                "slots": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "d",
+                                "type": "QByteArray"
+                            },
+                            {
+                                "name": "isEndOfMessage",
+                                "type": "bool"
+                            }
+                        ],
+                        "index": 6,
+                        "name": "receiveData",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qlanguageserver_p.h",
+        "outputRevision": 69
+    },
+    {
+        "classes": [
+            {
+                "className": "QQmlCodeModel",
+                "lineNumber": 74,
+                "object": true,
+                "qualifiedClassName": "QmlLsp::QQmlCodeModel",
+                "signals": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "url",
+                                "type": "QByteArray"
+                            }
+                        ],
+                        "index": 0,
+                        "name": "updatedSnapshot",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "path",
+                                "type": "QString"
+                            }
+                        ],
+                        "index": 1,
+                        "name": "documentationRootPathChanged",
+                        "returnType": "void"
+                    }
+                ],
+                "slots": [
+                    {
+                        "access": "private",
+                        "arguments": [
+                            {
+                                "type": "QString"
+                            }
+                        ],
+                        "index": 2,
+                        "name": "onCppFileChanged",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qqmlcodemodel_p.h",
+        "outputRevision": 69
+    },
+    {
+        "classes": [
+            {
+                "className": "QmlCompletionSupport",
+                "lineNumber": 46,
+                "object": true,
+                "qualifiedClassName": "QmlCompletionSupport",
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QQmlBaseModule<CompletionRequest>"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qqmlcompletionsupport_p.h",
+        "outputRevision": 69
+    },
+    {
+        "classes": [
+            {
+                "className": "QQmlFindUsagesSupport",
+                "lineNumber": 28,
+                "object": true,
+                "qualifiedClassName": "QQmlFindUsagesSupport",
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QQmlBaseModule<ReferencesRequest>"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qqmlfindusagessupport_p.h",
+        "outputRevision": 69
+    },
+    {
+        "classes": [
+            {
+                "className": "QQmlDocumentFormatting",
+                "lineNumber": 34,
+                "object": true,
+                "qualifiedClassName": "QQmlDocumentFormatting",
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QQmlBaseModule<DocumentFormattingRequest>"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qqmlformatting_p.h",
+        "outputRevision": 69
+    },
+    {
+        "classes": [
+            {
+                "className": "QmlGoToDefinitionSupport",
+                "lineNumber": 29,
+                "object": true,
+                "qualifiedClassName": "QmlGoToDefinitionSupport",
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QQmlBaseModule<DefinitionRequest>"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qqmlgotodefinitionsupport_p.h",
+        "outputRevision": 69
+    },
+    {
+        "classes": [
+            {
+                "className": "QmlGoToTypeDefinitionSupport",
+                "lineNumber": 30,
+                "object": true,
+                "qualifiedClassName": "QmlGoToTypeDefinitionSupport",
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QQmlBaseModule<TypeDefinitionRequest>"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qqmlgototypedefinitionsupport_p.h",
+        "outputRevision": 69
+    },
+    {
+        "classes": [
+            {
+                "className": "QQmlHover",
+                "lineNumber": 30,
+                "object": true,
+                "qualifiedClassName": "QQmlHover",
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QQmlBaseModule<HoverRequest>"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qqmlhover_p.h",
+        "outputRevision": 69
+    },
+    {
+        "classes": [
+            {
+                "className": "QQmlLanguageServer",
+                "lineNumber": 40,
+                "object": true,
+                "qualifiedClassName": "QmlLsp::QQmlLanguageServer",
+                "slots": [
+                    {
+                        "access": "public",
+                        "index": 0,
+                        "name": "exit",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "index": 1,
+                        "name": "errorExit",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QLanguageServerModule"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qqmllanguageserver_p.h",
+        "outputRevision": 69
+    },
+    {
+        "classes": [
+            {
+                "className": "QmlLintSuggestions",
+                "lineNumber": 32,
+                "object": true,
+                "qualifiedClassName": "QmlLsp::QmlLintSuggestions",
+                "slots": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "uri",
+                                "type": "QByteArray"
+                            }
+                        ],
+                        "index": 0,
+                        "name": "diagnose",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "server",
+                                "type": "QLanguageServer*"
+                            },
+                            {
+                                "name": "protocol",
+                                "type": "QLanguageServerProtocol*"
+                            }
+                        ],
+                        "index": 1,
+                        "name": "registerHandlers",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "clientInfo",
+                                "type": "QLspSpecification::InitializeParams"
+                            },
+                            {
+                                "type": "QLspSpecification::InitializeResult&"
+                            }
+                        ],
+                        "index": 2,
+                        "name": "setupCapabilities",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QLanguageServerModule"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qqmllintsuggestions_p.h",
+        "outputRevision": 69
+    },
+    {
+        "classes": [
+            {
+                "className": "QQmlRangeFormatting",
+                "lineNumber": 30,
+                "object": true,
+                "qualifiedClassName": "QQmlRangeFormatting",
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QQmlBaseModule<RangeFormattingRequest>"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qqmlrangeformatting_p.h",
+        "outputRevision": 69
+    },
+    {
+        "classes": [
+            {
+                "className": "QQmlRenameSymbolSupport",
+                "lineNumber": 28,
+                "object": true,
+                "qualifiedClassName": "QQmlRenameSymbolSupport",
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QQmlBaseModule<RenameRequest>"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qqmlrenamesymbolsupport_p.h",
+        "outputRevision": 69
+    },
+    {
+        "classes": [
+            {
+                "className": "HighlightingUtils",
+                "enums": [
+                    {
+                        "isClass": true,
+                        "isFlag": false,
+                        "name": "SemanticTokenProtocolTypes",
+                        "values": [
+                            "Namespace",
+                            "Type",
+                            "Enum",
+                            "Parameter",
+                            "Variable",
+                            "Property",
+                            "EnumMember",
+                            "Method",
+                            "Keyword",
+                            "Comment",
+                            "String",
+                            "Number",
+                            "Regexp",
+                            "Operator",
+                            "Decorator",
+                            "QmlLocalId",
+                            "QmlExternalId",
+                            "QmlRootObjectProperty",
+                            "QmlScopeObjectProperty",
+                            "QmlExternalObjectProperty",
+                            "JsScopeVar",
+                            "JsImportVar",
+                            "JsGlobalVar",
+                            "QmlStateName",
+                            "Field",
+                            "Unknown"
+                        ]
+                    }
+                ],
+                "lineNumber": 27,
+                "namespace": true,
+                "qualifiedClassName": "HighlightingUtils"
+            }
+        ],
+        "inputFile": "qqmlsemantictokens_p.h",
+        "outputRevision": 69
+    },
+    {
+        "classes": [
+            {
+                "className": "TextSynchronization",
+                "lineNumber": 23,
+                "object": true,
+                "qualifiedClassName": "TextSynchronization",
+                "slots": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "params",
+                                "type": "QLspSpecification::DidOpenTextDocumentParams"
+                            }
+                        ],
+                        "index": 0,
+                        "name": "didOpenTextDocument",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "params",
+                                "type": "QLspSpecification::DidChangeTextDocumentParams"
+                            }
+                        ],
+                        "index": 1,
+                        "name": "didDidChangeTextDocument",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "name": "params",
+                                "type": "QLspSpecification::DidCloseTextDocumentParams"
+                            }
+                        ],
+                        "index": 2,
+                        "name": "didCloseTextDocument",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QLanguageServerModule"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qtextsynchronization_p.h",
+        "outputRevision": 69
+    },
+    {
+        "classes": [
+            {
+                "className": "WorkspaceHandlers",
+                "lineNumber": 23,
+                "object": true,
+                "qualifiedClassName": "WorkspaceHandlers",
+                "slots": [
+                    {
+                        "access": "public",
+                        "arguments": [
+                            {
+                                "type": "QLanguageServer*"
+                            }
+                        ],
+                        "index": 0,
+                        "name": "clientInitialized",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QLanguageServerModule"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qworkspace_p.h",
+        "outputRevision": 69
+    }
+]

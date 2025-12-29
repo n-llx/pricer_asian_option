@@ -1,0 +1,36 @@
+{
+  "homebrew_version": "5.0.3-72-g1383417",
+  "used_options": [],
+  "unused_options": [],
+  "built_as_bottle": true,
+  "poured_from_bottle": true,
+  "loaded_from_api": true,
+  "installed_as_dependency": true,
+  "installed_on_request": false,
+  "changed_files": [],
+  "time": 1766916889,
+  "source_modified_time": 1764648722,
+  "compiler": "gcc-12",
+  "aliases": [],
+  "runtime_dependencies": [],
+  "source": {
+    "spec": "stable",
+    "versions": {
+      "stable": "2025-12-02",
+      "head": null,
+      "version_scheme": 0,
+      "compatibility_version": null
+    },
+    "path": "/Users/alexm1/Library/Caches/Homebrew/api/formula.jws.json",
+    "tap_git_head": null,
+    "tap": "homebrew/core"
+  },
+  "arch": "arm64",
+  "built_on": {
+    "os": "Linux",
+    "os_version": "Ubuntu 22.04.5",
+    "cpu_family": "arm",
+    "glibc_version": "2.35",
+    "oldest_cpu_family": "armv8"
+  }
+}

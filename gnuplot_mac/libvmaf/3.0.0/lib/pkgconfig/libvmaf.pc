@@ -1,0 +1,10 @@
+prefix=/opt/homebrew/Cellar/libvmaf/3.0.0
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+Name: libvmaf
+Description: VMAF, Video Multimethod Assessment Fusion
+Version: 3.0.0
+Libs: -L${libdir} -lvmaf
+Libs.private: -lm
+Cflags: -I${includedir} -I${includedir}/libvmaf

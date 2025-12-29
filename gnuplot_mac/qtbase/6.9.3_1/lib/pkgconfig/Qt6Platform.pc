@@ -1,0 +1,12 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+mkspecsdir=${prefix}/share/qt/mkspecs
+
+Name: Qt6 Platform
+Description: Qt Platform module
+Version: 6.9.3
+Cflags: -I${mkspecsdir}/macx-clang -I${includedir}

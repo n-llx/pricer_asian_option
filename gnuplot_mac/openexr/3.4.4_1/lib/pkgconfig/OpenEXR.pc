@@ -1,0 +1,21 @@
+##
+## SPDX-License-Identifier: BSD-3-Clause
+## Copyright (c) Contributors to the OpenEXR Project.
+##
+
+prefix=/opt/homebrew/Cellar/openexr/3.4.4_1
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+OpenEXR_includedir=${includedir}/OpenEXR
+libsuffix=-3_4
+
+Name: OpenEXR
+Description: OpenEXR image library
+Version: 3.4.4
+
+Libs:  -L${libdir} -lOpenEXR${libsuffix} -lOpenEXRUtil${libsuffix} -lOpenEXRCore${libsuffix} -lIex${libsuffix} -lIlmThread${libsuffix}
+Cflags: -I${includedir} -I${OpenEXR_includedir} -pthread
+Requires: Imath
+Requires.private: libdeflate >= 1.25 openjph >= 0.21.0
+

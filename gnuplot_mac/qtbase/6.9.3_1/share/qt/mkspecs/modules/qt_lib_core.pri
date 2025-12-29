@@ -1,0 +1,19 @@
+QT.core.VERSION = 6.9.3
+QT.core.name = QtCore
+QT.core.module = QtCore
+QT.core.libs = $$QT_MODULE_LIB_BASE
+QT.core.ldflags = 
+QT.core.includes = $$QT_MODULE_LIB_BASE/QtCore.framework/Headers
+QT.core.frameworks = $$QT_MODULE_LIB_BASE
+QT.core.bins = $$QT_MODULE_BIN_BASE
+QT.core.plugin_types = permissions
+QT.core.depends =  
+QT.core.uses = libatomic
+QT.core.module_config = v2 lib_bundle
+QT.core.CONFIG = moc resources
+QT.core.DEFINES = QT_CORE_LIB
+QT.core.enabled_features = cxx11_future cxx17_filesystem glib std-atomic64 mimetype regularexpression sharedmemory shortcut systemsemaphore xmlstream xmlstreamreader xmlstreamwriter textdate datestring process processenvironment temporaryfile library settings filesystemwatcher filesystemiterator itemmodel proxymodel sortfilterproxymodel identityproxymodel transposeproxymodel concatenatetablesproxymodel stringlistmodel translation easingcurve animation gestures jalalicalendar islamiccivilcalendar timezone commandlineparser cborstreamreader cborstreamwriter permissions version_tagging shared pkg-config rpath framework signaling_nan zstd thread future concurrent dbus openssl-linked opensslv30 test_gui shared trivial_auto_var_init_pattern stack_protector libcpp_hardening shared rpath reduce_exports openssl
+QT.core.disabled_features = clock-monotonic inotify cpp-winrt timezone_tzdb static cross_compile debug_and_release separate_debug_info appstore-compliant simulator_and_device force_asserts c++20 c++2a c++2b c++2c reduce_relocations wasm-simd128 wasm-exceptions wasm-jspi opensslv11
+QT_CONFIG += cxx11_future cxx17_filesystem glib std-atomic64 mimetype regularexpression sharedmemory shortcut systemsemaphore xmlstream xmlstreamreader xmlstreamwriter textdate datestring process processenvironment temporaryfile library settings filesystemwatcher filesystemiterator itemmodel proxymodel sortfilterproxymodel identityproxymodel transposeproxymodel concatenatetablesproxymodel stringlistmodel translation easingcurve animation gestures jalalicalendar islamiccivilcalendar timezone commandlineparser cborstreamreader cborstreamwriter permissions version_tagging shared pkg-config rpath framework signaling_nan zstd thread future concurrent dbus openssl-linked opensslv30 test_gui shared trivial_auto_var_init_pattern stack_protector libcpp_hardening shared rpath reduce_exports openssl
+QT_MODULES += core
+

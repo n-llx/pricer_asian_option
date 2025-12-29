@@ -1,0 +1,46 @@
+{
+  "homebrew_version": "4.6.20-43-g103917b",
+  "used_options": [],
+  "unused_options": [],
+  "built_as_bottle": true,
+  "poured_from_bottle": true,
+  "loaded_from_api": true,
+  "installed_as_dependency": true,
+  "installed_on_request": false,
+  "changed_files": [
+    "bin/icu-config",
+    "lib/icu/78.1/Makefile.inc",
+    "lib/icu/78.1/pkgdata.inc",
+    "lib/pkgconfig/icu-i18n.pc",
+    "lib/pkgconfig/icu-io.pc",
+    "lib/pkgconfig/icu-uc.pc"
+  ],
+  "time": 1766916885,
+  "source_modified_time": 1761845843,
+  "compiler": "clang",
+  "aliases": [
+    "icu4c"
+  ],
+  "runtime_dependencies": [],
+  "source": {
+    "spec": "stable",
+    "versions": {
+      "stable": "78.1",
+      "head": null,
+      "version_scheme": 0,
+      "compatibility_version": null
+    },
+    "path": "/Users/alexm1/Library/Caches/Homebrew/api/formula.jws.json",
+    "tap_git_head": null,
+    "tap": "homebrew/core"
+  },
+  "arch": "arm64",
+  "built_on": {
+    "os": "Macintosh",
+    "os_version": "macOS 15.4",
+    "cpu_family": "dunno",
+    "xcode": "16.3",
+    "clt": "16.3.0.0.1.1742442376",
+    "preferred_perl": "5.34"
+  }
+}

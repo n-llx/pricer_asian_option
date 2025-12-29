@@ -1,0 +1,13 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 Sql
+Description: Qt Sql module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtSql
+Cflags: -F${libdir} -I${libdir}/QtSql.framework/Headers -I${libdir}/QtSql.framework -DQT_SQL_LIB
+Requires: Qt6Core

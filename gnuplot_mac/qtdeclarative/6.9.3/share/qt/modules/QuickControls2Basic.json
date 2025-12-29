@@ -1,0 +1,21 @@
+{
+    "schema_version": 2,
+    "name": "QuickControls2Basic",
+    "repository": "qtdeclarative",
+    "version": "6.9.3",
+    "bundle_type": "framework",
+    "platforms": [
+        {
+            "name": "Darwin",
+            "version": "24.4.0",
+            "compiler_id": "AppleClang",
+            "compiler_version": "17.0.0.17000013",
+            "targets": [
+                {
+                    "architecture": "arm64",
+                    "abi": "arm64-little_endian-lp64"
+                }
+            ]
+        }
+    ]
+}

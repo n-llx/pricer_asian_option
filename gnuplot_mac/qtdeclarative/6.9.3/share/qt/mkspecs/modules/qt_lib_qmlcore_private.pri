@@ -1,0 +1,11 @@
+QT.qmlcore_private.VERSION = 6.9.3
+QT.qmlcore_private.name = QtQmlCore
+QT.qmlcore_private.module =
+QT.qmlcore_private.libs = $$QT_MODULE_LIB_BASE
+QT.qmlcore_private.includes = $$QT_MODULE_LIB_BASE/QtQmlCore.framework/Versions/A/Headers/6.9.3 $$QT_MODULE_LIB_BASE/QtQmlCore.framework/Versions/A/Headers/6.9.3/QtQmlCore
+QT.qmlcore_private.frameworks = 
+QT.qmlcore_private.depends = qml_private qmlcore
+QT.qmlcore_private.uses = 
+QT.qmlcore_private.module_config = v2 lib_bundle internal_module
+QT.qmlcore_private.enabled_features = 
+QT.qmlcore_private.disabled_features = 

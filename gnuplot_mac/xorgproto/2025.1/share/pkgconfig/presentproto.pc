@@ -1,0 +1,7 @@
+prefix=/opt/homebrew/Cellar/xorgproto/2025.1
+includedir=${prefix}/include
+
+Name: PresentProto
+Description: Present extension headers
+Version: 1.4
+Cflags: -I${includedir}

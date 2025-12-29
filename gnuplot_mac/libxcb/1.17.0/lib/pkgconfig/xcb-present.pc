@@ -1,0 +1,11 @@
+prefix=/opt/homebrew/Cellar/libxcb/1.17.0
+exec_prefix=${prefix}
+libdir=/opt/homebrew/Cellar/libxcb/1.17.0/lib
+includedir=${prefix}/include
+
+Name: XCB Present
+Description: XCB Present Extension
+Version: 1.17.0
+Requires.private: xcb xcb-randr xcb-xfixes xcb-sync xcb-dri3
+Libs: -L${libdir} -lxcb-present
+Cflags: -I${includedir}

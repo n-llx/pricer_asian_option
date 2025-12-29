@@ -1,0 +1,116 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "spdxVersion": "SPDX-2.3",
+  "name": "SBOM-SPDX-freetype-2.14.1",
+  "creationInfo": {
+    "created": "2025-12-28T10:14:28Z",
+    "creators": [
+      "Tool: https://github.com/Homebrew/brew@5.0.7"
+    ]
+  },
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://formulae.brew.sh/spdx/freetype-2.14.1.json",
+  "documentDescribes": [
+    "SPDXRef-Archive-freetype-src",
+    "SPDXRef-Package-SPDXRef-libpng-1.6.53",
+    "SPDXRef-Compiler",
+    "SPDXRef-Bottle-freetype"
+  ],
+  "files": [],
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Archive-freetype-src",
+      "name": "freetype",
+      "versionInfo": "2.14.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2025-09-11 11:19:36 UTC",
+      "licenseConcluded": "FTL",
+      "downloadLocation": "https://downloads.sourceforge.net/project/freetype/freetype2/2.14.1/freetype-2.14.1.tar.xz",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "32427e8c471ac095853212a37aef816c60b42052d4d9e48230bab3bdf2936ccc"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SPDXRef-libpng-1.6.53",
+      "name": "libpng",
+      "versionInfo": "1.6.53",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "libpng-2.0",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/libpng/blobs/sha256:9be8313689149a8cc6623088b1140dac0ff9cf529f5dfde84f2d160a1b0ef588",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "9be8313689149a8cc6623088b1140dac0ff9cf529f5dfde84f2d160a1b0ef588"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/libpng@1.6.53",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Compiler",
+      "name": "clang",
+      "versionInfo": "16.2",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "checksums": [],
+      "externalRefs": []
+    },
+    {
+      "SPDXID": "SPDXRef-Bottle-freetype",
+      "name": "freetype",
+      "versionInfo": "2.14.1",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "builtDate": "2025-09-11 11:19:36 UTC",
+      "licenseConcluded": "FTL",
+      "downloadLocation": "https://ghcr.io/v2/homebrew/core/freetype/blobs/sha256:40c5e9659d92bf629661a6580fbbf7f962cb98b81ac982dbfa23d30e4ddaf6d7",
+      "copyrightText": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:brew/homebrew/core/freetype@2.14.1",
+          "referenceType": "purl"
+        }
+      ],
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "40c5e9659d92bf629661a6580fbbf7f962cb98b81ac982dbfa23d30e4ddaf6d7"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-Package-SPDXRef-libpng-1.6.53",
+      "relationshipType": "RUNTIME_DEPENDENCY_OF",
+      "relatedSpdxElement": "SPDXRef-Bottle-freetype"
+    },
+    {
+      "spdxElementId": "SPDXRef-File-freetype",
+      "relationshipType": "PACKAGE_OF",
+      "relatedSpdxElement": "SPDXRef-Archive-freetype-src"
+    },
+    {
+      "spdxElementId": "SPDXRef-Compiler",
+      "relationshipType": "BUILD_TOOL_OF",
+      "relatedSpdxElement": "SPDXRef-Package-freetype-src"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 QuickTemplates2
+Description: Qt QuickTemplates2 module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtQuickTemplates2
+Cflags: -I${libdir}/QtQuickTemplates2.framework/Headers -I${libdir}/QtQuickTemplates2.framework -DQT_QUICKTEMPLATES2_LIB
+Requires: Qt6Core Qt6Gui Qt6Quick Qt6QmlModels

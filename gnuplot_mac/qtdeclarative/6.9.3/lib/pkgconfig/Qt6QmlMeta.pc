@@ -1,0 +1,13 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/share/qt/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Qt6 QmlMeta
+Description: Qt QmlMeta module
+Version: 6.9.3
+Libs: -F${libdir} -framework QtQmlMeta
+Cflags: -I${libdir}/QtQmlMeta.framework/Headers -I${libdir}/QtQmlMeta.framework -DQT_QMLMETA_LIB
+Requires: Qt6Qml Qt6QmlModels Qt6QmlWorkerScript

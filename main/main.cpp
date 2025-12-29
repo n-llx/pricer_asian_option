@@ -103,8 +103,8 @@ int main()
             double sigma_end = sigma_input + 0.2;
             double r_start = max(0.0, r - 0.05);
             double r_end = r + 0.05;
-            double T_start = max(0.1, T - 1);
-            double T_end = T + 2;
+            double T_start = 0.1;
+            double T_end = T + 2.5;
             double r_input = r;
             double r_step = (r_end - r_start) / grid_size;
             double T_step = (T_end - T_start) / grid_size;

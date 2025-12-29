@@ -51,12 +51,36 @@ double calculate_gamma(const std::vector<std::vector<double>> &call_results, int
     }
 }
 
-double calculate_rho(const std::vector<std::vector<double>> &call_results, const std::vector<std::vector<double>> &call_results_r_plus, int i, int j, double r_step)
+double calculate_rho(const std::vector<std::vector<double>> &call_results, int i, int j, double r_step)
 {
-    return (call_results_r_plus[i][j] - call_results[i][j]) / r_step;
+    int grid_max_i = call_results.size() - 1; // Check rows
+    if (i > 0 && i < grid_max_i)
+    {
+        return (call_results[i+1][j] - call_results[i-1][j]) / (2.0 * r_step);
+    }
+    else if (i == 0)
+    {
+        return (call_results[i+1][j] - call_results[i][j]) / r_step;
+    }
+    else // i == grid_max_i
+    {
+        return (call_results[i][j] - call_results[i-1][j]) / r_step;
+    }
 }
 
-double calculate_theta(const std::vector<std::vector<double>> &call_results, const std::vector<std::vector<double>> &call_results_t_minus, int i, int j, double t_step)
+double calculate_theta(const std::vector<std::vector<double>> &call_results, int i, int j, double t_step)
 {
-    return (call_results_t_minus[i][j] - call_results[i][j]) / t_step;
+    int grid_max_t = call_results.size() - 1;
+    if (j > 0 && j < grid_max_t)
+    {
+        return (call_results[i][j + 1] - call_results[i][j - 1]) / (2.0 * t_step);
+    }
+    else if (j == 0)
+    {
+        return (call_results[i][j + 1] - call_results[i][j]) / t_step;
+    }
+    else
+    {
+        return (call_results[i][j] - call_results[i][j - 1]) / t_step;
+    }
 }

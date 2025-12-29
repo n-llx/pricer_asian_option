@@ -29,7 +29,7 @@ int main()
 
     cout << "||--- Pricer Option Asiatique (Monte Carlo) ---||" << endl;
 
-    // Choix du mode : manuel ou réel (boucle comme pour les Greeks)
+    // Choix du mode : manuel ou réel
     while (true)
     {
         cout << "Choisissez le mode : [1] Mode manuel, [2] Mode reel (ticker) : ";
@@ -88,21 +88,6 @@ int main()
 
         cout << "Choix invalide. Veuillez reessayer." << endl;
     }
-    cout << "Mode manuel :" << endl;
-    cout << "Entrez S0: ";
-    cin >> S0_input;
-    cout << "Entrez r (taux sans risque) : ";
-    cin >> r;
-    cout << "Entrez sigma (volatilité entre 0 & 1): ";
-    cin >> sigma_input;
-    cout << "Entrez T (maturite) : ";
-    cin >> T;
-    cout << "Entrez K (strike) : ";
-    cin >> K;
-    cout << "Entrez le nombre de pas (steps) : ";
-    cin >> steps;
-    cout << "Entrez N (nombre de simulations) : ";
-    cin >> N;
 
     cout << "\n\nMonte carlo avec strike " << K << " et " << N << " simulations :" << "\n";
 
@@ -323,7 +308,6 @@ int main()
                         }
                         cout << "] " << int(progress * 100.0) << "% " << flush;
                     }
-
                 }
             }
 
@@ -332,7 +316,6 @@ int main()
                 for (int j = 0; j <= grid_size; ++j)
                 {
                     call_rho_call_results[i][j] = calculate_rho(call_results, call_results_r_plus, i, j, r_step);
-
                 }
             }
             cout << "\n\nRho calcule :" << call_rho_call_results[grid_size * (1 - ((sigma_end - sigma_input) / (sigma_end - sigma_start)))][grid_size * (1 - ((S0_end - S0_input) / (S0_end - S0_start)))] << endl;
@@ -439,10 +422,7 @@ int main()
             vector<vector<double>> call_theta_put_results(grid_size + 1, vector<double>(grid_size + 1));
             vector<vector<double>> put_results_t_minus(grid_size + 1, vector<double>(grid_size + 1));
 
-            // Use a consistent (and not too small) time step to limit MC noise amplification
             double t_step = 1e-2 * T;
-
-            // Compute call_results at T - t_step and derive put by put-call parity
             vector<vector<double>> call_results_t_minus(grid_size + 1, vector<double>(grid_size + 1));
             for (int i = 0; i <= grid_size; ++i)
             {

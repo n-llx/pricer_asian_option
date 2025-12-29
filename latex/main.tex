@@ -60,7 +60,14 @@
     \vspace{0.5cm}
     {\color{white} \Large \textit{C++ Project Report} \par}
     
-    \vspace{6cm}
+    \vspace{2cm}
+    
+    {\Large \textbf{Authors:} \par}
+    {\large Antoine BERGIER \par}
+    {\large Nils LELORIEUX \par}
+    {\large Alexandre ROGOJAN \par}
+    
+    \vspace{3cm}
     
     {\Large \textbf{Course:} C++ Project \par}
     \vspace{0.5cm}
@@ -129,9 +136,14 @@ The codebase is organized into logical modules to separate concerns:
         \item \texttt{gnuplot/}: Contains the local Gnuplot binary.
     \end{itemize}
     
+    \item[\texttt{App/}] Encapsulates the application logic.
+    \begin{itemize}
+        \item \texttt{PricerApp.hpp/cpp}: Manages the application lifecycle, user input handling, and orchestration of the Monte Carlo simulation and plotting.
+    \end{itemize}
+
     \item[\texttt{main/}] Application entry point.
     \begin{itemize}
-        \item \texttt{main.cpp}: Drives the user interface, coordinates the simulation, and calls the plotting functions.
+        \item \texttt{main.cpp}: A lightweight wrapper that instantiates and runs the \texttt{PricerApp}.
     \end{itemize}
 \end{description}
 

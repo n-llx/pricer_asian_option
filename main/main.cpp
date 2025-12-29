@@ -24,8 +24,70 @@ int main()
     int total_points = (grid_size + 1) * (grid_size + 1);
     int completed_points = 0;
     string ticker;
+    StockData market;
+    bool usedMarket = false;
 
     cout << "||--- Pricer Option Asiatique (Monte Carlo) ---||" << endl;
+
+    // Choix du mode : manuel ou réel (boucle comme pour les Greeks)
+    while (true)
+    {
+        cout << "Choisissez le mode : [1] Mode manuel, [2] Mode reel (ticker) : ";
+        int mode_choice;
+        cin >> mode_choice;
+
+        if (mode_choice == 1)
+        {
+            cout << "Mode manuel :" << endl;
+            cout << "Entrez S0 (entre 50 et 150) : ";
+            cin >> S0_input;
+            cout << "Entrez r (taux) : ";
+            cin >> r;
+            cout << "Entrez sigma (entre 0.05 et 0.5) : ";
+            cin >> sigma_input;
+            cout << "Entrez T (maturite) : ";
+            cin >> T;
+            cout << "Entrez K (strike) : ";
+            cin >> K;
+            cout << "Entrez le nombre de pas (steps) : ";
+            cin >> steps;
+            cout << "Entrez N (nombre de simulations) : ";
+            cin >> N;
+            usedMarket = false;
+            break;
+        }
+
+        if (mode_choice == 2)
+        {
+            cout << "Mode reel : Entrez une action (ex: AAPL, TSLA, MSFT,...): ";
+            cin >> ticker;
+            market = fetchMarketData(ticker);
+            if (market.success)
+            {
+                S0_input = market.price;
+                sigma_input = market.volatility;
+                cout << "Donnees recues pour " << ticker << " : dernier prix = " << S0_input << ", derniere volatilite historique = " << sigma_input << endl;
+                cout << "Entrez r (taux) : ";
+                cin >> r;
+                cout << "Entrez T (maturite) : ";
+                cin >> T;
+                cout << "Entrez K (strike) : ";
+                cin >> K;
+                cout << "Entrez le nombre de pas (steps) : ";
+                cin >> steps;
+                cout << "Entrez N (nombre de simulations) : ";
+                cin >> N;
+                usedMarket = true;
+                break;
+            }
+            else
+            {
+                cout << "Echec recuperation donnees pour '" << ticker << "'. Reessayez ou choisissez le mode manuel." << endl;
+            }
+        }
+
+        cout << "Choix invalide. Veuillez reessayer." << endl;
+    }
     cout << "Mode manuel :" << endl;
     cout << "Entrez S0: ";
     cin >> S0_input;
@@ -47,36 +109,28 @@ int main()
     // On utilise une seed aléatoire pour le calcul ponctuel
     random_device rd;
     unsigned int random_seed = rd();
-    cout << "\nAsian Call Price: " << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_call, K, random_seed) << "\n";
-    cout << "\nAsian Put Price: " << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_put, K, random_seed) << "\n"
+    cout << "\n     Asian Call Price: " << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_call, K, random_seed) << "\n";
+    cout << "\n     Asian Put Price: " << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_put, K, random_seed) << "\n"
          << "\n";
 
     cout << "||--- Calcul de surfaces automatique ---||" << endl;
-    cout << "Entrez une action (ex: AAPL, TSLA, MSFT,...): ";
-    cin >> ticker;
-
-    StockData market = fetchMarketData(ticker);
-
-    if (market.success) {
-        S0_input = market.price;
-        sigma_input = market.volatility;
-        cout << "Donnees recues pour " << ticker << " : dernier prix = " << S0_input << ", derniere volatilite = " << sigma_input << endl;
-    } else {
-    
-        cout << "Entrez S0 : "; cin >> S0_input;
-        cout << "Entrez sigma : "; cin >> sigma_input;
+    if (!usedMarket)
+    {
+        // Mode manuel : réutiliser les paramètres saisis précédemment sans demander de ticker
+        cout << "Utilisation des parametres saisis manuellement : S0 = " << S0_input << ", sigma = " << sigma_input << endl;
+    }
+    else
+    {
+        cout << "Reutilisation des donnees de marche pour " << ticker << " : dernier prix = " << S0_input << ", derniere volatilite = " << sigma_input << endl;
     }
 
     double S0_start = S0_input * 0.75;
-    double S0_end = S0_input * 1.25;   
+    double S0_end = S0_input * 1.25;
     double sigma_start = max(0.01, sigma_input - 0.2);
     double sigma_end = sigma_input + 0.2;
     double s_step = (S0_end - S0_start) / grid_size;
     double vol_step = (sigma_end - sigma_start) / grid_size;
     int completed = 0;
-
-    cout << "Entrez un nouveau strike: (conseil: entrez un strike aux alentours du prix actuel de l'action) " << endl;
-    cin >> K;
 
     // Calcul des surfaces (Call/Put/Greeks)
     vector<vector<double>> call_results(grid_size + 1, vector<double>(grid_size + 1));
@@ -243,7 +297,7 @@ int main()
             int completed = 0;
             vector<vector<double>> call_rho_call_results(grid_size + 1, vector<double>(grid_size + 1));
             vector<vector<double>> call_results_r_plus(grid_size + 1, vector<double>(grid_size + 1));
-            double r_step = 1e-2 * r;
+            double r_step = 1e-4;
             for (int i = 0; i <= grid_size; ++i)
             {
                 for (int j = 0; j <= grid_size; ++j)
@@ -292,7 +346,7 @@ int main()
             vector<vector<double>> call_rho_put_results(grid_size + 1, vector<double>(grid_size + 1));
             vector<vector<double>> put_results_r_plus(grid_size + 1, vector<double>(grid_size + 1));
 
-            double r_step = 1e-2 * r;
+            double r_step = 1e-4;
             for (int i = 0; i <= grid_size; ++i)
             {
                 for (int j = 0; j <= grid_size; ++j)
@@ -338,7 +392,7 @@ int main()
             int completed = 0;
             vector<vector<double>> call_theta_call_results(grid_size + 1, vector<double>(grid_size + 1));
             vector<vector<double>> call_results_t_minus(grid_size + 1, vector<double>(grid_size + 1));
-            double t_step = 1e-4 * T;
+            double t_step = 1e-2 * T;
             for (int i = 0; i <= grid_size; ++i)
             {
                 for (int j = 0; j <= grid_size; ++j)
@@ -384,7 +438,12 @@ int main()
             int completed = 0;
             vector<vector<double>> call_theta_put_results(grid_size + 1, vector<double>(grid_size + 1));
             vector<vector<double>> put_results_t_minus(grid_size + 1, vector<double>(grid_size + 1));
-            double t_step = 1e-4 * T;
+
+            // Use a consistent (and not too small) time step to limit MC noise amplification
+            double t_step = 1e-2 * T;
+
+            // Compute call_results at T - t_step and derive put by put-call parity
+            vector<vector<double>> call_results_t_minus(grid_size + 1, vector<double>(grid_size + 1));
             for (int i = 0; i <= grid_size; ++i)
             {
                 for (int j = 0; j <= grid_size; ++j)
@@ -410,6 +469,8 @@ int main()
                         }
                         cout << "] " << int(progress * 100.0) << "% " << flush;
                     }
+                    call_results_t_minus[i][j] = monte_carlo(N, current_S0_t, r, current_sigma_t, T - t_step, steps, &payoff_as_call, K, 42);
+                    put_results_t_minus[i][j] = call_results_t_minus[i][j] - current_S0_t + K * exp(-r * (T - t_step));
                 }
             }
 

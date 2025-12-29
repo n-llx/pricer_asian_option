@@ -39,14 +39,16 @@ int main()
     cout << "Entrez N (nombre de simulations) : ";
     cin >> N;
 
-    cout << "Monte carlo avec strike " << K << " et " << N << " simulations :" << "\n";
+    cout << "\n\nMonte carlo avec strike " << K << " et " << N << " simulations :" << "\n";
 
     // On utilise une seed aléatoire pour le calcul ponctuel
     random_device rd;
     unsigned int random_seed = rd();
-    cout << "Asian Call: " << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_call, K, random_seed) << "\n";
-    cout << "Asian Put:" << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_put, K, random_seed) << "\n"
+    cout << "\nAsian Call Price: " << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_call, K, random_seed) << "\n";
+    cout << "\nAsian Put Price: " << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_put, K, random_seed) << "\n"
          << "\n";
+
+    
 
     double sigma_start = 0.05, sigma_end = 0.50;
     double S0_start = 50.0, S0_end = 150.0;
@@ -95,13 +97,13 @@ int main()
     cout << "\nCalculs termines !" << endl;
 
     plot_surface(grid_size, call_results, S0_start, s_step, sigma_start, vol_step,
-                 "Surface Prix Call Asiatique", "Prix", K, r, T, N, 0);
+                 "Surface Prix Call Asiatique", "Prix", K, r, T, N);
     plot_surface(grid_size, put_results, S0_start, s_step, sigma_start, vol_step,
-                 "Surface Prix Put Asiatique", "Prix", K, r, T, N, 1);
+                 "Surface Prix Put Asiatique", "Prix", K, r, T, N);
 
     while (true)
     {
-        cout << "\n Choisissez le Greeks à calculer : [1] Delta, [2] Vega, [3] Gamma : ";
+        cout << "\n Choisissez le Greeks à calculer : [1] Delta, [2] Vega, [3] Gamma, [4] Rho, [5] Theta  : ";
         int greek_choice;
         cin >> greek_choice;
 
@@ -109,7 +111,7 @@ int main()
         int option_type;
         cin >> option_type;
 
-        if (greek_choice < 1 || greek_choice > 3 || option_type < 1 || option_type > 2)
+        if (greek_choice < 1 || greek_choice > 5 || option_type < 1 || option_type > 2)
         {
             cout << "Choix invalide." << endl;
         }
@@ -128,7 +130,7 @@ int main()
             }
             cout << "\n\nDelta calcule :" << call_delta_call_results[grid_size * (1 - ((sigma_end - sigma_input) / (sigma_end - sigma_start)))][grid_size * (1 - ((S0_end - S0_input) / (S0_end - S0_start)))] << endl;
             plot_surface(grid_size, call_delta_call_results, S0_start, s_step, sigma_start, vol_step,
-                         "Surface Delta Call", "Delta", K, r, T, N, 2);
+                         "Surface Delta Call", "Delta", K, r, T, N);
         }
 
         if (greek_choice == 1 && option_type == 2)
@@ -145,7 +147,7 @@ int main()
             }
             cout << "\n\nDelta calcule :" << call_delta_put_results[grid_size * (1 - ((sigma_end - sigma_input) / (sigma_end - sigma_start)))][grid_size * (1 - ((S0_end - S0_input) / (S0_end - S0_start)))] << endl;
             plot_surface(grid_size, call_delta_put_results, S0_start, s_step, sigma_start, vol_step,
-                         "Surface Delta Put", "Delta", K, r, T, N, 2);
+                         "Surface Delta Put", "Delta", K, r, T, N);
         }
 
         if (greek_choice == 2 && option_type == 1)
@@ -156,12 +158,12 @@ int main()
                 for (int j = 0; j <= grid_size; ++j)
                 {
                     // Calcul du Vega par méthode des différences finies
-                    call_vega_call_results[i][j] = calculate_vega(call_results, i, j, s_step);
+                    call_vega_call_results[i][j] = calculate_vega(call_results, i, j, vol_step);
                 }
             }
             cout << "\n\nVega calcule :" << call_vega_call_results[grid_size * (1 - ((sigma_end - sigma_input) / (sigma_end - sigma_start)))][grid_size * (1 - ((S0_end - S0_input) / (S0_end - S0_start)))] << endl;
             plot_surface(grid_size, call_vega_call_results, S0_start, s_step, sigma_start, vol_step,
-                         "Surface Vega Call", "Vega", K, r, T, N, 3);
+                         "Surface Vega Call", "Vega", K, r, T, N);
         }
 
         if (greek_choice == 2 && option_type == 2)
@@ -172,12 +174,12 @@ int main()
                 for (int j = 0; j <= grid_size; ++j)
                 {
                     // Calcul du Vega par méthode des différences finies
-                    call_vega_put_results[i][j] = calculate_vega(put_results, i, j, s_step);
+                    call_vega_put_results[i][j] = calculate_vega(put_results, i, j, vol_step);
                 }
             }
             cout << "\n\nVega calcule :" << call_vega_put_results[grid_size * (1 - ((sigma_end - sigma_input) / (sigma_end - sigma_start)))][grid_size * (1 - ((S0_end - S0_input) / (S0_end - S0_start)))] << endl;
             plot_surface(grid_size, call_vega_put_results, S0_start, s_step, sigma_start, vol_step,
-                         "Surface Vega Put", "Vega", K, r, T, N, 3);
+                         "Surface Vega Put", "Vega", K, r, T, N);
         }
 
         if (greek_choice == 3 && option_type == 1)
@@ -194,7 +196,7 @@ int main()
             }
             cout << "\n\nGamma calcule :" << call_gamma_call_results[grid_size * (1 - ((sigma_end - sigma_input) / (sigma_end - sigma_start)))][grid_size * (1 - ((S0_end - S0_input) / (S0_end - S0_start)))] << endl;
             plot_surface(grid_size, call_gamma_call_results, S0_start, s_step, sigma_start, vol_step,
-                         "Surface Gamma Call", "Gamma", K, r, T, N, 4);
+                         "Surface Gamma Call", "Gamma", K, r, T, N);
         }
 
         if (greek_choice == 3 && option_type == 2)
@@ -211,7 +213,120 @@ int main()
             }
             cout << "\n\nGamma calcule :" << call_gamma_put_results[grid_size * (1 - ((sigma_end - sigma_input) / (sigma_end - sigma_start)))][grid_size * (1 - ((S0_end - S0_input) / (S0_end - S0_start)))] << endl;
             plot_surface(grid_size, call_gamma_put_results, S0_start, s_step, sigma_start, vol_step,
-                         "Surface Gamma Put", "Gamma", K, r, T, N, 4);
+                         "Surface Gamma Put", "Gamma", K, r, T, N);
+        }
+
+        if (greek_choice == 4 && option_type == 1)
+        {
+
+            vector<vector<double>> call_rho_call_results(grid_size + 1, vector<double>(grid_size + 1));
+            vector<vector<double>> call_results_r_plus(grid_size + 1, vector<double>(grid_size + 1));
+            double r_step = 1e-2 * r;
+            for (int i = 0; i <= grid_size; ++i)
+            {
+                for (int j = 0; j <= grid_size; ++j)
+                {
+                    double current_sigma_r = sigma_start + i * vol_step;
+                    double current_S0_r = S0_start + j * s_step;
+                    call_results_r_plus[i][j] = monte_carlo(N, current_S0_r, r + r_step, current_sigma_r, T, steps, &payoff_as_call, K, 42);
+                }
+            }
+
+            for (int i = 0; i <= grid_size; ++i)
+            {
+                for (int j = 0; j <= grid_size; ++j)
+                {
+                    call_rho_call_results[i][j] = calculate_rho(call_results, call_results_r_plus, i, j, r_step);
+                }
+            }
+            cout << "\n\nRho calcule :" << call_rho_call_results[grid_size * (1 - ((sigma_end - sigma_input) / (sigma_end - sigma_start)))][grid_size * (1 - ((S0_end - S0_input) / (S0_end - S0_start)))] << endl;
+            plot_surface(grid_size, call_rho_call_results, S0_start, s_step, sigma_start, vol_step,
+                         "Surface Rho Call", "Rho", K, r, T, N);
+        }
+
+        if (greek_choice == 4 && option_type == 2)
+        {
+
+            vector<vector<double>> call_rho_put_results(grid_size + 1, vector<double>(grid_size + 1));
+            vector<vector<double>> put_results_r_plus(grid_size + 1, vector<double>(grid_size + 1));
+
+            double r_step = 1e-2 * r;
+            for (int i = 0; i <= grid_size; ++i)
+            {
+                for (int j = 0; j <= grid_size; ++j)
+                {
+                    double current_sigma_r = sigma_start + i * vol_step;
+                    double current_S0_r = S0_start + j * s_step;
+                    put_results_r_plus[i][j] = monte_carlo(N, current_S0_r, r + r_step, current_sigma_r, T, steps, &payoff_as_put, K, 42);
+                }
+            }
+
+            for (int i = 0; i <= grid_size; ++i)
+            {
+                for (int j = 0; j <= grid_size; ++j)
+                {
+                    call_rho_put_results[i][j] = calculate_rho(put_results, put_results_r_plus, i, j, r_step);
+                }
+            }
+            cout << "\n\nRho calcule :" << call_rho_put_results[grid_size * (1 - ((sigma_end - sigma_input) / (sigma_end - sigma_start)))][grid_size * (1 - ((S0_end - S0_input) / (S0_end - S0_start)))] << endl;
+            plot_surface(grid_size, call_rho_put_results, S0_start, s_step, sigma_start, vol_step,
+                         "Surface Rho Put", "Rho", K, r, T, N);
+        }
+
+        if (greek_choice == 5 && option_type == 1)
+        {
+
+            vector<vector<double>> call_theta_call_results(grid_size + 1, vector<double>(grid_size + 1));
+            vector<vector<double>> call_results_t_minus(grid_size + 1, vector<double>(grid_size + 1));
+            double t_step = 1e-4 * T;
+            for (int i = 0; i <= grid_size; ++i)
+            {
+                for (int j = 0; j <= grid_size; ++j)
+                {
+                    double current_sigma_t = sigma_start + i * vol_step;
+                    double current_S0_t = S0_start + j * s_step;
+                    call_results_t_minus[i][j] = monte_carlo(N, current_S0_t, r, current_sigma_t, T - t_step, steps, &payoff_as_call, K, 42);
+                }
+            }
+
+            for (int i = 0; i <= grid_size; ++i)
+            {
+                for (int j = 0; j <= grid_size; ++j)
+                {
+                    call_theta_call_results[i][j] = calculate_theta(call_results, call_results_t_minus, i, j, t_step);
+                }
+            }
+            cout << "\n\nTheta calcule :" << call_theta_call_results[grid_size * (1 - ((sigma_end - sigma_input) / (sigma_end - sigma_start)))][grid_size * (1 - ((S0_end - S0_input) / (S0_end - S0_start)))] << endl;
+            plot_surface(grid_size, call_theta_call_results, S0_start, s_step, sigma_start, vol_step,
+                         "Surface Theta Call", "Theta", K, r, T, N);
+        }
+
+        if (greek_choice == 5 && option_type == 2)
+        {
+
+            vector<vector<double>> call_theta_put_results(grid_size + 1, vector<double>(grid_size + 1));
+            vector<vector<double>> put_results_t_minus(grid_size + 1, vector<double>(grid_size + 1));
+            double t_step = 1e-4 * T;
+            for (int i = 0; i <= grid_size; ++i)
+            {
+                for (int j = 0; j <= grid_size; ++j)
+                {
+                    double current_sigma_t = sigma_start + i * vol_step;
+                    double current_S0_t = S0_start + j * s_step;
+                    put_results_t_minus[i][j] = monte_carlo(N, current_S0_t, r, current_sigma_t, T - t_step, steps, &payoff_as_put, K, 42);
+                }
+            }
+
+            for (int i = 0; i <= grid_size; ++i)
+            {
+                for (int j = 0; j <= grid_size; ++j)
+                {
+                    call_theta_put_results[i][j] = calculate_theta(put_results, put_results_t_minus, i, j, t_step);
+                }
+            }
+            cout << "\n\nTheta calcule :" << call_theta_put_results[grid_size * (1 - ((sigma_end - sigma_input) / (sigma_end - sigma_start)))][grid_size * (1 - ((S0_end - S0_input) / (S0_end - S0_start)))] << endl;
+            plot_surface(grid_size, call_theta_put_results, S0_start, s_step, sigma_start, vol_step,
+                         "Surface Theta Put", "Theta", K, r, T, N);
         }
 
         cout << "\nAffichage termine." << endl;

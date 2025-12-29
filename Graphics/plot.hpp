@@ -7,5 +7,4 @@ void plot_surface(int grid_size,
                   double sigma_start, double vol_step,
                   const char *title,
                   const char *zlabel,
-                  double K, double r, double T, int N,
-                  int window_id);
+                  double K, double r, double T, int N);

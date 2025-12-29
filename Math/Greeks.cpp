@@ -51,3 +51,12 @@ double calculate_gamma(const std::vector<std::vector<double>> &call_results, int
     }
 }
 
+double calculate_rho(const std::vector<std::vector<double>> &call_results, const std::vector<std::vector<double>> &call_results_r_plus, int i, int j, double r_step)
+{
+    return (call_results_r_plus[i][j] - call_results[i][j]) / r_step;
+}
+
+double calculate_theta(const std::vector<std::vector<double>> &call_results, const std::vector<std::vector<double>> &call_results_t_minus, int i, int j, double t_step)
+{
+    return (call_results_t_minus[i][j] - call_results[i][j]) / t_step;
+}

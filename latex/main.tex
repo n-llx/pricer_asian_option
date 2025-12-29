@@ -80,33 +80,28 @@
 \section{Description, Usage, and Structure}
 
 \subsection{Project Description}
-This project implements a robust \textbf{C++ pricer for path-dependent Asian options} using \textbf{Monte Carlo simulations}. It calculates the price of Asian Call and Put options based on the arithmetic average of the underlying asset's price path, modeled via Geometric Brownian Motion.
+This project implements a C++ pricer for path-dependent Asian options using Monte Carlo simulations. It calculates the price of Asian Call and Put options based on the arithmetic average of the underlying asset's price path, modeled via Geometric Brownian Motion.
 
-Key features include:
-\begin{itemize}
-    \item \textbf{Pricing}: Valuation of Asian Call and Put options.
-    \item \textbf{Greeks Calculation}: Computation of sensitivities like Delta and Vega.
-    \item \textbf{Visualization}: Integrated plotting of price surfaces and sensitivities using \texttt{Gnuplot}.
-    \item \textbf{Performance}: Efficient simulation using the C++ standard library's random number generation and vector arithmetic.
-\end{itemize}
+The main capabilities of the software include the valuation of Asian Call and Put options, and the computation of the full suite of Greeks: Delta, Vega, Gamma, Rho, and Theta. It also features integrated plotting of price surfaces using \texttt{Gnuplot}. The simulation is optimized using the C++ standard library's random number generation and vector arithmetic.
 
 \subsection{Usage Instructions}
 The project is designed to be easily executed on Windows environments without complex local dependencies (other than the included MinGW compiler and Gnuplot).
 
-\begin{enumerate}
-    \item \textbf{Locate the Script}: Find `run\_project.bat` in the root directory.
-    \item \textbf{Execute}: Double-click the batch file or run it from the command line:
-    \begin{lstlisting}[language=bash, frame=single, backgroundcolor=\color{gray!10}]
-    > run_project.bat
-    \end{lstlisting}
-    \item \textbf{Workflow}:
-    \begin{itemize}
-        \item The script automatically checks for the compiler and sources.
-        \item It compiles the project using `g++` with static linking to ensure portability.
-        \item Upon successful compilation, it launches `pricer.exe`.
-    \end{itemize}
-    \item \textbf{Interaction}: Follow the on-screen prompts to input parameters (Spot price, Strike, Rates, Volatility, Maturity, etc.).
-\end{enumerate}
+To run the project, locate the file `run\_project.bat` in the root directory and execute it (either by double-clicking or running it from the command line).
+
+\begin{lstlisting}[language=bash, frame=single, backgroundcolor=\color{gray!10}]
+> run_project.bat
+\end{lstlisting}
+
+This script automatically checks for the compiler, compiles the project using `g++` with static linking, and launches the `pricer.exe` executable. 
+
+Once running, the application offers two modes:
+\begin{itemize}
+    \item \textbf{Manual Mode}: Enter parameters manually (Spot, Rate, Volatility, etc.).
+    \item \textbf{Real-time Mode}: Enter a stock ticker (e.g., AAPL). The program connects to the Yahoo Finance API to fetch the latest spot price and historical volatility automatically.
+\end{itemize}
+
+Finally, follow the on-screen prompts to configure simulation steps and select the Greeks to visualize.
 
 \subsection{Project Structure}
 The codebase is organized into logical modules to separate concerns:
@@ -115,7 +110,12 @@ The codebase is organized into logical modules to separate concerns:
     \item[\texttt{Math/}] Contains the core mathematical models.
     \begin{itemize}
         \item \texttt{StochasticModel.hpp/cpp}: Implements the Geometric Brownian Motion path generation and the Monte Carlo engine.
-        \item \texttt{Greeks.hpp/cpp}: Functions to calculate Delta and Vega.
+        \item \texttt{Greeks.hpp/cpp}: Functions to calculate Delta, Vega, Gamma, Rho, and Theta using finite difference methods.
+    \end{itemize}
+
+    \item[\texttt{MarketData/}] Handles external data retrieval.
+    \begin{itemize}
+        \item \texttt{MarketData.hpp}: Implements the HTTP client and JSON parsing for Yahoo Finance.
     \end{itemize}
     
     \item[\texttt{Instruments/}] Defines the financial instruments.
@@ -139,46 +139,42 @@ The codebase is organized into logical modules to separate concerns:
 \section{Review of Problems Encountered}
 \textit{(This section describes the challenges faced during development.)}
 
-\begin{itemize}
+One of the main challenges was coordinating the work across the team. Working simultaneously on the same codebase led to occasional merge conflicts, and integrating different features required regular communication to ensure architectural consistency.
 
-    \item \textbf{Teamwork and Collaboration:} One of the challenges during the project was coordinating the work across the team. Working simultaneously on the same codebase sometimes led to merge conflicts, which made the integration of different features a bit more time-consuming. Additionally, getting familiar with the code written by other team members required regular communication to make sure the overall architecture stayed consistent and clear for everyone.
-    
-    \item \textbf{Compilation issues}: Configuring the build system to work portably across different Windows machines was challenging. This was resolved by including a local MinGW distribution and using a batch script for automatic path configuration.
-    \item \textbf{Gnuplot Integration}: Piping data correctly to Gnuplot for 3D surface rendering required careful formatting of the data streams.
+Configuring the build system to work portably across different Windows machines was also difficult. We resolved this by including a local MinGW distribution and using a batch script for automatic path configuration. Additionally, piping data correctly to Gnuplot for 3D surface rendering required careful formatting of the data streams.
 
-    \item \textbf{Greek Sensitivities Calculation (Theta and Rho):} Computing $\Theta$ (Theta) and $\rho$ (Rho) using finite difference methods initially produced aberrant results.
-    \begin{itemize}
-        \item Regarding Theta, the difficulty lay in choosing the time step $dt$. A step that was too large introduced significant bias, while a step that was too small amplified the numerical noise inherent in Monte Carlo simulations.
-        \item Regarding Rho, the low sensitivity of the price to interest rate variations made the calculation unstable when faced with simulation variance.
-    \end{itemize}
-    These issues were partially resolved by implementing variance reduction techniques—specifically using identical random seeds for perturbed paths. While improved, the precision of these two parameters remains more sensitive to noise than that of Delta or Vega.
-\end{itemize}
+Finally, computing $\Theta$ (Theta) and $\rho$ (Rho) using finite difference methods initially produced inaccurate results. For Theta, choosing the right time step $dt$ was tricky: too large a step introduced bias, while too small a step amplified Monte Carlo noise. For Rho, the low sensitivity of the price to interest rates made calculations unstable. Use of variance reduction techniques (identical random seeds for perturbed paths) helped, though these Greeks remain more sensitive to noise than Delta or Vega.
 
 % --- Section 3: General Architecture ---
 % --- Section 3: General Architecture ---
 \section{General Architecture}
 \textit{(This section details the software design decisions and technical justifications.)}
 
-The architecture of this project was driven by three primary goals: \textbf{performance}, \textbf{portability}, and \textbf{simplicity}. We wanted a codebase that is straightforward to compile on any Windows machine while being efficient enough to run heavy Monte Carlo simulations.
+The architecture of this project was driven by three primary goals: performance, portability, and simplicity. We wanted a codebase that is straightforward to compile on any Windows machine while being efficient enough to run heavy Monte Carlo simulations.
 
 \subsection{Global Architecture \& Portability}
-The project relies on a modular structure with clear separation of concerns: the \textbf{Math} module handles the stochastic calculus, \textbf{Instruments} defines the financial contracts, and \textbf{Graphics} manages visualization. 
+The project relies on a modular structure with clear separation of concerns: the Math module handles the stochastic calculus, Instruments defines the financial contracts, and Graphics manages visualization. 
 
-A key challenge in C++ development is distributing executables that run on any machine. To solve this, we used \textbf{MinGW64} with static linking flags (\texttt{-static}). This ensures that all necessary C++ runtime libraries are bundled directly into the executable, preventing the common "DLL missing" errors that often plague academic projects when moved between computers.
+A key challenge in C++ development is distributing executables that run on any machine. To solve this, we used MinGW64 with static linking flags (\texttt{-static}). This ensures that all necessary C++ runtime libraries are bundled directly into the executable, preventing the common "DLL missing" errors that often plague academic projects when moved between computers.
 
 \subsection{Mathematical Engine: Precision \& Performance}
-At the heart of the pricer lies the Monte Carlo engine. Financial simulations require generating billions of random numbers, and the quality of these numbers directly impacts the pricing accuracy. We explicitly rejected the standard C \texttt{rand()} function because of its known statistical flaws and short period. Instead, we implemented the \textbf{Mersenne Twister 19937 engine} (\texttt{std::mt19937}), which provides the high-quality randomness essential for robust financial modeling.
+At the heart of the pricer lies the Monte Carlo engine. Financial simulations require generating billions of random numbers, and the quality of these numbers directly impacts the pricing accuracy. We explicitly rejected the standard C \texttt{rand()} function because of its known statistical flaws and short period. Instead, we implemented the Mersenne Twister 19937 engine (\texttt{std::mt19937}), which provides the high-quality randomness essential for robust financial modeling.
 
 Performance was also a critical consideration. In our implementation of \\ \texttt{StochasticModel.cpp}, we pay close attention to memory management. Specifically, we allocate the path vector \textit{outside} the main simulation loop and pass it by reference. This avoids the distinct overhead of allocating and deallocating memory millions of times, which would otherwise significantly slow down the pricing process.
 
 \subsection{Financial Instruments: Function Pointers vs OOP}
 When designing the financial instruments, we had to choose between a classic Object-Oriented approach (with inheritance and polymorphism) and a more functional C-style approach.
 
-We opted for \textbf{Function Pointers}. While polymorphism is a powerful tool, virtual function calls incur a small CPU cost due to vtable lookups. In a tight loop running millions of iterations, these small costs accumulate. By using function pointers for our payoffs, we achieve a direct and faster execution path. This also keeps our code structure simpler and lighter compared to a deep class hierarchy.
+We opted for function pointers. While polymorphism is a powerful tool, virtual function calls incur a small CPU cost due to vtable lookups. In a tight loop running millions of iterations, these small costs accumulate. By using function pointers for our payoffs, we achieve a direct and faster execution path. This also keeps our code structure simpler and lighter compared to a deep class hierarchy.
 
 \subsection{Visualization: Lightweight Inter-Process Communication}
-Finally, for visualization, we wanted to avoid the complexity of linking heavy GUI libraries like Qt, which can be difficult to configure. Instead, we used a lightweight inter-process communication strategy: \textbf{Piping}.
+Finally, for visualization, we wanted to avoid the complexity of linking heavy GUI libraries like Qt, which can be difficult to configure. Instead, we used a lightweight inter-process communication strategy: Piping.
 
 Our program spawns a \texttt{Gnuplot} subprocess and sends commands via standard input. To optimize performance, we use Gnuplot's "Data Blocks" feature. We transmit the simulation data only once, store it in memory within Gnuplot, and then issue multiple commands to render different views. This approach gives us powerful 3D visualization capabilities with minimal code and zero external library dependencies.
+
+\subsection{Market Data Module: Windows API \& JSON}
+To enable real-time features without bloating the project with heavy dependencies like \texttt{libcurl}, we implemented a lightweight HTTP client using the native Windows \texttt{WinInet} API. This allows the application to directly fetch JSON data from Yahoo Finance.
+
+For parsing the response, we utilize the header-only \texttt{nlohmann/json} library. This combination ensures that the "automatic mode" works out-of-the-box on any standard Windows development environment, maintaining our goal of maximum portability.
 
 \end{document}

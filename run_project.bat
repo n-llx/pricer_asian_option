@@ -25,7 +25,7 @@ echo Compiling: !SRCS!
 :: 3. The Compile Command
 :: -static-libgcc -static-libstdc++ ensures it runs on any PC without extra DLLs
 :: -I"%~dp0include" tells g++ to look for the 'nlohmann' folder here
-g++ -O3 -static -static-libgcc -static-libstdc++ -I"%~dp0include" !SRCS! -o "%~dp0pricer.exe"
+g++ -O3 -static -static-libgcc -static-libstdc++ -I"%~dp0include" !SRCS! -o "%~dp0pricer.exe" -lwininet
 
 if %errorlevel% == 0 (
     echo [SUCCESS] pricer.exe created.

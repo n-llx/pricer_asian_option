@@ -3,6 +3,7 @@
 #include "../Math/StochasticModel.hpp"
 #include "../Instruments/Payoff.hpp"
 #include "../Math/Greeks.hpp"
+#include "../MarketData/MarketData.hpp"
 #include <vector>
 #include <cstdio>
 #include <cmath>
@@ -22,8 +23,10 @@ int main()
     int steps, N;
     int total_points = (grid_size + 1) * (grid_size + 1);
     int completed_points = 0;
+    string ticker;
 
     cout << "||--- Pricer Option Asiatique (Monte Carlo) ---||" << endl;
+    cout << "Mode manuel :" << endl;
     cout << "Entrez S0 (entre 50 et 150) : ";
     cin >> S0_input;
     cout << "Entrez r (taux) : ";
@@ -48,17 +51,38 @@ int main()
     cout << "Asian Put:" << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_put, K, random_seed) << "\n"
          << "\n";
 
-    double sigma_start = 0.05, sigma_end = 0.50;
-    double S0_start = 50.0, S0_end = 150.0;
+    cout << "||--- Calcul de surfaces automatique ---||" << endl;
+    cout << "Entrez une action (ex: AAPL, TSLA, MSFT,...): ";
+    cin >> ticker;
+
+    StockData market = fetchMarketData(ticker);
+
+    if (market.success) {
+        S0_input = market.price;
+        sigma_input = market.volatility;
+        cout << "Donnees recues pour " << ticker << " : dernier prix = " << S0_input << ", derniere volatilite = " << sigma_input << endl;
+    } else {
+    
+        cout << "Entrez S0 : "; cin >> S0_input;
+        cout << "Entrez sigma : "; cin >> sigma_input;
+    }
+
+    double S0_start = S0_input * 0.75;
+    double S0_end = S0_input * 1.25;   
+    double sigma_start = max(0.01, sigma_input - 0.2);
+    double sigma_end = sigma_input + 0.2;
     double s_step = (S0_end - S0_start) / grid_size;
     double vol_step = (sigma_end - sigma_start) / grid_size;
     int completed = 0;
+
+    cout << "Entrez un nouveau strike: (conseil: entrez un strike aux alentours du prix actuel de l'action) " << endl;
+    cin >> K;
 
     // Calcul des surfaces (Call/Put/Greeks)
     vector<vector<double>> call_results(grid_size + 1, vector<double>(grid_size + 1));
     vector<vector<double>> put_results(grid_size + 1, vector<double>(grid_size + 1));
 
-    cout << "\nCalcul des surfaces en cours... " << endl;
+    cout << "\nCalcul des surfaces en cours... N simulations pour chaque point " << endl;
     for (int i = 0; i <= grid_size; ++i)
     {
         for (int j = 0; j <= grid_size; ++j)
@@ -101,7 +125,7 @@ int main()
 
     while (true)
     {
-        cout << "\n Choisissez le Greeks à calculer : [1] Delta, [2] Vega, [3] Gamma : ";
+        cout << "\n Choisissez le Greeks a calculer : [1] Delta, [2] Vega, [3] Gamma : ";
         int greek_choice;
         cin >> greek_choice;
 

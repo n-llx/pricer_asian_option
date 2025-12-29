@@ -73,7 +73,6 @@ void PricerApp::runManualMode()
     unsigned int random_seed = rd();
     cout << "\n     Asian Call Price: " << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_call, K, random_seed) << "\n";
     cout << "\n     Asian Put Price: " << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_put, K, random_seed) << "\n\n";
-    cout << "Appuyez sur Entree pour revenir au menu...";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.get();
 }

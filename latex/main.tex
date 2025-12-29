@@ -64,7 +64,7 @@
     
     {\Large \textbf{Course:} C++ Project \par}
     \vspace{0.5cm}
-    {\Large \textbf{Professor:} Mrs. DUMITRESCU \par}
+    {\Large \textbf{Professor:} Miss DUMITRESCU \par}
     
     \vfill
     
@@ -85,41 +85,19 @@ This project implements a robust \textbf{C++ pricer for path-dependent Asian opt
 Key features include:
 \begin{itemize}
     \item \textbf{Pricing}: Valuation of Asian Call and Put options.
-    \item \textbf{Greeks Calculation}: Computation of sensitivities of real-life stocks (using live-data fetched from Yahoo): Delta, Vega, Gamma, Rho and Theta.
+    \item \textbf{Greeks Calculation}: Computation of sensitivities like Delta and Vega.
     \item \textbf{Visualization}: Integrated plotting of price surfaces and sensitivities using \texttt{Gnuplot}.
     \item \textbf{Performance}: Efficient simulation using the C++ standard library's random number generation and vector arithmetic.
 \end{itemize}
 
 \subsection{Usage Instructions}
-The project is designed to be fully portable and direclty executed on Windows and MacOS environments (it includes a portable compiler (MinGW) and all dependencies).
+The project is designed to be easily executed on Windows environments without complex local dependencies (other than the included MinGW compiler and Gnuplot).
 
-\bigskip
-\newline
-\noindent \textbf{On Windows:}
 \begin{enumerate}
     \item \textbf{Locate the Script}: Find `run\_project.bat` in the root directory.
     \item \textbf{Execute}: Double-click the batch file or run it from the command line:
     \begin{lstlisting}[language=bash, frame=single, backgroundcolor=\color{gray!10}]
     > run_project.bat
-    \end{lstlisting}
-    \item \textbf{Workflow}:
-    \begin{itemize}
-        \item The script automatically checks for the compiler and sources.
-        \item It compiles the project using `g++` with static linking to ensure portability.
-        \item Upon successful compilation, it launches `pricer.exe`.
-    \end{itemize}
-    \item \textbf{Interaction}: Follow the on-screen prompts to input parameters (Spot price, Strike, Rates, Volatility, Maturity, etc.).
-\end{enumerate}
-
-\bigskip
-\newline
-\noindent \textbf{On MacOS:}
-\begin{enumerate}
-    \item \textbf{Locate the Script}: Find `run\_project.sh` in the root directory.
-    \item \textbf{Execute}: Open a new terminal inside the project's folder and run the following commands:
-    \begin{lstlisting}[language=bash, frame=single, backgroundcolor=\color{gray!10}]
-    > chmod +x run_project.sh
-    > ./run_project.sh #to compile the project
     \end{lstlisting}
     \item \textbf{Workflow}:
     \begin{itemize}
@@ -157,18 +135,23 @@ The codebase is organized into logical modules to separate concerns:
     \end{itemize}
 \end{description}
 
-All other pieces of code are external and are: a portable compiler, a portable plotter, and helpers to make the software run smoothly. 
-
 % --- Section 2: Problems Encountered ---
 \section{Review of Problems Encountered}
 \textit{(This section describes the challenges faced during development.)}
 
 \begin{itemize}
-    \item \textbf{Compilation issues}: Configuring the build system to work portably and reliably across different Windows machines was challenging. This was resolved by including a local MinGW distribution and using a batch script for automatic path configuration.Some security issues were also encountered on the MacOS environment.
+
+    \item \textbf{Teamwork and Collaboration:} One of the challenges during the project was coordinating the work across the team. Working simultaneously on the same codebase sometimes led to merge conflicts, which made the integration of different features a bit more time-consuming. Additionally, getting familiar with the code written by other team members required regular communication to make sure the overall architecture stayed consistent and clear for everyone.
+    
+    \item \textbf{Compilation issues}: Configuring the build system to work portably across different Windows machines was challenging. This was resolved by including a local MinGW distribution and using a batch script for automatic path configuration.
     \item \textbf{Gnuplot Integration}: Piping data correctly to Gnuplot for 3D surface rendering required careful formatting of the data streams.
-    \item \textbf{Optimization}: The code needed to be overhauled several times. Indeed, memory allocations were often times too numerous, requiring the use of pointers. The surfaces plotting generates for each point a Monte-Carlo simulation with, for each point (grid size of 50x50) N simulations containing many steps. 
-    \item \textbf{Maths}: Optimizing the code required the use of maths to simplify calculations: the put surface is derived from the call surface using put/call parity for example. The delta, gamma and vega surfaces are derived from the call surface by finite difference derivation, thus slashing the number of Monte-Carlo simulations from 4 to 1 to output 4 graphs (put prices and 3 first greeks). However other greeks needed new Monte-Carlo simulations as they are derived from other parameters than spot price and volatility.
-    \item \textbf{Live-Data fetching}: Acquiring real-world data about stocks is challenging. Most APIs are either expensive or unreliable or limited by their number of calls. We stuck with Yahoo as it provides basic price Data, from which we can derive historical volatility and calculate option prices. Although our software can't currently be calibrated to be used in the real-world (with the implied volatility for example), we remain consistent with the GBM model assumptions (constant volatility,...).
+
+    \item \textbf{Greek Sensitivities Calculation (Theta and Rho):} Computing $\Theta$ (Theta) and $\rho$ (Rho) using finite difference methods initially produced aberrant results.
+    \begin{itemize}
+        \item Regarding Theta, the difficulty lay in choosing the time step $dt$. A step that was too large introduced significant bias, while a step that was too small amplified the numerical noise inherent in Monte Carlo simulations.
+        \item Regarding Rho, the low sensitivity of the price to interest rate variations made the calculation unstable when faced with simulation variance.
+    \end{itemize}
+    These issues were partially resolved by implementing variance reduction techniques—specifically using identical random seeds for perturbed paths. While improved, the precision of these two parameters remains more sensitive to noise than that of Delta or Vega.
 \end{itemize}
 
 % --- Section 3: General Architecture ---
@@ -176,7 +159,7 @@ All other pieces of code are external and are: a portable compiler, a portable p
 \section{General Architecture}
 \textit{(This section details the software design decisions and technical justifications.)}
 
-The architecture of this project was driven by three primary goals: \textbf{performance}, \textbf{portability} (so that it can run directly on any environment), and \textbf{simplicity}. We wanted a codebase that is straightforward to compile on any Windows machine while being efficient enough to run heavy Monte Carlo simulations.
+The architecture of this project was driven by three primary goals: \textbf{performance}, \textbf{portability}, and \textbf{simplicity}. We wanted a codebase that is straightforward to compile on any Windows machine while being efficient enough to run heavy Monte Carlo simulations.
 
 \subsection{Global Architecture \& Portability}
 The project relies on a modular structure with clear separation of concerns: the \textbf{Math} module handles the stochastic calculus, \textbf{Instruments} defines the financial contracts, and \textbf{Graphics} manages visualization. 
@@ -184,9 +167,9 @@ The project relies on a modular structure with clear separation of concerns: the
 A key challenge in C++ development is distributing executables that run on any machine. To solve this, we used \textbf{MinGW64} with static linking flags (\texttt{-static}). This ensures that all necessary C++ runtime libraries are bundled directly into the executable, preventing the common "DLL missing" errors that often plague academic projects when moved between computers.
 
 \subsection{Mathematical Engine: Precision \& Performance}
-At the heart of the pricer lies the Monte Carlo engine backed by the usual Gordon model (log normal distribution of prices). Financial simulations require generating billions of random numbers, and the quality of these numbers directly impacts the pricing accuracy. We explicitly rejected the standard C \texttt{rand()} function because of its known statistical flaws and short period. Instead, we implemented the \textbf{Mersenne Twister 19937 engine} (\texttt{std::mt19937}), which provides the high-quality randomness essential for robust financial modeling.
+At the heart of the pricer lies the Monte Carlo engine. Financial simulations require generating billions of random numbers, and the quality of these numbers directly impacts the pricing accuracy. We explicitly rejected the standard C \texttt{rand()} function because of its known statistical flaws and short period. Instead, we implemented the \textbf{Mersenne Twister 19937 engine} (\texttt{std::mt19937}), which provides the high-quality randomness essential for robust financial modeling.
 
-Performance was also a critical consideration. In our implementation of \texttt{StochasticModel.cpp}, we paid close attention to memory management. Specifically, we allocate the path vector \textit{outside} the main simulation loop and pass it by reference. This avoids the distinct overhead of allocating and deallocating memory millions of times, which would otherwise significantly slow down the pricing process.
+Performance was also a critical consideration. In our implementation of \\ \texttt{StochasticModel.cpp}, we pay close attention to memory management. Specifically, we allocate the path vector \textit{outside} the main simulation loop and pass it by reference. This avoids the distinct overhead of allocating and deallocating memory millions of times, which would otherwise significantly slow down the pricing process.
 
 \subsection{Financial Instruments: Function Pointers vs OOP}
 When designing the financial instruments, we had to choose between a classic Object-Oriented approach (with inheritance and polymorphism) and a more functional C-style approach.

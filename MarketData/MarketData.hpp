@@ -48,13 +48,12 @@ StockData fetchMarketData(std::string ticker) {
         auto j = json::parse(jsonRaw);
         auto& result = j["chart"]["result"][0];
         
-        // 1. Get Current Price
         data.price = result["meta"]["regularMarketPrice"];
         
-        // 2. Extract Closing Prices for Volatility
+        // Extract Closing Prices for Volatility
         std::vector<double> closes = result["indicators"]["quote"][0]["close"].get<std::vector<double>>();
         
-        // Remove nulls if any (Yahoo sometimes returns nulls for holidays)
+        // Remove nulls 
         closes.erase(std::remove_if(closes.begin(), closes.end(), [](double d){ return d == 0; }), closes.end());
 
         if (closes.size() > 1) {
@@ -69,7 +68,7 @@ StockData fetchMarketData(std::string ticker) {
             double sq_sum = std::inner_product(logReturns.begin(), logReturns.end(), logReturns.begin(), 0.0);
             double stdev = std::sqrt(sq_sum / logReturns.size() - mean * mean);
 
-            // Annualize (sqrt of ~252 trading days)
+            // Annualize (252 trading days)
             data.volatility = stdev * std::sqrt(252);
             data.success = true;
             

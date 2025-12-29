@@ -8,7 +8,6 @@ using namespace std;
 
 void generate_price_path(double S0, double r, double sigma, double T, int steps, vector<double>& path, mt19937& gen)
 {
-    // path is assumed to be already resized to steps + 1
     double dt = T / static_cast<double>(steps);
     double drift = (r - 0.5 * sigma * sigma) * dt;
     double vol_sqrt_dt = sigma * sqrt(dt);
@@ -29,11 +28,11 @@ double monte_carlo(int N, double S0, double r, double sigma, double T, int steps
 {
     mt19937 gen(base_seed); 
     double sum = 0.0;
-    vector<double> path(steps + 1); // Allocation unique
+    vector<double> path(steps + 1); 
     
     for (int i = 0; i < N; i++)
     {
-        generate_price_path(S0, r, sigma, T, steps, path, gen); // Réutilisation
+        generate_price_path(S0, r, sigma, T, steps, path, gen); 
         sum += f_payoff(path, K);
     }
     return (sum / N) * exp(-r * T);

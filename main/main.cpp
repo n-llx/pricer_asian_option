@@ -29,7 +29,7 @@ int main()
 
     cout << "||--- Pricer Option Asiatique (Monte Carlo) ---||" << endl;
 
-    // Choix du mode : manuel ou réel (boucle comme pour les Greeks)
+    // Choix du mode : manuel ou réel
     while (true)
     {
         cout << "Choisissez le mode : [1] Mode manuel, [2] Mode reel (ticker) : ";

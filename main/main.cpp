@@ -91,7 +91,7 @@ int main()
 
     cout << "\n\nMonte carlo avec strike " << K << " et " << N << " simulations :" << "\n";
 
-    // On utilise une seed aléatoire pour le calcul ponctuel
+    // On utilise une seed aléatoire pour le calcul 
     random_device rd;
     unsigned int random_seed = rd();
     cout << "\n     Asian Call Price: " << monte_carlo(N, S0_input, r, sigma_input, T, steps, &payoff_as_call, K, random_seed) << "\n";
@@ -117,7 +117,7 @@ int main()
     double vol_step = (sigma_end - sigma_start) / grid_size;
     int completed = 0;
 
-    // Calcul des surfaces (Call/Put/Greeks)
+    // Calcul des surfaces 
     vector<vector<double>> call_results(grid_size + 1, vector<double>(grid_size + 1));
     vector<vector<double>> put_results(grid_size + 1, vector<double>(grid_size + 1));
 
@@ -129,7 +129,7 @@ int main()
             double current_sigma = sigma_start + i * vol_step;
             double current_S0 = S0_start + j * s_step;
 
-            // On fixe la graine à 42 pour avoir des surfaces bien lisses
+            // On fixe la graine à 42 pour enlever la variance entre les points de la grille
             call_results[i][j] = monte_carlo(N, current_S0, r, current_sigma, T, steps, &payoff_as_call, K, 42);
 
             // On déduit le Put par parité Call-Put
